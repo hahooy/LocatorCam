@@ -9,6 +9,7 @@
 import UIKit
 import MobileCoreServices
 
+
 class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     /* keep an instance of the location manager while it fetches the location for you */
@@ -59,15 +60,34 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         self.dismissViewControllerAnimated(true, completion: nil)
         
         if mediaType.isEqualToString(kUTTypeImage as String) {
-            let image = info[UIImagePickerControllerOriginalImage]
+            var image = info[UIImagePickerControllerOriginalImage]
                 as! UIImage
-            
+
             imageView.image = image
-            
+            print(image)
             if (newMedia == true) {
-                UIImageWriteToSavedPhotosAlbum(image, self,
-                    "image:didFinishSavingWithError:contextInfo:", nil)
-                getLocation()
+                //
+                // request the current location
+                //
+                manager = OneShotLocationManager()
+                manager!.fetchWithCompletion {location, error in
+                    
+                    // fetch location or an error
+                    if let loc = location {
+                        self.locationDisplay.text = loc.description
+                    } else if let err = error {
+                        self.locationDisplay.text = err.localizedDescription
+                    }
+                    image = self.textToImage(self.locationDisplay.text!, inImage: image, atPoint: CGPointMake(0, 0))
+                    UIImageWriteToSavedPhotosAlbum(image, self,
+                        "image:didFinishSavingWithError:contextInfo:", nil)
+                    // destroy the object immediately to save memory
+                    self.manager = nil
+                    
+                }
+
+
+                //getLocation(image)
             } else if mediaType.isEqualToString(kUTTypeMovie as String) {
                 // Code to support video here
             }
@@ -105,7 +125,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         // Dispose of any resources that can be recreated.
     }
     
-    func getLocation() -> String? {
+    func getLocation(image: UIImage) -> String? {
         //
         // request the current location
         //
@@ -125,29 +145,44 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         
         return self.locationDisplay.text
     }
-    /*
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
+
+    
+    func textToImage(drawText: NSString, inImage: UIImage, atPoint:CGPoint)->UIImage{
         
-        //
-        // request the current location
-        //
-        manager = OneShotLocationManager()
-        manager!.fetchWithCompletion {location, error in
-            
-            // fetch location or an error
-            if let loc = location {
-                self.locationDisplay.text = loc.description
-            } else if let err = error {
-                self.locationDisplay.text = err.localizedDescription
-            }
-            
-            // destroy the object immediately to save memory
-            self.manager = nil
-        }
+        // Setup the font specific variables
+        let textColor: UIColor = UIColor.whiteColor()
+        let textFont: UIFont = UIFont(name: "Helvetica Bold", size: 120)!
+        
+        //Setup the image context using the passed image.
+        UIGraphicsBeginImageContext(inImage.size)
+        
+        //Setups up the font attributes that will be later used to dictate how the text should be drawn
+        let textFontAttributes = [
+            NSFontAttributeName: textFont,
+            NSForegroundColorAttributeName: textColor,
+        ]
+        
+        //Put the image into a rectangle as large as the original image.
+        inImage.drawInRect(CGRectMake(0, 0, inImage.size.width, inImage.size.height))
+        
+        // Creating a point within the space that is as bit as the image.
+        let rect: CGRect = CGRectMake(atPoint.x, atPoint.y, inImage.size.width, inImage.size.height)
+        
+        //Now Draw the text into an image.
+        drawText.drawInRect(rect, withAttributes: textFontAttributes)
+        
+        // Create a new image out of the images we have created
+        let newImage: UIImage = UIGraphicsGetImageFromCurrentImageContext()
+        
+        // End the context now that we have the image we need
+        UIGraphicsEndImageContext()
+        
+        //And pass it back up to the caller.
+        return newImage
         
     }
-    */
+    
+
 
 }
 
