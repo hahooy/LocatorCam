@@ -78,7 +78,9 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
                     } else if let err = error {
                         self.locationDisplay.text = err.localizedDescription
                     }
+                    // embeded text to image
                     image = self.textToImage(self.locationDisplay.text!, inImage: image, atPoint: CGPointMake(0, 0))
+                    // save the image
                     UIImageWriteToSavedPhotosAlbum(image, self,
                         "image:didFinishSavingWithError:contextInfo:", nil)
                     // destroy the object immediately to save memory
@@ -86,8 +88,6 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
                     
                 }
 
-
-                //getLocation(image)
             } else if mediaType.isEqualToString(kUTTypeMovie as String) {
                 // Code to support video here
             }
@@ -185,4 +185,3 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
 
 
 }
-
