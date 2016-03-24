@@ -35,20 +35,33 @@
                                     </barButtonItem>
                                 </items>
                             </toolbar>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m9m-kf-bvo">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="73"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="73" id="iTG-0N-y65"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="u1e-mX-jtK" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="BcZ-SC-Xmc"/>
-                            <constraint firstItem="u1e-mX-jtK" firstAttribute="bottom" secondItem="wfy-db-euE" secondAttribute="top" id="Crg-Cl-cZ2"/>
-                            <constraint firstItem="u1e-mX-jtK" firstAttribute="trailing" secondItem="BD4-dz-FEc" secondAttribute="trailing" id="Ea6-N9-uBv"/>
-                            <constraint firstItem="u1e-mX-jtK" firstAttribute="top" secondItem="BD4-dz-FEc" secondAttribute="bottom" id="Wm6-wl-6aT"/>
-                            <constraint firstItem="BD4-dz-FEc" firstAttribute="leading" secondItem="u1e-mX-jtK" secondAttribute="leading" id="Ylf-v7-it5"/>
-                            <constraint firstItem="BD4-dz-FEc" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="eMP-ue-C3g"/>
-                            <constraint firstAttribute="trailing" secondItem="u1e-mX-jtK" secondAttribute="trailing" id="rw8-aS-fd6"/>
+                            <constraint firstItem="BD4-dz-FEc" firstAttribute="top" secondItem="m9m-kf-bvo" secondAttribute="top" id="7Hg-5I-J1r"/>
+                            <constraint firstItem="m9m-kf-bvo" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="CRA-Ya-7mf"/>
+                            <constraint firstItem="BD4-dz-FEc" firstAttribute="leading" secondItem="u1e-mX-jtK" secondAttribute="leading" id="FPN-aO-L2y"/>
+                            <constraint firstItem="m9m-kf-bvo" firstAttribute="leading" secondItem="BD4-dz-FEc" secondAttribute="leading" id="IIV-sP-WvN"/>
+                            <constraint firstItem="u1e-mX-jtK" firstAttribute="trailing" secondItem="BD4-dz-FEc" secondAttribute="trailing" id="IcT-2s-6oh"/>
+                            <constraint firstItem="u1e-mX-jtK" firstAttribute="bottom" secondItem="wfy-db-euE" secondAttribute="top" id="L9t-gm-1NZ"/>
+                            <constraint firstItem="u1e-mX-jtK" firstAttribute="top" secondItem="BD4-dz-FEc" secondAttribute="bottom" id="jld-zm-vO1"/>
+                            <constraint firstItem="m9m-kf-bvo" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="maV-fc-od4"/>
+                            <constraint firstAttribute="trailing" secondItem="m9m-kf-bvo" secondAttribute="trailing" id="uhQ-gs-MBQ"/>
+                            <constraint firstItem="BD4-dz-FEc" firstAttribute="trailing" secondItem="m9m-kf-bvo" secondAttribute="trailing" id="vin-43-pVF"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="imageView" destination="BD4-dz-FEc" id="BHm-PZ-paB"/>
+                        <outlet property="locationDisplay" destination="m9m-kf-bvo" id="peB-i0-6Qk"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

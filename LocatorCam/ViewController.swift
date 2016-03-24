@@ -10,9 +10,13 @@ import UIKit
 import MobileCoreServices
 
 class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-
+    
+    /* keep an instance of the location manager while it fetches the location for you */
+    var manager: OneShotLocationManager?
+    
     @IBOutlet weak var imageView: UIImageView!
     var newMedia: Bool?
+    @IBOutlet weak var locationDisplay: UITextView!
     
     @IBAction func useCamera(sender: AnyObject) {
         if UIImagePickerController.isSourceTypeAvailable(
@@ -63,6 +67,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
             if (newMedia == true) {
                 UIImageWriteToSavedPhotosAlbum(image, self,
                     "image:didFinishSavingWithError:contextInfo:", nil)
+                getLocation()
             } else if mediaType.isEqualToString(kUTTypeMovie as String) {
                 // Code to support video here
             }
@@ -99,7 +104,50 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
+    
+    func getLocation() -> String? {
+        //
+        // request the current location
+        //
+        manager = OneShotLocationManager()
+        manager!.fetchWithCompletion {location, error in
+            
+            // fetch location or an error
+            if let loc = location {
+                self.locationDisplay.text = loc.description
+            } else if let err = error {
+                self.locationDisplay.text = err.localizedDescription
+            }
+            
+            // destroy the object immediately to save memory
+            self.manager = nil
+        }
+        
+        return self.locationDisplay.text
+    }
+    /*
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        //
+        // request the current location
+        //
+        manager = OneShotLocationManager()
+        manager!.fetchWithCompletion {location, error in
+            
+            // fetch location or an error
+            if let loc = location {
+                self.locationDisplay.text = loc.description
+            } else if let err = error {
+                self.locationDisplay.text = err.localizedDescription
+            }
+            
+            // destroy the object immediately to save memory
+            self.manager = nil
+        }
+        
+    }
+    */
 
 }
 
