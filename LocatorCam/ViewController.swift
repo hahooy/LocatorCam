@@ -17,7 +17,6 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     @IBOutlet weak var imageView: UIImageView!
     var newMedia: Bool?
-    @IBOutlet weak var locationDisplay: UITextView!
     
     @IBAction func useCamera(sender: AnyObject) {
         if UIImagePickerController.isSourceTypeAvailable(
@@ -64,7 +63,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
                 as! UIImage
 
             imageView.image = image
-            print(image)
+
             if (newMedia == true) {
                 //
                 // request the current location
@@ -74,15 +73,15 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
                     
                     // fetch location or an error
                     if let loc = location {
-                        self.locationDisplay.text = loc.description
+                        // embeded text to image
+                        image = self.textToImage(loc.description, inImage: image, atPoint: CGPointMake(0, 0))
                     } else if let err = error {
-                        self.locationDisplay.text = err.localizedDescription
+                        print(err.localizedDescription)
                     }
-                    // embeded text to image
-                    image = self.textToImage(self.locationDisplay.text!, inImage: image, atPoint: CGPointMake(0, 0))
+                    self.imageView.image = image
                     // save the image
                     UIImageWriteToSavedPhotosAlbum(image, self,
-                        "image:didFinishSavingWithError:contextInfo:", nil)
+                        #selector(ViewController.image(_:didFinishSavingWithError:contextInfo:)), nil)
                     // destroy the object immediately to save memory
                     self.manager = nil
                     
@@ -123,27 +122,6 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
-    }
-    
-    func getLocation(image: UIImage) -> String? {
-        //
-        // request the current location
-        //
-        manager = OneShotLocationManager()
-        manager!.fetchWithCompletion {location, error in
-            
-            // fetch location or an error
-            if let loc = location {
-                self.locationDisplay.text = loc.description
-            } else if let err = error {
-                self.locationDisplay.text = err.localizedDescription
-            }
-            
-            // destroy the object immediately to save memory
-            self.manager = nil
-        }
-        
-        return self.locationDisplay.text
     }
 
     
