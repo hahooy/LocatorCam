@@ -55,7 +55,6 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
 
     @IBAction func shareImage(sender: UILongPressGestureRecognizer) {
-        print("!")
         if let image = imageView.image {
             let vc = UIActivityViewController(activityItems: [image], applicationActivities: nil)
             presentViewController(vc, animated: true, completion: nil)
