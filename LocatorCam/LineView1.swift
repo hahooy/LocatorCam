@@ -52,6 +52,7 @@ class LineView1: UIView {
         drawCircle(startPoint, radius: radius)
         drawCircle(endPoint, radius: radius)
         // draw distance
+        drawText(String(Int(distance)), atPoint: midPoint)
     }
     
     // draw circle at the line end points
@@ -63,8 +64,22 @@ class LineView1: UIView {
     }
     
     // draw text along the line
-    private func drawText() {
+    private func drawText(text: String, atPoint: CGPoint) {
+        print(text)
         
+        let textColor: UIColor = UIColor.blackColor()
+        let textFont: UIFont = UIFont(name: "Helvetica Neue", size: 12)!
+        
+        let textFontAttributes = [
+            NSFontAttributeName: textFont,
+            NSForegroundColorAttributeName: textColor,
+            ]
+        
+        // Creating a point within the space that is as bit as the image.
+        let rect: CGRect = CGRectMake(atPoint.x, atPoint.y, self.bounds.width, self.bounds.height)
+        
+        //Now Draw the text into an image.
+        text.drawInRect(rect, withAttributes: textFontAttributes)
     }
     
     // determine if two points are closer than the specified distance
@@ -78,7 +93,6 @@ class LineView1: UIView {
         case .Began:
             // determine which point should be moved
             let initialLocation = gesture.locationInView(self)
-            print(initialLocation)
             closeToStartPoint = closeEnough(initialLocation, pointB: startPoint, distance: radius)
             closeToEndPoint = closeEnough(initialLocation, pointB: endPoint, distance: radius)
         case .Ended: fallthrough
@@ -92,8 +106,6 @@ class LineView1: UIView {
                 endPoint.x += translation.x
                 endPoint.y += translation.y
             }
-            //print(startPoint)
-            //print(endPoint)
             gesture.setTranslation(CGPointZero, inView: self)
         default: break
         }
