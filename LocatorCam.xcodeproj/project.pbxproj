@@ -7,15 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0ADEF61F1CACCFAD008F3E6F /* LocatorCamModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ADEF61E1CACCFAD008F3E6F /* LocatorCamModel.swift */; };
 		0AE5BD2E1CA3B287001458DF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AE5BD2D1CA3B287001458DF /* AppDelegate.swift */; };
 		0AE5BD301CA3B287001458DF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AE5BD2F1CA3B287001458DF /* ViewController.swift */; };
 		0AE5BD331CA3B287001458DF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0AE5BD311CA3B287001458DF /* Main.storyboard */; };
 		0AE5BD351CA3B287001458DF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0AE5BD341CA3B287001458DF /* Assets.xcassets */; };
 		0AE5BD401CA3BA75001458DF /* OneShotLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AE5BD3F1CA3BA75001458DF /* OneShotLocationManager.swift */; };
 		0AFFDC9A1CAA24620006E65D /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0AFFDC991CAA24620006E65D /* LaunchScreen.xib */; };
+		AB14DEDE776EA6213B5AE712 /* Pods_LocatorCam.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C0DC8607C3FC40239DAAD4A /* Pods_LocatorCam.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0ADEF61E1CACCFAD008F3E6F /* LocatorCamModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocatorCamModel.swift; sourceTree = "<group>"; };
 		0AE5BD2A1CA3B287001458DF /* LocatorCam.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LocatorCam.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0AE5BD2D1CA3B287001458DF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0AE5BD2F1CA3B287001458DF /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -24,6 +27,9 @@
 		0AE5BD391CA3B287001458DF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0AE5BD3F1CA3BA75001458DF /* OneShotLocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OneShotLocationManager.swift; sourceTree = "<group>"; };
 		0AFFDC991CAA24620006E65D /* LaunchScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LaunchScreen.xib; sourceTree = "<group>"; };
+		125E085099445A5609024AFB /* Pods-LocatorCam.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LocatorCam.release.xcconfig"; path = "Pods/Target Support Files/Pods-LocatorCam/Pods-LocatorCam.release.xcconfig"; sourceTree = "<group>"; };
+		26E6DDCD150B630BE8AA7259 /* Pods-LocatorCam.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LocatorCam.debug.xcconfig"; path = "Pods/Target Support Files/Pods-LocatorCam/Pods-LocatorCam.debug.xcconfig"; sourceTree = "<group>"; };
+		3C0DC8607C3FC40239DAAD4A /* Pods_LocatorCam.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LocatorCam.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,6 +37,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AB14DEDE776EA6213B5AE712 /* Pods_LocatorCam.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -42,6 +49,8 @@
 			children = (
 				0AE5BD2C1CA3B287001458DF /* LocatorCam */,
 				0AE5BD2B1CA3B287001458DF /* Products */,
+				4AF6FA6D689086C57DAB4B87 /* Pods */,
+				1A00DEED2470002308A68DC2 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -59,6 +68,7 @@
 				0AE5BD2D1CA3B287001458DF /* AppDelegate.swift */,
 				0AE5BD3F1CA3BA75001458DF /* OneShotLocationManager.swift */,
 				0AE5BD2F1CA3B287001458DF /* ViewController.swift */,
+				0ADEF61E1CACCFAD008F3E6F /* LocatorCamModel.swift */,
 				0AE5BD311CA3B287001458DF /* Main.storyboard */,
 				0AFFDC9B1CAA24B10006E65D /* Supporting Files */,
 			);
@@ -75,6 +85,23 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		1A00DEED2470002308A68DC2 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				3C0DC8607C3FC40239DAAD4A /* Pods_LocatorCam.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		4AF6FA6D689086C57DAB4B87 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				26E6DDCD150B630BE8AA7259 /* Pods-LocatorCam.debug.xcconfig */,
+				125E085099445A5609024AFB /* Pods-LocatorCam.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -82,9 +109,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 0AE5BD3C1CA3B287001458DF /* Build configuration list for PBXNativeTarget "LocatorCam" */;
 			buildPhases = (
+				F044674DB9813F7C27D30A5C /* Check Pods Manifest.lock */,
 				0AE5BD261CA3B287001458DF /* Sources */,
 				0AE5BD271CA3B287001458DF /* Frameworks */,
 				0AE5BD281CA3B287001458DF /* Resources */,
+				318CA82C4BC252958B2E70D6 /* Embed Pods Frameworks */,
+				D40BC256B6C709FC60FA2500 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -142,6 +172,54 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		318CA82C4BC252958B2E70D6 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-LocatorCam/Pods-LocatorCam-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D40BC256B6C709FC60FA2500 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-LocatorCam/Pods-LocatorCam-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F044674DB9813F7C27D30A5C /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		0AE5BD261CA3B287001458DF /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -149,6 +227,7 @@
 			files = (
 				0AE5BD301CA3B287001458DF /* ViewController.swift in Sources */,
 				0AE5BD401CA3BA75001458DF /* OneShotLocationManager.swift in Sources */,
+				0ADEF61F1CACCFAD008F3E6F /* LocatorCamModel.swift in Sources */,
 				0AE5BD2E1CA3B287001458DF /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -250,6 +329,7 @@
 		};
 		0AE5BD3D1CA3B287001458DF /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 26E6DDCD150B630BE8AA7259 /* Pods-LocatorCam.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = LocatorCam/Info.plist;
@@ -261,6 +341,7 @@
 		};
 		0AE5BD3E1CA3B287001458DF /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 125E085099445A5609024AFB /* Pods-LocatorCam.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = LocatorCam/Info.plist;

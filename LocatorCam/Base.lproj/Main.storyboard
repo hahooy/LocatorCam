@@ -19,6 +19,14 @@
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="BD4-dz-FEc">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="556"/>
+                                <gestureRecognizers/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="K7p-WN-lyX" appends="YES" id="5nK-QP-QzR"/>
+                                    <outletCollection property="gestureRecognizers" destination="K7p-WN-lyX" appends="YES" id="fEC-Ta-DQE"/>
+                                    <outletCollection property="gestureRecognizers" destination="K7p-WN-lyX" appends="YES" id="Hsc-AK-8xM"/>
+                                    <outletCollection property="gestureRecognizers" destination="K7p-WN-lyX" appends="YES" id="757-4M-Js9"/>
+                                    <outletCollection property="gestureRecognizers" destination="K7p-WN-lyX" appends="YES" id="JXl-sk-7FW"/>
+                                </connections>
                             </imageView>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="u1e-mX-jtK">
                                 <rect key="frame" x="0.0" y="556" width="600" height="44"/>
@@ -37,6 +45,7 @@
                             </toolbar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="BD4-dz-FEc" firstAttribute="trailing" secondItem="u1e-mX-jtK" secondAttribute="trailing" id="EH4-pY-I8g"/>
                             <constraint firstAttribute="trailing" secondItem="u1e-mX-jtK" secondAttribute="trailing" id="QnN-ZS-b8F"/>
@@ -46,14 +55,22 @@
                             <constraint firstItem="BD4-dz-FEc" firstAttribute="bottom" secondItem="u1e-mX-jtK" secondAttribute="top" id="iet-KP-0GX"/>
                             <constraint firstItem="BD4-dz-FEc" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="lOK-uy-JSl"/>
                         </constraints>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="K7p-WN-lyX" appends="YES" id="4qd-mq-a3G"/>
+                        </connections>
                     </view>
                     <connections>
                         <outlet property="imageView" destination="BD4-dz-FEc" id="BHm-PZ-paB"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="K7p-WN-lyX">
+                    <connections>
+                        <action selector="shareImage:" destination="BYZ-38-t0r" id="GJo-t6-RsJ"/>
+                    </connections>
+                </pongPressGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="305" y="338"/>
+            <point key="canvasLocation" x="459" y="157"/>
         </scene>
     </scenes>
 </document>
