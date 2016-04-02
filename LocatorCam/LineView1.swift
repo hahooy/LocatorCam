@@ -68,8 +68,8 @@ class LineView1: UIView {
             lines[i].color.set()
             linePath.stroke()
             // draw circles
-            drawCircle(lines[i].startPoint, radius: lines[i].radius)
-            drawCircle(lines[i].endPoint, radius: lines[i].radius)
+            drawCircle(lines[i].startPoint, radius: lines[i].radius / 2)
+            drawCircle(lines[i].endPoint, radius: lines[i].radius / 2)
             // draw distance
             drawText(String(Int(lines[i].distance)), atPoint: lines[i].midPoint)
         }
@@ -79,23 +79,26 @@ class LineView1: UIView {
     private func drawCircle(center: CGPoint, radius: CGFloat) {
         let circlePath = UIBezierPath(arcCenter: center, radius: radius, startAngle: 0, endAngle: CGFloat(2 * M_PI), clockwise: true)
         circlePath.lineWidth = 1
-        UIColor.darkGrayColor().set()
-        circlePath.stroke()
+        UIColor(red: 0.1, green: 0.5, blue: 0.5, alpha: 0.3).set()
+        circlePath.fill()
     }
     
     // draw text along the line
     private func drawText(text: String, atPoint: CGPoint) {
         
-        let textColor: UIColor = UIColor.blackColor()
+        let textColor: UIColor = UIColor.whiteColor()
         let textFont: UIFont = UIFont(name: "Helvetica Neue", size: 12)!
         
         let textFontAttributes = [
             NSFontAttributeName: textFont,
             NSForegroundColorAttributeName: textColor,
+            NSBackgroundColorAttributeName: UIColor(red: 0.1, green: 0.5, blue: 0.5, alpha: 0.8)
             ]
         
-        // Creating a point within the space that is as bit as the image.
-        let rect: CGRect = CGRectMake(atPoint.x, atPoint.y, self.bounds.width - atPoint.x, self.bounds.height - atPoint.y)
+        let textWithAttr = NSAttributedString(string: text, attributes: textFontAttributes)
+        // Creating a container for the text
+        let rect: CGRect = CGRectMake(atPoint.x, atPoint.y, textWithAttr.size().width, textWithAttr.size().height)
+
         //Now Draw the text into an image.
         text.drawInRect(rect, withAttributes: textFontAttributes)
     }

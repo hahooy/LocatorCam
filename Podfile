@@ -5,6 +5,7 @@
 
 target 'LocatorCam' do
   pod 'ALCameraViewController'
+  pod 'Firebase', '>= 2.5.1'
   use_frameworks!
 end
 

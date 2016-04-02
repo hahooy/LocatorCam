@@ -108,7 +108,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
                     // fetch location or an error
                     if let loc = location {
                         // embeded text to image
-                        image = ViewController.textToImage(loc.description, inImage: image, atPoint: CGPointMake(0, 0))
+                        image = ViewController.textToImage(loc.description, inImage: image, atPoint: CGPointZero)
                     } else if let err = error {
                         print(err.localizedDescription)
                     }
@@ -144,32 +144,37 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     }
     
     // embed text in UIImage
-    static func textToImage(drawText: NSString, inImage: UIImage, atPoint:CGPoint)->UIImage {
-        
-        // Setup the font specific variables
-        let textColor: UIColor = UIColor.whiteColor()
-        let textFont: UIFont = UIFont(name: "Helvetica Bold", size: 120)!
+    static func textToImage(text: NSString, inImage: UIImage, atPoint:CGPoint)->UIImage {
+
+        // configure the font
+        let textColor = UIColor.whiteColor()
+        let textFont = UIFont(name: "Helvetica Bold", size: 120)!
+        let textFontAttributes = [
+            NSFontAttributeName: textFont,
+            NSForegroundColorAttributeName: textColor
+        ]
+        let drawText = NSAttributedString(string: text as String, attributes: textFontAttributes)
         
         //Setup the image context using the passed image.
         UIGraphicsBeginImageContext(inImage.size)
         
-        //Setups up the font attributes that will be later used to dictate how the text should be drawn
-        let textFontAttributes = [
-            NSFontAttributeName: textFont,
-            NSForegroundColorAttributeName: textColor,
-            ]
-        
         //Put the image into a rectangle as large as the original image.
         inImage.drawInRect(CGRectMake(0, 0, inImage.size.width, inImage.size.height))
+
+        // Creating a text container within the image that is as wide as the image, as height as the text.
+        let textWidth = inImage.size.width
+        let textHeight = (ceil(drawText.size().width) / inImage.size.width * drawText.size().height) * 1.2
+        let rect = CGRectMake(atPoint.x, atPoint.y, textWidth,  textHeight)
+
+        // draw the background color for the text.
+        UIColor(red: 0.1, green: 0.5, blue: 0.5, alpha: 0.8).set()
+        UIBezierPath(rect: rect).fill()
         
-        // Creating a point within the space that is as bit as the image.
-        let rect: CGRect = CGRectMake(atPoint.x, atPoint.y, inImage.size.width, inImage.size.height)
-        
-        //Now Draw the text into an image.
-        drawText.drawInRect(rect, withAttributes: textFontAttributes)
+        // Draw the text into the container.
+        drawText.drawInRect(rect)
         
         // Create a new image out of the images we have created
-        let newImage: UIImage = UIGraphicsGetImageFromCurrentImageContext()
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
         
         // End the context now that we have the image we need
         UIGraphicsEndImageContext()
@@ -180,7 +185,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     }
     
     // add lineView to the parent view
-    private func loadLineView(parentView: UIImageView) {
+    private func loadLineView(parentView: UIView) {
             let lineFrame = CGRectMake(parentView.bounds.origin.x, parentView.bounds.origin.y, parentView.bounds.size.width, parentView.bounds.size.height)
             lineView = LineView1(frame: lineFrame)
             lineView!.backgroundColor = UIColor(white: 1, alpha: 0)

@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Yvx-g3-eYs">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Edit Photo-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="LocatorCam" customModuleProvider="target" sceneMemberID="viewController">
@@ -18,78 +17,83 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="u1e-mX-jtK">
-                                <rect key="frame" x="0.0" y="556" width="600" height="44"/>
-                                <items>
-                                    <barButtonItem title="Camera" id="AJ3-A8-n7A">
-                                        <connections>
-                                            <action selector="useCamera:" destination="BYZ-38-t0r" id="Ggg-PJ-XnI"/>
-                                        </connections>
-                                    </barButtonItem>
-                                    <barButtonItem title="Save" id="EZ1-Ma-OPn">
-                                        <connections>
-                                            <action selector="saveImage:" destination="BYZ-38-t0r" id="SPE-cI-uWb"/>
-                                        </connections>
-                                    </barButtonItem>
-                                    <barButtonItem title="Camera Roll" id="J14-sd-8gx">
-                                        <connections>
-                                            <action selector="useCameraRoll:" destination="BYZ-38-t0r" id="s97-W0-KDB"/>
-                                        </connections>
-                                    </barButtonItem>
-                                    <barButtonItem title="Measure" id="7cl-Bk-fEl">
-                                        <connections>
-                                            <action selector="addMeasurementLine:" destination="BYZ-38-t0r" id="QLE-c4-Qf5"/>
-                                        </connections>
-                                    </barButtonItem>
-                                    <barButtonItem title="Delete" id="cuE-S1-La4">
-                                        <connections>
-                                            <action selector="removeMeasurementLine:" destination="BYZ-38-t0r" id="Yzy-zU-58b"/>
-                                        </connections>
-                                    </barButtonItem>
-                                </items>
-                            </toolbar>
                             <imageView contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="nX9-BF-hK2">
-                                <rect key="frame" x="0.0" y="44" width="600" height="512"/>
+                                <rect key="frame" x="0.0" y="64" width="600" height="492"/>
                             </imageView>
-                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Oru-5I-19q">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="44" id="oHX-1G-Bi4"/>
-                                </constraints>
-                                <items>
-                                    <navigationItem title="Photo" id="xP2-Gc-fX8">
-                                        <barButtonItem key="leftBarButtonItem" title="back" id="SRz-nQ-H6t"/>
-                                        <barButtonItem key="rightBarButtonItem" title="share" id="HBi-Tg-tsw">
-                                            <connections>
-                                                <action selector="shareImage:" destination="BYZ-38-t0r" id="0pQ-Pk-7C9"/>
-                                            </connections>
-                                        </barButtonItem>
-                                    </navigationItem>
-                                </items>
-                            </navigationBar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
                         <constraints>
-                            <constraint firstItem="nX9-BF-hK2" firstAttribute="top" secondItem="Oru-5I-19q" secondAttribute="bottom" id="0SU-uW-D9k"/>
-                            <constraint firstItem="nX9-BF-hK2" firstAttribute="top" secondItem="Oru-5I-19q" secondAttribute="bottom" id="4JT-St-bpo"/>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="u1e-mX-jtK" secondAttribute="bottom" id="B6k-dW-Wxs"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="u1e-mX-jtK" secondAttribute="trailing" constant="-20" id="MxX-ds-274"/>
-                            <constraint firstItem="Oru-5I-19q" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="topMargin" id="NNp-VN-BRu"/>
-                            <constraint firstItem="Oru-5I-19q" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-20" id="Tbn-23-vI8"/>
-                            <constraint firstItem="u1e-mX-jtK" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-20" id="aWd-cm-0xI"/>
-                            <constraint firstItem="u1e-mX-jtK" firstAttribute="top" secondItem="nX9-BF-hK2" secondAttribute="bottom" id="d2N-zA-puj"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="Oru-5I-19q" secondAttribute="trailing" constant="-20" id="hOz-UH-wXM"/>
-                            <constraint firstItem="nX9-BF-hK2" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-20" id="nqy-Sn-Rwa"/>
-                            <constraint firstItem="u1e-mX-jtK" firstAttribute="top" secondItem="nX9-BF-hK2" secondAttribute="bottom" id="or4-Yb-PPP"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="nX9-BF-hK2" secondAttribute="trailing" constant="-20" id="uFU-xl-Q7z"/>
+                            <constraint firstItem="nX9-BF-hK2" firstAttribute="bottom" secondItem="wfy-db-euE" secondAttribute="top" id="41N-f1-ubC"/>
+                            <constraint firstAttribute="trailing" secondItem="nX9-BF-hK2" secondAttribute="trailing" id="Dt6-Ga-kzi"/>
+                            <constraint firstItem="nX9-BF-hK2" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="deN-AW-chR"/>
+                            <constraint firstItem="nX9-BF-hK2" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="sW3-Ks-MHl"/>
                         </constraints>
                     </view>
+                    <toolbarItems>
+                        <barButtonItem systemItem="camera" id="AJ3-A8-n7A">
+                            <connections>
+                                <action selector="useCamera:" destination="BYZ-38-t0r" id="Ggg-PJ-XnI"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem systemItem="organize" id="J14-sd-8gx">
+                            <connections>
+                                <action selector="useCameraRoll:" destination="BYZ-38-t0r" id="s97-W0-KDB"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="cRE-A6-ft7"/>
+                        <barButtonItem title="Ruler" id="7cl-Bk-fEl">
+                            <connections>
+                                <action selector="addMeasurementLine:" destination="BYZ-38-t0r" id="QLE-c4-Qf5"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem systemItem="undo" id="cuE-S1-La4">
+                            <connections>
+                                <action selector="removeMeasurementLine:" destination="BYZ-38-t0r" id="Yzy-zU-58b"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem systemItem="save" id="EZ1-Ma-OPn">
+                            <connections>
+                                <action selector="saveImage:" destination="BYZ-38-t0r" id="SPE-cI-uWb"/>
+                            </connections>
+                        </barButtonItem>
+                    </toolbarItems>
+                    <navigationItem key="navigationItem" title="Edit Photo" id="3Ss-eI-4Js">
+                        <barButtonItem key="rightBarButtonItem" systemItem="action" id="VNr-mR-zx2">
+                            <connections>
+                                <action selector="shareImage:" destination="BYZ-38-t0r" id="jz1-4V-MUl"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="imageView" destination="nX9-BF-hK2" id="w80-2P-QoH"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1530" y="-25"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="XLx-H1-g2t">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" toolbarHidden="NO" hidesBarsOnTap="YES" id="Yvx-g3-eYs" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="EeR-SJ-Fyg">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="Dxu-Bb-kE9">
+                        <rect key="frame" x="0.0" y="556" width="600" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </toolbar>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="IcW-uP-DcX"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="KMI-jP-xp7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="718" y="-25"/>
         </scene>
