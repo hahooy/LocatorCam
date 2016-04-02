@@ -1,6 +1,8 @@
 //
 //  LineView1.swift
-//  
+//
+//  You can add lines to this view, modify the line by draging its end points, and
+//  remove existing lines.
 //
 //  Created by Yongzheng Huang on 3/31/16.
 //
@@ -119,12 +121,11 @@ class LineView1: UIView {
             for i in 0..<lines.count {
                 // move the point if pointed by pan gesture
                 if (lines[i].closeToStartPoint) {
-                    lines[i].startPoint.x += translation.x
-                    lines[i].startPoint.y += translation.y
+                    lines[i].startPoint.x = max(min(lines[i].startPoint.x + translation.x, bounds.width), 0)
+                    lines[i].startPoint.y = max(min(lines[i].startPoint.y + translation.y, bounds.height), 0)
                 } else if (lines[i].closeToEndPoint) {
-                    lines[i].endPoint.x += translation.x
-                    lines[i].endPoint.y += translation.y
-                }
+                    lines[i].endPoint.x = max(min(lines[i].endPoint.x + translation.x, bounds.width), 0)
+                    lines[i].endPoint.y = max(min(lines[i].endPoint.y + translation.y, bounds.height), 0)                }
                 gesture.setTranslation(CGPointZero, inView: self)
             }
         default: break
@@ -142,5 +143,10 @@ class LineView1: UIView {
     // remove a line from the view
     func removeLine() {
         lines.popLast()
+    }
+    
+    // remove all lines from the view
+    func removeAllLines() {
+        lines.removeAll()
     }
 }

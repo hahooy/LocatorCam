@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -25,6 +26,11 @@
                                             <action selector="useCamera:" destination="BYZ-38-t0r" id="Ggg-PJ-XnI"/>
                                         </connections>
                                     </barButtonItem>
+                                    <barButtonItem title="Save" id="EZ1-Ma-OPn">
+                                        <connections>
+                                            <action selector="saveImage:" destination="BYZ-38-t0r" id="SPE-cI-uWb"/>
+                                        </connections>
+                                    </barButtonItem>
                                     <barButtonItem title="Camera Roll" id="J14-sd-8gx">
                                         <connections>
                                             <action selector="useCameraRoll:" destination="BYZ-38-t0r" id="s97-W0-KDB"/>
@@ -35,83 +41,57 @@
                                             <action selector="addMeasurementLine:" destination="BYZ-38-t0r" id="QLE-c4-Qf5"/>
                                         </connections>
                                     </barButtonItem>
+                                    <barButtonItem title="Delete" id="cuE-S1-La4">
+                                        <connections>
+                                            <action selector="removeMeasurementLine:" destination="BYZ-38-t0r" id="Yzy-zU-58b"/>
+                                        </connections>
+                                    </barButtonItem>
                                 </items>
                             </toolbar>
-                            <imageView contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="BD4-dz-FEc">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="556"/>
-                                <gestureRecognizers/>
-                                <connections>
-                                    <outletCollection property="gestureRecognizers" destination="K7p-WN-lyX" appends="YES" id="5nK-QP-QzR"/>
-                                    <outletCollection property="gestureRecognizers" destination="K7p-WN-lyX" appends="YES" id="fEC-Ta-DQE"/>
-                                    <outletCollection property="gestureRecognizers" destination="K7p-WN-lyX" appends="YES" id="Hsc-AK-8xM"/>
-                                    <outletCollection property="gestureRecognizers" destination="K7p-WN-lyX" appends="YES" id="757-4M-Js9"/>
-                                    <outletCollection property="gestureRecognizers" destination="K7p-WN-lyX" appends="YES" id="JXl-sk-7FW"/>
-                                </connections>
+                            <imageView contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="nX9-BF-hK2">
+                                <rect key="frame" x="0.0" y="44" width="600" height="512"/>
                             </imageView>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Oru-5I-19q">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="oHX-1G-Bi4"/>
+                                </constraints>
+                                <items>
+                                    <navigationItem title="Photo" id="xP2-Gc-fX8">
+                                        <barButtonItem key="leftBarButtonItem" title="back" id="SRz-nQ-H6t"/>
+                                        <barButtonItem key="rightBarButtonItem" title="share" id="HBi-Tg-tsw">
+                                            <connections>
+                                                <action selector="shareImage:" destination="BYZ-38-t0r" id="0pQ-Pk-7C9"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
                         <constraints>
-                            <constraint firstItem="BD4-dz-FEc" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="CP5-jr-Dqq"/>
-                            <constraint firstItem="BD4-dz-FEc" firstAttribute="trailing" secondItem="u1e-mX-jtK" secondAttribute="trailing" id="IuH-k3-bnk"/>
-                            <constraint firstItem="u1e-mX-jtK" firstAttribute="top" secondItem="BD4-dz-FEc" secondAttribute="bottom" id="MQz-ya-0nx"/>
-                            <constraint firstItem="BD4-dz-FEc" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="Tze-Gk-OjC"/>
-                            <constraint firstItem="u1e-mX-jtK" firstAttribute="bottom" secondItem="wfy-db-euE" secondAttribute="top" id="i4a-y1-5NL"/>
-                            <constraint firstAttribute="trailing" secondItem="BD4-dz-FEc" secondAttribute="trailing" id="q4a-o3-r77"/>
-                            <constraint firstItem="BD4-dz-FEc" firstAttribute="leading" secondItem="u1e-mX-jtK" secondAttribute="leading" id="sQS-Jr-7sH"/>
+                            <constraint firstItem="nX9-BF-hK2" firstAttribute="top" secondItem="Oru-5I-19q" secondAttribute="bottom" id="0SU-uW-D9k"/>
+                            <constraint firstItem="nX9-BF-hK2" firstAttribute="top" secondItem="Oru-5I-19q" secondAttribute="bottom" id="4JT-St-bpo"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="u1e-mX-jtK" secondAttribute="bottom" id="B6k-dW-Wxs"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="u1e-mX-jtK" secondAttribute="trailing" constant="-20" id="MxX-ds-274"/>
+                            <constraint firstItem="Oru-5I-19q" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="topMargin" id="NNp-VN-BRu"/>
+                            <constraint firstItem="Oru-5I-19q" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-20" id="Tbn-23-vI8"/>
+                            <constraint firstItem="u1e-mX-jtK" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-20" id="aWd-cm-0xI"/>
+                            <constraint firstItem="u1e-mX-jtK" firstAttribute="top" secondItem="nX9-BF-hK2" secondAttribute="bottom" id="d2N-zA-puj"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Oru-5I-19q" secondAttribute="trailing" constant="-20" id="hOz-UH-wXM"/>
+                            <constraint firstItem="nX9-BF-hK2" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-20" id="nqy-Sn-Rwa"/>
+                            <constraint firstItem="u1e-mX-jtK" firstAttribute="top" secondItem="nX9-BF-hK2" secondAttribute="bottom" id="or4-Yb-PPP"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="nX9-BF-hK2" secondAttribute="trailing" constant="-20" id="uFU-xl-Q7z"/>
                         </constraints>
-                        <connections>
-                            <outletCollection property="gestureRecognizers" destination="K7p-WN-lyX" appends="YES" id="4qd-mq-a3G"/>
-                        </connections>
                     </view>
                     <connections>
-                        <outlet property="imageView" destination="BD4-dz-FEc" id="BHm-PZ-paB"/>
+                        <outlet property="imageView" destination="nX9-BF-hK2" id="w80-2P-QoH"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
-                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="K7p-WN-lyX">
-                    <connections>
-                        <action selector="shareImage:" destination="BYZ-38-t0r" id="GJo-t6-RsJ"/>
-                    </connections>
-                </pongPressGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="499" y="123"/>
-        </scene>
-        <!--Line View Controller-->
-        <scene sceneID="5HI-lj-aTs">
-            <objects>
-                <viewController id="qfh-hp-mku" customClass="LineViewController" customModule="LocatorCam" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="Ozz-Vv-Dv4"/>
-                        <viewControllerLayoutGuide type="bottom" id="DDH-Dz-Kxc"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="8fh-iu-seh">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8Fc-r2-V5A" customClass="LineView1" customModule="LocatorCam" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <gestureRecognizers/>
-                                <connections>
-                                    <outletCollection property="gestureRecognizers" destination="EUa-Kt-ViD" appends="YES" id="NLq-1I-dGX"/>
-                                </connections>
-                            </view>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                    <connections>
-                        <outlet property="lineView" destination="8Fc-r2-V5A" id="Ogl-uV-Sl5"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Zry-Wi-ULy" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <panGestureRecognizer minimumNumberOfTouches="1" id="EUa-Kt-ViD">
-                    <connections>
-                        <action selector="moveLine:" destination="qfh-hp-mku" id="0jP-6x-x8B"/>
-                    </connections>
-                </panGestureRecognizer>
-            </objects>
-            <point key="canvasLocation" x="1104" y="123"/>
+            <point key="canvasLocation" x="718" y="-25"/>
         </scene>
     </scenes>
 </document>

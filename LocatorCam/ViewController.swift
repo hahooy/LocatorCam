@@ -10,19 +10,21 @@ import UIKit
 import MobileCoreServices
 
 
+/* control the main UI view */
 class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     /* keep an instance of the location manager while it fetches the location for you */
     var manager: OneShotLocationManager?
     var newMedia: Bool?
-    
-    @IBOutlet weak var imageView: UIImageView!
     var lineView: LineView1?
+    @IBOutlet weak var imageView: UIImageView!
     
     
+    // use camera
     @IBAction func useCamera(sender: AnyObject) {
         if UIImagePickerController.isSourceTypeAvailable(
             UIImagePickerControllerSourceType.Camera) {
+            removeLines()
             
             let imagePicker = UIImagePickerController()
             
@@ -38,9 +40,12 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         }
     }
     
+    // open camera roll
     @IBAction func useCameraRoll(sender: AnyObject) {
         if UIImagePickerController.isSourceTypeAvailable(
             UIImagePickerControllerSourceType.SavedPhotosAlbum) {
+            removeLines()
+            
             let imagePicker = UIImagePickerController()
             
             imagePicker.delegate = self
@@ -54,12 +59,30 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         }
     }
     
-
+    // add a line to line view
     @IBAction func addMeasurementLine(sender: UIBarButtonItem) {
         lineView?.addLine()        
     }
     
-    @IBAction func shareImage(sender: UILongPressGestureRecognizer) {
+    // remove a line from line view
+    @IBAction func removeMeasurementLine(sender: UIBarButtonItem) {
+        lineView?.removeLine()
+    }
+    
+    // save the image locally
+    @IBAction func saveImage(sender: UIBarButtonItem) {
+        if (imageView.image) != nil {
+            let views:[UIView] = [imageView]
+            let combinedImage = flattenViews(views)
+            UIImageWriteToSavedPhotosAlbum(combinedImage!, self,
+                                       #selector(ViewController.image(_:didFinishSavingWithError:contextInfo:)), nil)
+            removeLines()
+            imageView.image = combinedImage
+        }
+    }
+    
+    // share image via sms, email and social media
+    @IBAction func shareImage(sender: AnyObject) {
         if let image = imageView.image {
             let vc = UIActivityViewController(activityItems: [image], applicationActivities: nil)
             presentViewController(vc, animated: true, completion: nil)
@@ -90,9 +113,6 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
                         print(err.localizedDescription)
                     }
                     self.imageView.image = image
-                    // save the image
-                    UIImageWriteToSavedPhotosAlbum(image, self,
-                        #selector(ViewController.image(_:didFinishSavingWithError:contextInfo:)), nil)
                     // destroy the object immediately to save memory
                     self.manager = nil
                 }
@@ -123,6 +143,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
+    // embed text in UIImage
     static func textToImage(drawText: NSString, inImage: UIImage, atPoint:CGPoint)->UIImage {
         
         // Setup the font specific variables
@@ -158,16 +179,52 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         
     }
     
+    // add lineView to the parent view
+    private func loadLineView(parentView: UIImageView) {
+            let lineFrame = CGRectMake(parentView.bounds.origin.x, parentView.bounds.origin.y, parentView.bounds.size.width, parentView.bounds.size.height)
+            lineView = LineView1(frame: lineFrame)
+            lineView!.backgroundColor = UIColor(white: 1, alpha: 0)
+            lineView!.addGestureRecognizer(UIPanGestureRecognizer(target: lineView, action: Selector("move:")))
+            lineView!.contentMode = UIViewContentMode.ScaleAspectFit
+            parentView.addSubview(lineView!)
+    }
+    
+    // remove all lines
+    private func removeLines() {
+        if let lines = lineView {
+            lines.removeAllLines()
+        }
+    }
+    
+    // Flattens <allViews> into single UIImage
+    func flattenViews(allViews: [UIView]) -> UIImage? {
+        // Return nil if <allViews> empty
+        if (allViews.isEmpty) {
+            return nil
+        }
+        
+        // If here, compose image out of views in <allViews>
+        // Create graphics context
+        UIGraphicsBeginImageContextWithOptions(UIScreen.mainScreen().bounds.size, false, UIScreen.mainScreen().scale)
+        let context = UIGraphicsGetCurrentContext()
+        CGContextSetInterpolationQuality(context, CGInterpolationQuality.High)
+        
+        // Draw each view into context
+        for curView in allViews {
+            curView.drawViewHierarchyInRect(curView.frame, afterScreenUpdates: false)
+        }
+        
+        // Extract image & end context
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        // Return image
+        return image
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // add lineView to the imageView
-        let lineFrame = CGRectMake(imageView.bounds.origin.x, imageView.bounds.origin.y, imageView.bounds.width, imageView.bounds.height)
-        print("\(imageView.bounds.width) \(imageView.bounds.height)")
-        lineView = LineView1(frame: lineFrame)
-        lineView!.backgroundColor = UIColor(white: 0, alpha: 0.5)
-        lineView!.addGestureRecognizer(UIPanGestureRecognizer(target: lineView, action: Selector("move:")))
-        lineView!.contentMode = UIViewContentMode.ScaleAspectFit
-        imageView.addSubview(lineView!)
+        loadLineView(imageView)
     }
     
     override func didReceiveMemoryWarning() {
