@@ -8,6 +8,22 @@
 
 import UIKit
 
+private struct Line {
+    var startPoint: CGPoint
+    var endPoint: CGPoint
+    var midPoint: CGPoint {
+        return CGPoint(x: (startPoint.x + endPoint.x) / 2, y: (startPoint.y + endPoint.y) / 2)
+    }
+    var distance: CGFloat {
+        return sqrt(pow((startPoint.x - endPoint.x), 2) + pow((startPoint.y - endPoint.y), 2))
+    }
+    var lineWidth: CGFloat
+    var color: UIColor
+    var radius: CGFloat
+    var closeToStartPoint: Bool
+    var closeToEndPoint: Bool
+}
+
 @IBDesignable
 class LineView1: UIView {
 
@@ -19,26 +35,45 @@ class LineView1: UIView {
     }
     */
     
-    var scale: CGFloat = 0.7 { didSet { setNeedsDisplay() } }
+
+
     @IBInspectable
-    var length: CGFloat { return max(bounds.size.width, bounds.size.height) * scale }
+    var startPoint = CGPoint.zero { didSet { setNeedsDisplay() } }
     @IBInspectable
-    var lineWidth: CGFloat = 3 { didSet { setNeedsDisplay() } }
-    @IBInspectable
-    var color: UIColor = UIColor.blueColor() { didSet { setNeedsDisplay() } }
-    @IBInspectable
-    var startPoint = CGPoint(x:100, y:100) { didSet { setNeedsDisplay() } }
-    @IBInspectable
-    var endPoint = CGPoint(x:100, y:300) { didSet { setNeedsDisplay() } }
+    var endPoint = CGPoint.zero { didSet { setNeedsDisplay() } }
     var midPoint: CGPoint {
         return CGPoint(x: (startPoint.x + endPoint.x) / 2, y: (startPoint.y + endPoint.y) / 2)
     }
     var distance: CGFloat {
         return sqrt(pow((startPoint.x - endPoint.x), 2) + pow((startPoint.y - endPoint.y), 2))
     }
-    var closeToStartPoint = false
-    var closeToEndPoint = false
-    var radius: CGFloat = 30
+    @IBInspectable
+    var lineWidth: CGFloat { didSet { setNeedsDisplay() } }
+    @IBInspectable
+    var color: UIColor { didSet { setNeedsDisplay() } }
+    var radius: CGFloat
+    private var closeToStartPoint: Bool
+    private var closeToEndPoint: Bool
+    
+    override init(frame: CGRect) {
+        lineWidth = 3
+        color = UIColor.blueColor()
+        radius = 30
+        closeToStartPoint = false
+        closeToEndPoint = false
+        super.init(frame: frame)
+        startPoint = CGPoint(x: bounds.width / 2, y: bounds.height / 2)
+        endPoint = CGPoint(x: bounds.width / 2, y: bounds.height / 4)
+    }
+    
+    convenience init() {
+        self.init(frame: CGRect.zero)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("This class does not support NSCoding")
+    }
+    
     
     override func drawRect(rect: CGRect) {
         // draw line
@@ -65,7 +100,6 @@ class LineView1: UIView {
     
     // draw text along the line
     private func drawText(text: String, atPoint: CGPoint) {
-        print(text)
         
         let textColor: UIColor = UIColor.blackColor()
         let textFont: UIFont = UIFont(name: "Helvetica Neue", size: 12)!
@@ -76,8 +110,7 @@ class LineView1: UIView {
             ]
         
         // Creating a point within the space that is as bit as the image.
-        let rect: CGRect = CGRectMake(atPoint.x, atPoint.y, self.bounds.width, self.bounds.height)
-        
+        let rect: CGRect = CGRectMake(atPoint.x, atPoint.y, self.bounds.width - atPoint.x, self.bounds.height - atPoint.y)
         //Now Draw the text into an image.
         text.drawInRect(rect, withAttributes: textFontAttributes)
     }

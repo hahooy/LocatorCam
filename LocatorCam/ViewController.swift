@@ -54,6 +54,16 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     }
     
 
+    @IBAction func addMeasurementLine(sender: UIBarButtonItem) {
+        
+        let lineFrame = CGRectMake(imageView.bounds.origin.x, imageView.bounds.origin.y, imageView.bounds.width, imageView.bounds.height)
+        let lineView = LineView1(frame: lineFrame)
+        lineView.backgroundColor = UIColor(white: 1, alpha: 0)
+        lineView.addGestureRecognizer(UIPanGestureRecognizer(target: lineView, action: Selector("move:")))
+        lineView.contentMode = UIViewContentMode.ScaleAspectFit
+        imageView.addSubview(lineView)
+    }
+    
     @IBAction func shareImage(sender: UILongPressGestureRecognizer) {
         if let image = imageView.image {
             let vc = UIActivityViewController(activityItems: [image], applicationActivities: nil)
@@ -80,7 +90,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
                     // fetch location or an error
                     if let loc = location {
                         // embeded text to image
-                        image = LocatorCam.textToImage(loc.description, inImage: image, atPoint: CGPointMake(0, 0))
+                        image = ViewController.textToImage(loc.description, inImage: image, atPoint: CGPointMake(0, 0))
                     } else if let err = error {
                         print(err.localizedDescription)
                     }
@@ -116,6 +126,41 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     func imagePickerControllerDidCancel(picker: UIImagePickerController) {
         self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    static func textToImage(drawText: NSString, inImage: UIImage, atPoint:CGPoint)->UIImage {
+        
+        // Setup the font specific variables
+        let textColor: UIColor = UIColor.whiteColor()
+        let textFont: UIFont = UIFont(name: "Helvetica Bold", size: 120)!
+        
+        //Setup the image context using the passed image.
+        UIGraphicsBeginImageContext(inImage.size)
+        
+        //Setups up the font attributes that will be later used to dictate how the text should be drawn
+        let textFontAttributes = [
+            NSFontAttributeName: textFont,
+            NSForegroundColorAttributeName: textColor,
+            ]
+        
+        //Put the image into a rectangle as large as the original image.
+        inImage.drawInRect(CGRectMake(0, 0, inImage.size.width, inImage.size.height))
+        
+        // Creating a point within the space that is as bit as the image.
+        let rect: CGRect = CGRectMake(atPoint.x, atPoint.y, inImage.size.width, inImage.size.height)
+        
+        //Now Draw the text into an image.
+        drawText.drawInRect(rect, withAttributes: textFontAttributes)
+        
+        // Create a new image out of the images we have created
+        let newImage: UIImage = UIGraphicsGetImageFromCurrentImageContext()
+        
+        // End the context now that we have the image we need
+        UIGraphicsEndImageContext()
+        
+        //And pass it back up to the caller.
+        return newImage
+        
     }
     
     override func viewDidLoad() {
