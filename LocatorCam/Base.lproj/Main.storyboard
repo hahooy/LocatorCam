@@ -17,17 +17,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="BD4-dz-FEc">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="556"/>
-                                <gestureRecognizers/>
-                                <connections>
-                                    <outletCollection property="gestureRecognizers" destination="K7p-WN-lyX" appends="YES" id="5nK-QP-QzR"/>
-                                    <outletCollection property="gestureRecognizers" destination="K7p-WN-lyX" appends="YES" id="fEC-Ta-DQE"/>
-                                    <outletCollection property="gestureRecognizers" destination="K7p-WN-lyX" appends="YES" id="Hsc-AK-8xM"/>
-                                    <outletCollection property="gestureRecognizers" destination="K7p-WN-lyX" appends="YES" id="757-4M-Js9"/>
-                                    <outletCollection property="gestureRecognizers" destination="K7p-WN-lyX" appends="YES" id="JXl-sk-7FW"/>
-                                </connections>
-                            </imageView>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="u1e-mX-jtK">
                                 <rect key="frame" x="0.0" y="556" width="600" height="44"/>
                                 <items>
@@ -48,17 +37,28 @@
                                     </barButtonItem>
                                 </items>
                             </toolbar>
+                            <imageView contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="BD4-dz-FEc">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="556"/>
+                                <gestureRecognizers/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="K7p-WN-lyX" appends="YES" id="5nK-QP-QzR"/>
+                                    <outletCollection property="gestureRecognizers" destination="K7p-WN-lyX" appends="YES" id="fEC-Ta-DQE"/>
+                                    <outletCollection property="gestureRecognizers" destination="K7p-WN-lyX" appends="YES" id="Hsc-AK-8xM"/>
+                                    <outletCollection property="gestureRecognizers" destination="K7p-WN-lyX" appends="YES" id="757-4M-Js9"/>
+                                    <outletCollection property="gestureRecognizers" destination="K7p-WN-lyX" appends="YES" id="JXl-sk-7FW"/>
+                                </connections>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
                         <constraints>
-                            <constraint firstItem="BD4-dz-FEc" firstAttribute="trailing" secondItem="u1e-mX-jtK" secondAttribute="trailing" id="EH4-pY-I8g"/>
-                            <constraint firstItem="u1e-mX-jtK" firstAttribute="bottom" secondItem="wfy-db-euE" secondAttribute="top" id="Upi-mu-jmC"/>
-                            <constraint firstItem="BD4-dz-FEc" firstAttribute="leading" secondItem="u1e-mX-jtK" secondAttribute="leading" id="XdB-fy-WDZ"/>
-                            <constraint firstItem="BD4-dz-FEc" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="bcG-zw-DPf"/>
-                            <constraint firstItem="BD4-dz-FEc" firstAttribute="bottom" secondItem="u1e-mX-jtK" secondAttribute="top" id="iet-KP-0GX"/>
-                            <constraint firstItem="BD4-dz-FEc" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="tgt-8f-14I"/>
-                            <constraint firstAttribute="trailing" secondItem="BD4-dz-FEc" secondAttribute="trailing" id="zRa-I7-nPF"/>
+                            <constraint firstItem="BD4-dz-FEc" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="CP5-jr-Dqq"/>
+                            <constraint firstItem="BD4-dz-FEc" firstAttribute="trailing" secondItem="u1e-mX-jtK" secondAttribute="trailing" id="IuH-k3-bnk"/>
+                            <constraint firstItem="u1e-mX-jtK" firstAttribute="top" secondItem="BD4-dz-FEc" secondAttribute="bottom" id="MQz-ya-0nx"/>
+                            <constraint firstItem="BD4-dz-FEc" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="Tze-Gk-OjC"/>
+                            <constraint firstItem="u1e-mX-jtK" firstAttribute="bottom" secondItem="wfy-db-euE" secondAttribute="top" id="i4a-y1-5NL"/>
+                            <constraint firstAttribute="trailing" secondItem="BD4-dz-FEc" secondAttribute="trailing" id="q4a-o3-r77"/>
+                            <constraint firstItem="BD4-dz-FEc" firstAttribute="leading" secondItem="u1e-mX-jtK" secondAttribute="leading" id="sQS-Jr-7sH"/>
                         </constraints>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="K7p-WN-lyX" appends="YES" id="4qd-mq-a3G"/>

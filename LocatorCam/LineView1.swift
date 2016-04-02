@@ -9,19 +9,19 @@
 import UIKit
 
 private struct Line {
-    var startPoint: CGPoint
-    var endPoint: CGPoint
+    var startPoint = CGPoint.zero
+    var endPoint = CGPoint.zero
     var midPoint: CGPoint {
         return CGPoint(x: (startPoint.x + endPoint.x) / 2, y: (startPoint.y + endPoint.y) / 2)
     }
     var distance: CGFloat {
         return sqrt(pow((startPoint.x - endPoint.x), 2) + pow((startPoint.y - endPoint.y), 2))
     }
-    var lineWidth: CGFloat
-    var color: UIColor
-    var radius: CGFloat
-    var closeToStartPoint: Bool
-    var closeToEndPoint: Bool
+    var lineWidth: CGFloat = 3
+    var color: UIColor = UIColor.blueColor()
+    var radius: CGFloat = 30
+    var closeToStartPoint = false
+    var closeToEndPoint = false
 }
 
 @IBDesignable
@@ -35,35 +35,15 @@ class LineView1: UIView {
     }
     */
     
-
-
     @IBInspectable
-    var startPoint = CGPoint.zero { didSet { setNeedsDisplay() } }
-    @IBInspectable
-    var endPoint = CGPoint.zero { didSet { setNeedsDisplay() } }
-    var midPoint: CGPoint {
-        return CGPoint(x: (startPoint.x + endPoint.x) / 2, y: (startPoint.y + endPoint.y) / 2)
+    private var lines: [Line] = [] {
+        didSet {
+            setNeedsDisplay()
+        }
     }
-    var distance: CGFloat {
-        return sqrt(pow((startPoint.x - endPoint.x), 2) + pow((startPoint.y - endPoint.y), 2))
-    }
-    @IBInspectable
-    var lineWidth: CGFloat { didSet { setNeedsDisplay() } }
-    @IBInspectable
-    var color: UIColor { didSet { setNeedsDisplay() } }
-    var radius: CGFloat
-    private var closeToStartPoint: Bool
-    private var closeToEndPoint: Bool
     
     override init(frame: CGRect) {
-        lineWidth = 3
-        color = UIColor.blueColor()
-        radius = 30
-        closeToStartPoint = false
-        closeToEndPoint = false
         super.init(frame: frame)
-        startPoint = CGPoint(x: bounds.width / 2, y: bounds.height / 2)
-        endPoint = CGPoint(x: bounds.width / 2, y: bounds.height / 4)
     }
     
     convenience init() {
@@ -76,18 +56,21 @@ class LineView1: UIView {
     
     
     override func drawRect(rect: CGRect) {
-        // draw line
-        let linePath = UIBezierPath()
-        linePath.moveToPoint(startPoint)
-        linePath.lineWidth = lineWidth
-        linePath.addLineToPoint(endPoint)
-        color.set()
-        linePath.stroke()
-        // draw circles
-        drawCircle(startPoint, radius: radius)
-        drawCircle(endPoint, radius: radius)
-        // draw distance
-        drawText(String(Int(distance)), atPoint: midPoint)
+        // draw all lines
+        for i in 0..<lines.count {
+            // draw line
+            let linePath = UIBezierPath()
+            linePath.moveToPoint(lines[i].startPoint)
+            linePath.lineWidth = lines[i].lineWidth
+            linePath.addLineToPoint(lines[i].endPoint)
+            lines[i].color.set()
+            linePath.stroke()
+            // draw circles
+            drawCircle(lines[i].startPoint, radius: lines[i].radius)
+            drawCircle(lines[i].endPoint, radius: lines[i].radius)
+            // draw distance
+            drawText(String(Int(lines[i].distance)), atPoint: lines[i].midPoint)
+        }
     }
     
     // draw circle at the line end points
@@ -124,24 +107,40 @@ class LineView1: UIView {
     func move(gesture: UIPanGestureRecognizer) {
         switch gesture.state {
         case .Began:
-            // determine which point should be moved
-            let initialLocation = gesture.locationInView(self)
-            closeToStartPoint = closeEnough(initialLocation, pointB: startPoint, distance: radius)
-            closeToEndPoint = closeEnough(initialLocation, pointB: endPoint, distance: radius)
+            for i in 0..<lines.count {
+                // determine which point should be moved
+                let initialLocation = gesture.locationInView(self)
+                lines[i].closeToStartPoint = closeEnough(initialLocation, pointB: lines[i].startPoint, distance: lines[i].radius)
+                lines[i].closeToEndPoint = closeEnough(initialLocation, pointB: lines[i].endPoint, distance: lines[i].radius)
+            }
         case .Ended: fallthrough
         case .Changed:
-            // move the point if pointed by pan gesture
             let translation = gesture.translationInView(self)
-            if (closeToStartPoint) {
-                startPoint.x += translation.x
-                startPoint.y += translation.y
-            } else if (closeToEndPoint) {
-                endPoint.x += translation.x
-                endPoint.y += translation.y
+            for i in 0..<lines.count {
+                // move the point if pointed by pan gesture
+                if (lines[i].closeToStartPoint) {
+                    lines[i].startPoint.x += translation.x
+                    lines[i].startPoint.y += translation.y
+                } else if (lines[i].closeToEndPoint) {
+                    lines[i].endPoint.x += translation.x
+                    lines[i].endPoint.y += translation.y
+                }
+                gesture.setTranslation(CGPointZero, inView: self)
             }
-            gesture.setTranslation(CGPointZero, inView: self)
         default: break
         }
     }
-
+    
+    // add a line to view
+    func addLine() {
+        var line = Line()
+        line.startPoint = CGPoint(x: bounds.width / 2, y: bounds.height / 2)
+        line.endPoint = CGPoint(x: bounds.width / 2, y: bounds.height / 4)
+        lines.append(line)
+    }
+    
+    // remove a line from the view
+    func removeLine() {
+        lines.popLast()
+    }
 }

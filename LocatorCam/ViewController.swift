@@ -17,6 +17,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     var newMedia: Bool?
     
     @IBOutlet weak var imageView: UIImageView!
+    var lineView: LineView1?
     
     
     @IBAction func useCamera(sender: AnyObject) {
@@ -55,13 +56,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
 
     @IBAction func addMeasurementLine(sender: UIBarButtonItem) {
-        
-        let lineFrame = CGRectMake(imageView.bounds.origin.x, imageView.bounds.origin.y, imageView.bounds.width, imageView.bounds.height)
-        let lineView = LineView1(frame: lineFrame)
-        lineView.backgroundColor = UIColor(white: 1, alpha: 0)
-        lineView.addGestureRecognizer(UIPanGestureRecognizer(target: lineView, action: Selector("move:")))
-        lineView.contentMode = UIViewContentMode.ScaleAspectFit
-        imageView.addSubview(lineView)
+        lineView?.addLine()        
     }
     
     @IBAction func shareImage(sender: UILongPressGestureRecognizer) {
@@ -165,7 +160,14 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        // add lineView to the imageView
+        let lineFrame = CGRectMake(imageView.bounds.origin.x, imageView.bounds.origin.y, imageView.bounds.width, imageView.bounds.height)
+        print("\(imageView.bounds.width) \(imageView.bounds.height)")
+        lineView = LineView1(frame: lineFrame)
+        lineView!.backgroundColor = UIColor(white: 0, alpha: 0.5)
+        lineView!.addGestureRecognizer(UIPanGestureRecognizer(target: lineView, action: Selector("move:")))
+        lineView!.contentMode = UIViewContentMode.ScaleAspectFit
+        imageView.addSubview(lineView!)
     }
     
     override func didReceiveMemoryWarning() {

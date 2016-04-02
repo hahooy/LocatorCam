@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		0A61D52E1CAE1E1000DDC276 /* LineView1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A61D52D1CAE1E1000DDC276 /* LineView1.swift */; };
-		0A61D5341CAE202E00DDC276 /* LineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A61D5331CAE202E00DDC276 /* LineViewController.swift */; };
 		0ADEF61F1CACCFAD008F3E6F /* LocatorCamModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ADEF61E1CACCFAD008F3E6F /* LocatorCamModel.swift */; };
 		0AE5BD2E1CA3B287001458DF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AE5BD2D1CA3B287001458DF /* AppDelegate.swift */; };
 		0AE5BD301CA3B287001458DF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AE5BD2F1CA3B287001458DF /* ViewController.swift */; };
@@ -21,7 +20,6 @@
 
 /* Begin PBXFileReference section */
 		0A61D52D1CAE1E1000DDC276 /* LineView1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LineView1.swift; sourceTree = "<group>"; };
-		0A61D5331CAE202E00DDC276 /* LineViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LineViewController.swift; sourceTree = "<group>"; };
 		0ADEF61E1CACCFAD008F3E6F /* LocatorCamModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocatorCamModel.swift; sourceTree = "<group>"; };
 		0AE5BD2A1CA3B287001458DF /* LocatorCam.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LocatorCam.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0AE5BD2D1CA3B287001458DF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -75,7 +73,6 @@
 				0AE5BD2F1CA3B287001458DF /* ViewController.swift */,
 				0ADEF61E1CACCFAD008F3E6F /* LocatorCamModel.swift */,
 				0AE5BD311CA3B287001458DF /* Main.storyboard */,
-				0A61D5331CAE202E00DDC276 /* LineViewController.swift */,
 				0AFFDC9B1CAA24B10006E65D /* Supporting Files */,
 			);
 			path = LocatorCam;
@@ -233,7 +230,6 @@
 			files = (
 				0AE5BD301CA3B287001458DF /* ViewController.swift in Sources */,
 				0AE5BD401CA3BA75001458DF /* OneShotLocationManager.swift in Sources */,
-				0A61D5341CAE202E00DDC276 /* LineViewController.swift in Sources */,
 				0A61D52E1CAE1E1000DDC276 /* LineView1.swift in Sources */,
 				0ADEF61F1CACCFAD008F3E6F /* LocatorCamModel.swift in Sources */,
 				0AE5BD2E1CA3B287001458DF /* AppDelegate.swift in Sources */,
