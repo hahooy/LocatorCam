@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  EditPhotoVC.swift
 //  LocatorCam
 //
 //  Created by Yongzheng Huang on 3/24/16.
@@ -11,12 +11,12 @@ import MobileCoreServices
 
 
 /* control the main UI view */
-class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class EditPhotoVC: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     /* keep an instance of the location manager while it fetches the location for you */
     var manager: OneShotLocationManager?
     var newMedia: Bool?
-    var lineView: LineView1?
+    var lineView: LineView?
     @IBOutlet weak var imageView: UIImageView!
     
     
@@ -75,7 +75,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
             let views:[UIView] = [imageView]
             let combinedImage = flattenViews(views)
             UIImageWriteToSavedPhotosAlbum(combinedImage!, self,
-                                       #selector(ViewController.image(_:didFinishSavingWithError:contextInfo:)), nil)
+                                       #selector(EditPhotoVC.image(_:didFinishSavingWithError:contextInfo:)), nil)
             removeLines()
             imageView.image = combinedImage
         }
@@ -108,7 +108,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
                     // fetch location or an error
                     if let loc = location {
                         // embeded text to image
-                        image = ViewController.textToImage(loc.description, inImage: image, atPoint: CGPointZero)
+                        image = EditPhotoVC.textToImage(loc.description, inImage: image, atPoint: CGPointZero)
                     } else if let err = error {
                         print(err.localizedDescription)
                     }
@@ -187,7 +187,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     // add lineView to the parent view
     private func loadLineView(parentView: UIView) {
             let lineFrame = CGRectMake(parentView.bounds.origin.x, parentView.bounds.origin.y, parentView.bounds.size.width, parentView.bounds.size.height)
-            lineView = LineView1(frame: lineFrame)
+            lineView = LineView(frame: lineFrame)
             lineView!.backgroundColor = UIColor(white: 1, alpha: 0)
             lineView!.addGestureRecognizer(UIPanGestureRecognizer(target: lineView, action: Selector("move:")))
             lineView!.contentMode = UIViewContentMode.ScaleAspectFit

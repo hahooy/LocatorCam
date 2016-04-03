@@ -7,10 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0A61D52E1CAE1E1000DDC276 /* LineView1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A61D52D1CAE1E1000DDC276 /* LineView1.swift */; };
+		0A61D52E1CAE1E1000DDC276 /* LineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A61D52D1CAE1E1000DDC276 /* LineView.swift */; };
 		0ADEF61F1CACCFAD008F3E6F /* LocatorCamModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ADEF61E1CACCFAD008F3E6F /* LocatorCamModel.swift */; };
 		0AE5BD2E1CA3B287001458DF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AE5BD2D1CA3B287001458DF /* AppDelegate.swift */; };
-		0AE5BD301CA3B287001458DF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AE5BD2F1CA3B287001458DF /* ViewController.swift */; };
+		0AE5BD301CA3B287001458DF /* EditPhotoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AE5BD2F1CA3B287001458DF /* EditPhotoVC.swift */; };
 		0AE5BD331CA3B287001458DF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0AE5BD311CA3B287001458DF /* Main.storyboard */; };
 		0AE5BD351CA3B287001458DF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0AE5BD341CA3B287001458DF /* Assets.xcassets */; };
 		0AE5BD401CA3BA75001458DF /* OneShotLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AE5BD3F1CA3BA75001458DF /* OneShotLocationManager.swift */; };
@@ -19,11 +19,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		0A61D52D1CAE1E1000DDC276 /* LineView1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LineView1.swift; sourceTree = "<group>"; };
+		0A61D52D1CAE1E1000DDC276 /* LineView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LineView.swift; sourceTree = "<group>"; };
 		0ADEF61E1CACCFAD008F3E6F /* LocatorCamModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocatorCamModel.swift; sourceTree = "<group>"; };
 		0AE5BD2A1CA3B287001458DF /* LocatorCam.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LocatorCam.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0AE5BD2D1CA3B287001458DF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		0AE5BD2F1CA3B287001458DF /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		0AE5BD2F1CA3B287001458DF /* EditPhotoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPhotoVC.swift; sourceTree = "<group>"; };
 		0AE5BD321CA3B287001458DF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		0AE5BD341CA3B287001458DF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0AE5BD391CA3B287001458DF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -46,6 +46,32 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0AB7485B1CB0D6A000A18F43 /* Layout */ = {
+			isa = PBXGroup;
+			children = (
+				0AE5BD311CA3B287001458DF /* Main.storyboard */,
+			);
+			name = Layout;
+			sourceTree = "<group>";
+		};
+		0AB7485C1CB0D6D100A18F43 /* Controler */ = {
+			isa = PBXGroup;
+			children = (
+				0AE5BD2F1CA3B287001458DF /* EditPhotoVC.swift */,
+				0A61D52D1CAE1E1000DDC276 /* LineView.swift */,
+			);
+			name = Controler;
+			sourceTree = "<group>";
+		};
+		0AB7485D1CB0D71200A18F43 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				0ADEF61E1CACCFAD008F3E6F /* LocatorCamModel.swift */,
+				0AE5BD3F1CA3BA75001458DF /* OneShotLocationManager.swift */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
 		0AE5BD211CA3B286001458DF = {
 			isa = PBXGroup;
 			children = (
@@ -67,12 +93,9 @@
 		0AE5BD2C1CA3B287001458DF /* LocatorCam */ = {
 			isa = PBXGroup;
 			children = (
-				0A61D52D1CAE1E1000DDC276 /* LineView1.swift */,
-				0AE5BD2D1CA3B287001458DF /* AppDelegate.swift */,
-				0AE5BD3F1CA3BA75001458DF /* OneShotLocationManager.swift */,
-				0AE5BD2F1CA3B287001458DF /* ViewController.swift */,
-				0ADEF61E1CACCFAD008F3E6F /* LocatorCamModel.swift */,
-				0AE5BD311CA3B287001458DF /* Main.storyboard */,
+				0AB7485D1CB0D71200A18F43 /* Models */,
+				0AB7485C1CB0D6D100A18F43 /* Controler */,
+				0AB7485B1CB0D6A000A18F43 /* Layout */,
 				0AFFDC9B1CAA24B10006E65D /* Supporting Files */,
 			);
 			path = LocatorCam;
@@ -81,6 +104,7 @@
 		0AFFDC9B1CAA24B10006E65D /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				0AE5BD2D1CA3B287001458DF /* AppDelegate.swift */,
 				0AFFDC991CAA24620006E65D /* LaunchScreen.xib */,
 				0AE5BD391CA3B287001458DF /* Info.plist */,
 				0AE5BD341CA3B287001458DF /* Assets.xcassets */,
@@ -228,9 +252,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0AE5BD301CA3B287001458DF /* ViewController.swift in Sources */,
+				0AE5BD301CA3B287001458DF /* EditPhotoVC.swift in Sources */,
 				0AE5BD401CA3BA75001458DF /* OneShotLocationManager.swift in Sources */,
-				0A61D52E1CAE1E1000DDC276 /* LineView1.swift in Sources */,
+				0A61D52E1CAE1E1000DDC276 /* LineView.swift in Sources */,
 				0ADEF61F1CACCFAD008F3E6F /* LocatorCamModel.swift in Sources */,
 				0AE5BD2E1CA3B287001458DF /* AppDelegate.swift in Sources */,
 			);

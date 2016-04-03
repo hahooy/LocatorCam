@@ -1,5 +1,5 @@
 //
-//  LineView1.swift
+//  LineView.swift
 //
 //  You can add lines to this view, modify the line by draging its end points, and
 //  remove existing lines.
@@ -27,7 +27,7 @@ private struct Line {
 }
 
 @IBDesignable
-class LineView1: UIView {
+class LineView: UIView {
 
     /*
     // Only override drawRect: if you perform custom drawing.
