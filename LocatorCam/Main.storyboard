@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Rxe-ZY-aB1">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <scenes>
+        <!--Tournament-->
+        <scene sceneID="3RR-YX-M1p">
+            <objects>
+                <tableViewController id="SuZ-jQ-qpD" customClass="ListTableViewController" customModule="LocatorCam" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="84" sectionHeaderHeight="28" sectionFooterHeight="28" id="Sd6-N0-rQC">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="profileCell" textLabel="QB4-zA-bSf" detailTextLabel="F6e-LQ-9Z3" rowHeight="84" style="IBUITableViewCellStyleSubtitle" id="rAQ-N5-GEv">
+                                <rect key="frame" x="0.0" y="92" width="600" height="84"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="rAQ-N5-GEv" id="PNr-Iq-FWc">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="83"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="QB4-zA-bSf">
+                                            <rect key="frame" x="15" y="25" width="32" height="20"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="F6e-LQ-9Z3">
+                                            <rect key="frame" x="15" y="45" width="41" height="14"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="SuZ-jQ-qpD" id="Pus-m0-3xP"/>
+                            <outlet property="delegate" destination="SuZ-jQ-qpD" id="3s5-SD-RuL"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Tournament" id="wnF-GH-rOa">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="EG1-AG-Yol">
+                            <connections>
+                                <segue destination="eT3-pG-0C3" kind="show" id="c2U-T7-gYw"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="U2p-A2-NdV" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1184" y="193"/>
+        </scene>
+        <!--List-->
+        <scene sceneID="MYp-gN-hWu">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" toolbarHidden="NO" id="Rxe-ZY-aB1" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="List" id="LiH-ge-yXr"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="fCM-L4-4HX">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="0O4-iA-KcC">
+                        <rect key="frame" x="0.0" y="556" width="600" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </toolbar>
+                    <connections>
+                        <segue destination="SuZ-jQ-qpD" kind="relationship" relationship="rootViewController" id="xKX-qL-e5h"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="D6B-0b-YIB" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="430" y="216"/>
+        </scene>
+        <!--Edit Photo-->
+        <scene sceneID="Q0M-l7-RFO">
+            <objects>
+                <viewController id="eT3-pG-0C3" customClass="EditPhotoVC" customModule="LocatorCam" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Uto-bM-M7x"/>
+                        <viewControllerLayoutGuide type="bottom" id="W6s-7p-RQr"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="MSD-Bf-VU2">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Umr-NV-rJb">
+                                <rect key="frame" x="0.0" y="64" width="600" height="492"/>
+                                <gestureRecognizers/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="3UD-mx-P85" appends="YES" id="Qe9-nZ-0VV"/>
+                                </connections>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
+                        <constraints>
+                            <constraint firstItem="Umr-NV-rJb" firstAttribute="top" secondItem="Uto-bM-M7x" secondAttribute="bottom" id="5ch-FQ-Z1Q"/>
+                            <constraint firstItem="W6s-7p-RQr" firstAttribute="top" secondItem="Umr-NV-rJb" secondAttribute="bottom" id="ecT-7j-bJv"/>
+                            <constraint firstItem="Umr-NV-rJb" firstAttribute="leading" secondItem="MSD-Bf-VU2" secondAttribute="leadingMargin" constant="-20" id="leP-vR-teV"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Umr-NV-rJb" secondAttribute="trailing" constant="-20" id="tB6-Wx-fT9"/>
+                        </constraints>
+                    </view>
+                    <toolbarItems>
+                        <barButtonItem systemItem="camera" id="EhI-T6-o0w">
+                            <connections>
+                                <action selector="useCamera:" destination="eT3-pG-0C3" id="cFa-sP-IP5"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem systemItem="organize" id="ggM-oH-v2g">
+                            <connections>
+                                <action selector="useCameraRoll:" destination="eT3-pG-0C3" id="li8-Ba-1Yn"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="Bic-32-GaS"/>
+                        <barButtonItem title="Ruler" id="aGk-sX-4eH">
+                            <connections>
+                                <action selector="addMeasurementLine:" destination="eT3-pG-0C3" id="atf-1S-bRS"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem systemItem="undo" id="y3D-2x-tjd">
+                            <connections>
+                                <action selector="removeMeasurementLine:" destination="eT3-pG-0C3" id="VJy-w5-9Hi"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem systemItem="save" id="p7c-cI-AJI">
+                            <connections>
+                                <action selector="saveImage:" destination="eT3-pG-0C3" id="j4i-9w-oXN"/>
+                            </connections>
+                        </barButtonItem>
+                    </toolbarItems>
+                    <navigationItem key="navigationItem" title="Edit Photo" id="G8V-5o-QOq">
+                        <barButtonItem key="rightBarButtonItem" systemItem="action" id="3ia-Ck-7jh">
+                            <connections>
+                                <action selector="uploadPhoto:" destination="eT3-pG-0C3" id="OYh-Me-wse"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="imageView" destination="Umr-NV-rJb" id="ET6-JH-AcY"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="SY9-QN-loa" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="3UD-mx-P85">
+                    <connections>
+                        <action selector="shareImage:" destination="eT3-pG-0C3" id="tRQ-8v-KlU"/>
+                    </connections>
+                </pongPressGestureRecognizer>
+            </objects>
+            <point key="canvasLocation" x="1897" y="193"/>
+        </scene>
+    </scenes>
+</document>

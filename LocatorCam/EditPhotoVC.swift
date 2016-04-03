@@ -8,13 +8,14 @@
 
 import UIKit
 import MobileCoreServices
+import Firebase
 
 
 /* control the main UI view */
 class EditPhotoVC: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
-    /* keep an instance of the location manager while it fetches the location for you */
-    var manager: OneShotLocationManager?
+    var profileRef = Firebase(url: "https://fishboard.firebaseio.com/profiles")
+    var manager: OneShotLocationManager?    /* keep an instance of the location manager */
     var newMedia: Bool?
     var lineView: LineView?
     @IBOutlet weak var imageView: UIImageView!
@@ -61,7 +62,7 @@ class EditPhotoVC: UIViewController, UIImagePickerControllerDelegate, UINavigati
     
     // add a line to line view
     @IBAction func addMeasurementLine(sender: UIBarButtonItem) {
-        lineView?.addLine()        
+        lineView?.addLine()
     }
     
     // remove a line from line view
@@ -75,7 +76,7 @@ class EditPhotoVC: UIViewController, UIImagePickerControllerDelegate, UINavigati
             let views:[UIView] = [imageView]
             let combinedImage = flattenViews(views)
             UIImageWriteToSavedPhotosAlbum(combinedImage!, self,
-                                       #selector(EditPhotoVC.image(_:didFinishSavingWithError:contextInfo:)), nil)
+                                           #selector(EditPhotoVC.image(_:didFinishSavingWithError:contextInfo:)), nil)
             removeLines()
             imageView.image = combinedImage
         }
@@ -87,6 +88,34 @@ class EditPhotoVC: UIViewController, UIImagePickerControllerDelegate, UINavigati
             let vc = UIActivityViewController(activityItems: [image], applicationActivities: nil)
             presentViewController(vc, animated: true, completion: nil)
         }
+    }
+    
+    // upload the photo to firebase
+    @IBAction func uploadPhoto(sender: UIBarButtonItem) {
+        
+        // quit if no photo available for upload
+        if imageView.image == nil {
+            return
+        }
+        
+        // compress and encode the image
+        let data = UIImageJPEGRepresentation(imageView.image!, 0.1)!
+        let base64String:NSString = data.base64EncodedStringWithOptions(NSDataBase64EncodingOptions.Encoding64CharacterLineLength)
+
+        // create a photo object
+        let photo = [
+            "name": "unknow",
+            "dob": NSDate().timeIntervalSinceNow,
+            "photoBase64": base64String
+        ]
+        
+        // create a new child under profiles in Firebase
+        let itemRef = profileRef.childByAutoId()
+        
+        // write the photo to Firebase
+        itemRef.setValue(photo)
+        
+        navigationController?.popViewControllerAnimated(true)
     }
     
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
@@ -145,7 +174,7 @@ class EditPhotoVC: UIViewController, UIImagePickerControllerDelegate, UINavigati
     
     // embed text in UIImage
     static func textToImage(text: NSString, inImage: UIImage, atPoint:CGPoint)->UIImage {
-
+        
         // configure the font
         let textColor = UIColor.whiteColor()
         let textFont = UIFont(name: "Helvetica Bold", size: 120)!
@@ -160,12 +189,12 @@ class EditPhotoVC: UIViewController, UIImagePickerControllerDelegate, UINavigati
         
         //Put the image into a rectangle as large as the original image.
         inImage.drawInRect(CGRectMake(0, 0, inImage.size.width, inImage.size.height))
-
+        
         // Creating a text container within the image that is as wide as the image, as height as the text.
         let textWidth = inImage.size.width
         let textHeight = (ceil(drawText.size().width) / inImage.size.width * drawText.size().height) * 1.2
         let rect = CGRectMake(atPoint.x, atPoint.y, textWidth,  textHeight)
-
+        
         // draw the background color for the text.
         UIColor(red: 0.1, green: 0.5, blue: 0.5, alpha: 0.8).set()
         UIBezierPath(rect: rect).fill()
@@ -186,12 +215,12 @@ class EditPhotoVC: UIViewController, UIImagePickerControllerDelegate, UINavigati
     
     // add lineView to the parent view
     private func loadLineView(parentView: UIView) {
-            let lineFrame = CGRectMake(parentView.bounds.origin.x, parentView.bounds.origin.y, parentView.bounds.size.width, parentView.bounds.size.height)
-            lineView = LineView(frame: lineFrame)
-            lineView!.backgroundColor = UIColor(white: 1, alpha: 0)
-            lineView!.addGestureRecognizer(UIPanGestureRecognizer(target: lineView, action: Selector("move:")))
-            lineView!.contentMode = UIViewContentMode.ScaleAspectFit
-            parentView.addSubview(lineView!)
+        let lineFrame = CGRectMake(parentView.bounds.origin.x, parentView.bounds.origin.y, parentView.bounds.size.width, parentView.bounds.size.height)
+        lineView = LineView(frame: lineFrame)
+        lineView!.backgroundColor = UIColor(white: 1, alpha: 0)
+        lineView!.addGestureRecognizer(UIPanGestureRecognizer(target: lineView, action: Selector("move:")))
+        lineView!.contentMode = UIViewContentMode.ScaleAspectFit
+        parentView.addSubview(lineView!)
     }
     
     // remove all lines

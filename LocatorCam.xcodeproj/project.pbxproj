@@ -8,10 +8,15 @@
 
 /* Begin PBXBuildFile section */
 		0A61D52E1CAE1E1000DDC276 /* LineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A61D52D1CAE1E1000DDC276 /* LineView.swift */; };
+		0AB7485F1CB0DDEA00A18F43 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0AB7485E1CB0DDEA00A18F43 /* Main.storyboard */; };
+		0AB748611CB0DEB900A18F43 /* ListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AB748601CB0DEB900A18F43 /* ListTableViewController.swift */; };
+		0AB748631CB0DECA00A18F43 /* AddUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AB748621CB0DECA00A18F43 /* AddUserViewController.swift */; };
+		0AB748651CB0DF0700A18F43 /* Firebase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0AB748641CB0DF0700A18F43 /* Firebase.framework */; };
+		0AB748671CB0E2EF00A18F43 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AB748661CB0E2EF00A18F43 /* Theme.swift */; };
 		0ADEF61F1CACCFAD008F3E6F /* LocatorCamModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ADEF61E1CACCFAD008F3E6F /* LocatorCamModel.swift */; };
 		0AE5BD2E1CA3B287001458DF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AE5BD2D1CA3B287001458DF /* AppDelegate.swift */; };
 		0AE5BD301CA3B287001458DF /* EditPhotoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AE5BD2F1CA3B287001458DF /* EditPhotoVC.swift */; };
-		0AE5BD331CA3B287001458DF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0AE5BD311CA3B287001458DF /* Main.storyboard */; };
+		0AE5BD331CA3B287001458DF /* Main1.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0AE5BD311CA3B287001458DF /* Main1.storyboard */; };
 		0AE5BD351CA3B287001458DF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0AE5BD341CA3B287001458DF /* Assets.xcassets */; };
 		0AE5BD401CA3BA75001458DF /* OneShotLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AE5BD3F1CA3BA75001458DF /* OneShotLocationManager.swift */; };
 		0AFFDC9A1CAA24620006E65D /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0AFFDC991CAA24620006E65D /* LaunchScreen.xib */; };
@@ -20,11 +25,16 @@
 
 /* Begin PBXFileReference section */
 		0A61D52D1CAE1E1000DDC276 /* LineView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LineView.swift; sourceTree = "<group>"; };
+		0AB7485E1CB0DDEA00A18F43 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		0AB748601CB0DEB900A18F43 /* ListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListTableViewController.swift; sourceTree = "<group>"; };
+		0AB748621CB0DECA00A18F43 /* AddUserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddUserViewController.swift; sourceTree = "<group>"; };
+		0AB748641CB0DF0700A18F43 /* Firebase.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Firebase.framework; path = "../../Library/Developer/Xcode/DerivedData/LocatorCam-grftmbhhyxhqfyfnrtatzowvrclu/Build/Products/Debug-iphoneos/Firebase.framework"; sourceTree = "<group>"; };
+		0AB748661CB0E2EF00A18F43 /* Theme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		0ADEF61E1CACCFAD008F3E6F /* LocatorCamModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocatorCamModel.swift; sourceTree = "<group>"; };
 		0AE5BD2A1CA3B287001458DF /* LocatorCam.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LocatorCam.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0AE5BD2D1CA3B287001458DF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0AE5BD2F1CA3B287001458DF /* EditPhotoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPhotoVC.swift; sourceTree = "<group>"; };
-		0AE5BD321CA3B287001458DF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		0AE5BD321CA3B287001458DF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main1.storyboard; sourceTree = "<group>"; };
 		0AE5BD341CA3B287001458DF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0AE5BD391CA3B287001458DF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0AE5BD3F1CA3BA75001458DF /* OneShotLocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OneShotLocationManager.swift; sourceTree = "<group>"; };
@@ -39,6 +49,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0AB748651CB0DF0700A18F43 /* Firebase.framework in Frameworks */,
 				AB14DEDE776EA6213B5AE712 /* Pods_LocatorCam.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -49,7 +60,8 @@
 		0AB7485B1CB0D6A000A18F43 /* Layout */ = {
 			isa = PBXGroup;
 			children = (
-				0AE5BD311CA3B287001458DF /* Main.storyboard */,
+				0AE5BD311CA3B287001458DF /* Main1.storyboard */,
+				0AB7485E1CB0DDEA00A18F43 /* Main.storyboard */,
 			);
 			name = Layout;
 			sourceTree = "<group>";
@@ -59,6 +71,8 @@
 			children = (
 				0AE5BD2F1CA3B287001458DF /* EditPhotoVC.swift */,
 				0A61D52D1CAE1E1000DDC276 /* LineView.swift */,
+				0AB748601CB0DEB900A18F43 /* ListTableViewController.swift */,
+				0AB748621CB0DECA00A18F43 /* AddUserViewController.swift */,
 			);
 			name = Controler;
 			sourceTree = "<group>";
@@ -104,6 +118,7 @@
 		0AFFDC9B1CAA24B10006E65D /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				0AB748661CB0E2EF00A18F43 /* Theme.swift */,
 				0AE5BD2D1CA3B287001458DF /* AppDelegate.swift */,
 				0AFFDC991CAA24620006E65D /* LaunchScreen.xib */,
 				0AE5BD391CA3B287001458DF /* Info.plist */,
@@ -115,6 +130,7 @@
 		1A00DEED2470002308A68DC2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0AB748641CB0DF0700A18F43 /* Firebase.framework */,
 				3C0DC8607C3FC40239DAAD4A /* Pods_LocatorCam.framework */,
 			);
 			name = Frameworks;
@@ -193,7 +209,8 @@
 			files = (
 				0AFFDC9A1CAA24620006E65D /* LaunchScreen.xib in Resources */,
 				0AE5BD351CA3B287001458DF /* Assets.xcassets in Resources */,
-				0AE5BD331CA3B287001458DF /* Main.storyboard in Resources */,
+				0AE5BD331CA3B287001458DF /* Main1.storyboard in Resources */,
+				0AB7485F1CB0DDEA00A18F43 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -253,8 +270,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				0AE5BD301CA3B287001458DF /* EditPhotoVC.swift in Sources */,
+				0AB748671CB0E2EF00A18F43 /* Theme.swift in Sources */,
 				0AE5BD401CA3BA75001458DF /* OneShotLocationManager.swift in Sources */,
 				0A61D52E1CAE1E1000DDC276 /* LineView.swift in Sources */,
+				0AB748611CB0DEB900A18F43 /* ListTableViewController.swift in Sources */,
+				0AB748631CB0DECA00A18F43 /* AddUserViewController.swift in Sources */,
 				0ADEF61F1CACCFAD008F3E6F /* LocatorCamModel.swift in Sources */,
 				0AE5BD2E1CA3B287001458DF /* AppDelegate.swift in Sources */,
 			);
@@ -263,12 +283,12 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		0AE5BD311CA3B287001458DF /* Main.storyboard */ = {
+		0AE5BD311CA3B287001458DF /* Main1.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				0AE5BD321CA3B287001458DF /* Base */,
 			);
-			name = Main.storyboard;
+			name = Main1.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
