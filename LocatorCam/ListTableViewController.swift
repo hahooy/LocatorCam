@@ -16,6 +16,8 @@ class ListTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.tableView.rowHeight = 500
+        self.tableView.allowsSelection = false
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -42,7 +44,7 @@ class ListTableViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCellWithIdentifier("profileCell", forIndexPath: indexPath)
+        let cell = tableView.dequeueReusableCellWithIdentifier("profileCell", forIndexPath: indexPath) as! ProfileTableViewCell
         
         configureCell(cell, indexPath: indexPath)
         tableViewStyle(cell)
@@ -65,10 +67,10 @@ class ListTableViewController: UITableViewController {
     
     // MARK:- Configure Cell
     
-    func configureCell(cell: UITableViewCell, indexPath: NSIndexPath) {
+    func configureCell(cell: ProfileTableViewCell, indexPath: NSIndexPath) {
         let dict = items[indexPath.row]
         
-        cell.textLabel?.text = dict["name"] as? String
+        cell.nameLabel?.text = dict["name"] as? String
         
         let timeInterval = dict["time"] as! NSTimeInterval
         populateTimeInterval(cell, timeInterval: timeInterval)
@@ -80,39 +82,39 @@ class ListTableViewController: UITableViewController {
     
     // MARK:- Populate Timeinterval
     
-    func populateTimeInterval(cell: UITableViewCell, timeInterval: NSTimeInterval) {
+    func populateTimeInterval(cell: ProfileTableViewCell, timeInterval: NSTimeInterval) {
         
         let date = NSDate(timeIntervalSince1970: timeInterval)
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "MMM d, yyyy, HH:mm"
-        cell.detailTextLabel?.text = dateFormatter.stringFromDate(date)
+        cell.timeLabel?.text = dateFormatter.stringFromDate(date)
     }
     
     // MARK:- Populate Image
     
-    func populateImage(cell:UITableViewCell, imageString: String) {
+    func populateImage(cell:ProfileTableViewCell, imageString: String) {
         
         let decodedData = NSData(base64EncodedString: imageString, options: NSDataBase64DecodingOptions.IgnoreUnknownCharacters)
         
         let decodedImage = UIImage(data: decodedData!)
         
-        cell.imageView!.image = decodedImage
+        cell.profileImageView?.image = decodedImage
         
     }
     
     // MARK:- Apply TableViewCell Style
     
-    func tableViewStyle(cell: UITableViewCell) {
+    func tableViewStyle(cell: ProfileTableViewCell) {
         cell.contentView.backgroundColor = backgroundColor
         cell.backgroundColor = backgroundColor
         
-        cell.textLabel?.font =  UIFont(name: "HelveticaNeue-Medium", size: 15)
-        cell.textLabel?.textColor = textColor
-        cell.textLabel?.backgroundColor = backgroundColor
+        cell.nameLabel?.font =  UIFont(name: "HelveticaNeue-Medium", size: 15)
+        cell.nameLabel?.textColor = textColor
+        cell.nameLabel?.backgroundColor = backgroundColor
         
-        cell.detailTextLabel?.font = UIFont.boldSystemFontOfSize(15)
-        cell.detailTextLabel?.textColor = UIColor.grayColor()
-        cell.detailTextLabel?.backgroundColor = backgroundColor
+        cell.timeLabel?.font = UIFont.boldSystemFontOfSize(15)
+        cell.timeLabel?.textColor = UIColor.grayColor()
+        cell.timeLabel?.backgroundColor = backgroundColor
     }
     
     // MARK:- Load data from Firebase

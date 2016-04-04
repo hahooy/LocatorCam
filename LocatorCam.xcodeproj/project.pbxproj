@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0A0B1F2F1CB2102F00FC0C77 /* ProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A0B1F2E1CB2102F00FC0C77 /* ProfileTableViewCell.swift */; };
 		0A61D52E1CAE1E1000DDC276 /* LineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A61D52D1CAE1E1000DDC276 /* LineView.swift */; };
 		0AB7485F1CB0DDEA00A18F43 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0AB7485E1CB0DDEA00A18F43 /* Main.storyboard */; };
 		0AB748611CB0DEB900A18F43 /* ListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AB748601CB0DEB900A18F43 /* ListTableViewController.swift */; };
@@ -24,6 +25,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0A0B1F2E1CB2102F00FC0C77 /* ProfileTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileTableViewCell.swift; sourceTree = "<group>"; };
 		0A61D52D1CAE1E1000DDC276 /* LineView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LineView.swift; sourceTree = "<group>"; };
 		0AB7485E1CB0DDEA00A18F43 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		0AB748601CB0DEB900A18F43 /* ListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListTableViewController.swift; sourceTree = "<group>"; };
@@ -72,6 +74,7 @@
 				0AE5BD2F1CA3B287001458DF /* EditPhotoVC.swift */,
 				0A61D52D1CAE1E1000DDC276 /* LineView.swift */,
 				0AB748601CB0DEB900A18F43 /* ListTableViewController.swift */,
+				0A0B1F2E1CB2102F00FC0C77 /* ProfileTableViewCell.swift */,
 				0AB748621CB0DECA00A18F43 /* AddUserViewController.swift */,
 			);
 			name = Controler;
@@ -272,6 +275,7 @@
 				0AE5BD301CA3B287001458DF /* EditPhotoVC.swift in Sources */,
 				0AB748671CB0E2EF00A18F43 /* Theme.swift in Sources */,
 				0AE5BD401CA3BA75001458DF /* OneShotLocationManager.swift in Sources */,
+				0A0B1F2F1CB2102F00FC0C77 /* ProfileTableViewCell.swift in Sources */,
 				0A61D52E1CAE1E1000DDC276 /* LineView.swift in Sources */,
 				0AB748611CB0DEB900A18F43 /* ListTableViewController.swift in Sources */,
 				0AB748631CB0DECA00A18F43 /* AddUserViewController.swift in Sources */,
