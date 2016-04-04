@@ -15,6 +15,7 @@ func applyTheme() {
     
     styleForTabBar()
     styleForNavigationBar()
+    styleForToolBar()
     styleForTableView()
 }
 
@@ -34,6 +35,11 @@ func styleForNavigationBar() {
     UINavigationBar.appearance().titleTextAttributes = [NSFontAttributeName: standardTextFont,  NSForegroundColorAttributeName: UIColor.whiteColor()]
 }
 
+func styleForToolBar() {
+    UIToolbar.appearance().barTintColor = barTintColor
+    UIToolbar.appearance().tintColor = UIColor.whiteColor()
+}
+
 func styleForTableView() {
     UITableView.appearance().backgroundColor = backgroundColor
     UITableView.appearance().separatorStyle = .SingleLineEtched
@@ -48,11 +54,11 @@ func formatDate(date: NSDate) ->  String {
 
 
 var mainColor: UIColor {
-    return UIColor(red: 215.0/255.0, green: 100.0/255.0, blue: 76.0/255.0, alpha: 1.0)
+    return UIColor(red: 18.0/255.0, green: 86.0/255.0, blue: 136.0/255.0, alpha: 1.0)
 }
 
 var barTintColor: UIColor {
-    return UIColor(red: 215.0/255.0, green: 100.0/255.0, blue: 76.0/255.0, alpha: 1.0)
+    return UIColor(red: 18.0/255.0, green: 86.0/255.0, blue: 136.0/255.0, alpha: 1.0)
 }
 
 var barTextColor: UIColor {
@@ -60,7 +66,7 @@ var barTextColor: UIColor {
 }
 
 var backgroundColor: UIColor {
-    return UIColor(red: 251.0/255.0, green: 243.0/255.0, blue: 241.0/255.0, alpha: 1.0)
+    return UIColor(red: 255.0/255.0, green: 255.0/255.0, blue: 255.0/255.0, alpha: 1.0)
 }
 
 var secondaryColor: UIColor {

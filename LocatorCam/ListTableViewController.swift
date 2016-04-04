@@ -54,11 +54,11 @@ class ListTableViewController: UITableViewController {
         if editingStyle == .Delete {
             
             let dict = items[indexPath.row]
-            let name = dict["name"] as! String
+            let key = dict["key"] as! String
             
             // delete data from firebase
             
-            let profile = firebase.ref.childByAppendingPath(name)
+            let profile = firebase.ref.childByAppendingPath(key)
             profile.removeValue()
         }
     }
@@ -70,8 +70,8 @@ class ListTableViewController: UITableViewController {
         
         cell.textLabel?.text = dict["name"] as? String
         
-        let dobTimeInterval = dict["dob"] as! NSTimeInterval
-        populateTimeInterval(cell, timeInterval: dobTimeInterval)
+        let timeInterval = dict["time"] as! NSTimeInterval
+        populateTimeInterval(cell, timeInterval: timeInterval)
         
         let base64String = dict["photoBase64"] as! String
         populateImage(cell, imageString: base64String)
@@ -82,10 +82,10 @@ class ListTableViewController: UITableViewController {
     
     func populateTimeInterval(cell: UITableViewCell, timeInterval: NSTimeInterval) {
         
-        let date = NSDate(timeIntervalSinceNow: timeInterval)
-        let dateStr = formatDate(date)
-        
-        cell.detailTextLabel?.text = dateStr
+        let date = NSDate(timeIntervalSince1970: timeInterval)
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "MMM d, yyyy, HH:mm"
+        cell.detailTextLabel?.text = dateFormatter.stringFromDate(date)
     }
     
     // MARK:- Populate Image
@@ -121,7 +121,7 @@ class ListTableViewController: UITableViewController {
         
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         
-        firebase.observeEventType(.Value, withBlock: { snapshot in
+        firebase.queryOrderedByChild("time").observeEventType(.Value, withBlock: { snapshot in
             var tempItems = [NSDictionary]()
             
             for item in snapshot.children {
@@ -130,7 +130,7 @@ class ListTableViewController: UITableViewController {
                 tempItems.append(dict)
             }
             
-            self.items = tempItems
+            self.items = tempItems.reverse()
             self.tableView.reloadData()
             UIApplication.sharedApplication().networkActivityIndicatorVisible = false
             

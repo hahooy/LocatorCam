@@ -101,17 +101,18 @@ class EditPhotoVC: UIViewController, UIImagePickerControllerDelegate, UINavigati
         // compress and encode the image
         let data = UIImageJPEGRepresentation(imageView.image!, 0.1)!
         let base64String:NSString = data.base64EncodedStringWithOptions(NSDataBase64EncodingOptions.Encoding64CharacterLineLength)
-
-        // create a photo object
-        let photo = [
-            "name": "unknow",
-            "dob": NSDate().timeIntervalSinceNow,
-            "photoBase64": base64String
-        ]
         
         // create a new child under profiles in Firebase
         let itemRef = profileRef.childByAutoId()
         
+        // create a photo object
+        let photo = [
+            "key": itemRef.key,
+            "name": "unknow",
+            "time": NSDate().timeIntervalSince1970,
+            "photoBase64": base64String
+        ]
+        print(photo["time"])
         // write the photo to Firebase
         itemRef.setValue(photo)
         
@@ -177,7 +178,7 @@ class EditPhotoVC: UIViewController, UIImagePickerControllerDelegate, UINavigati
         
         // configure the font
         let textColor = UIColor.whiteColor()
-        let textFont = UIFont(name: "Helvetica Bold", size: 120)!
+        let textFont = UIFont(name: "Helvetica Neue", size: 120)!
         let textFontAttributes = [
             NSFontAttributeName: textFont,
             NSForegroundColorAttributeName: textColor
