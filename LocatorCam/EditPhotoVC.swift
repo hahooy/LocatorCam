@@ -14,7 +14,7 @@ import Firebase
 /* control the main UI view */
 class EditPhotoVC: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
-    var profileRef = Firebase(url: "https://fishboard.firebaseio.com/profiles")
+    
     var manager: OneShotLocationManager?    /* keep an instance of the location manager */
     var newMedia: Bool?
     var lineView: LineView?
@@ -77,46 +77,26 @@ class EditPhotoVC: UIViewController, UIImagePickerControllerDelegate, UINavigati
             let combinedImage = flattenViews(views)
             UIImageWriteToSavedPhotosAlbum(combinedImage!, self,
                                            #selector(EditPhotoVC.image(_:didFinishSavingWithError:contextInfo:)), nil)
-            removeLines()
-            imageView.image = combinedImage
         }
     }
     
-    // share image via sms, email and social media
-    @IBAction func shareImage(sender: AnyObject) {
-        if let image = imageView.image {
-            let vc = UIActivityViewController(activityItems: [image], applicationActivities: nil)
-            presentViewController(vc, animated: true, completion: nil)
-        }
-    }
+
     
-    // upload the photo to firebase
-    @IBAction func uploadPhoto(sender: UIBarButtonItem) {
-        
-        // quit if no photo available for upload
+    
+    // send image to the next view
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if imageView.image == nil {
             return
         }
+        // flatten all views on the image
+        let views:[UIView] = [imageView]
+        let combinedImage = flattenViews(views)
         
-        // compress and encode the image
-        let data = UIImageJPEGRepresentation(imageView.image!, 0.1)!
-        let base64String:NSString = data.base64EncodedStringWithOptions(NSDataBase64EncodingOptions.Encoding64CharacterLineLength)
+        // send it to the submit view controler
+        let submitVC = (segue.destinationViewController as! SubmitPhotoViewController)
+        submitVC.imageToSubmit = combinedImage
         
-        // create a new child under profiles in Firebase
-        let itemRef = profileRef.childByAutoId()
-        
-        // create a photo object
-        let photo = [
-            "key": itemRef.key,
-            "name": "unknow",
-            "time": NSDate().timeIntervalSince1970,
-            "photoBase64": base64String
-        ]
-        print(photo["time"])
-        // write the photo to Firebase
-        itemRef.setValue(photo)
-        
-        navigationController?.popViewControllerAnimated(true)
+        removeLines()
     }
     
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
@@ -252,9 +232,19 @@ class EditPhotoVC: UIViewController, UIImagePickerControllerDelegate, UINavigati
         // Extract image & end context
         let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
+
+        // resize the snapshot to the size of the original image
+        let x:CGFloat = imageView.frame.origin.x * UIScreen.mainScreen().scale
+        let y:CGFloat = imageView.frame.origin.y * UIScreen.mainScreen().scale
+        let width = imageView.frame.width * UIScreen.mainScreen().scale
+        let height = imageView.frame.height * UIScreen.mainScreen().scale
         
+        let imageRef = image.CGImage!
+        let imageArea = CGRectMake(x, y, width, height)
+        let subImageRef: CGImageRef = CGImageCreateWithImageInRect(imageRef, imageArea)!
+        print("x:\(x) y:\(y) width:\(width) height:\(height)")
         // Return image
-        return image
+        return UIImage(CGImage: subImageRef)
     }
     
     override func viewDidLoad() {

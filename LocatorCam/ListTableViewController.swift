@@ -71,6 +71,7 @@ class ListTableViewController: UITableViewController {
         let dict = items[indexPath.row]
         
         cell.nameLabel?.text = dict["name"] as? String
+        cell.descriptionLable?.text = dict["description"] as? String
         
         let timeInterval = dict["time"] as! NSTimeInterval
         populateTimeInterval(cell, timeInterval: timeInterval)

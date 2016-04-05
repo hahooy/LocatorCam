@@ -69,6 +69,10 @@ var backgroundColor: UIColor {
     return UIColor(red: 255.0/255.0, green: 255.0/255.0, blue: 255.0/255.0, alpha: 1.0)
 }
 
+var backgroundColorDarker: UIColor {
+    return UIColor(red: 240.0/255.0, green: 240.0/255.0, blue: 240.0/255.0, alpha: 1.0)
+}
+
 var secondaryColor: UIColor {
     return UIColor(red: 251.0/255.0, green: 243.0/255.0, blue: 241.0/255.0, alpha: 1.0)
 }
