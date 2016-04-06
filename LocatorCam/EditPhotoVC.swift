@@ -18,8 +18,19 @@ class EditPhotoVC: UIViewController, UIImagePickerControllerDelegate, UINavigati
     var manager: OneShotLocationManager?    /* keep an instance of the location manager */
     var newMedia: Bool?
     var lineView: LineView?
+    var photo: UIImage?
     @IBOutlet weak var imageView: UIImageView!
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        loadLineView(imageView)
+        imageView.image = photo!
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
     
     // use camera
     @IBAction func useCamera(sender: AnyObject) {
@@ -246,15 +257,4 @@ class EditPhotoVC: UIViewController, UIImagePickerControllerDelegate, UINavigati
         // Return image
         return UIImage(CGImage: subImageRef)
     }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        loadLineView(imageView)
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
 }

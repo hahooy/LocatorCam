@@ -85,10 +85,13 @@
                     <navigationItem key="navigationItem" title="Tournament" id="wnF-GH-rOa">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="EG1-AG-Yol">
                             <connections>
-                                <segue destination="eT3-pG-0C3" kind="show" id="c2U-T7-gYw"/>
+                                <action selector="addPhoto:" destination="SuZ-jQ-qpD" id="nCZ-Ik-8Mw"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <segue destination="eT3-pG-0C3" kind="show" identifier="toEditPhoto" id="75W-hg-J3a"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="U2p-A2-NdV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -120,7 +123,7 @@
         <!--Edit Photo-->
         <scene sceneID="Q0M-l7-RFO">
             <objects>
-                <viewController id="eT3-pG-0C3" customClass="EditPhotoVC" customModule="LocatorCam" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="editPhoto" id="eT3-pG-0C3" customClass="EditPhotoVC" customModule="LocatorCam" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Uto-bM-M7x"/>
                         <viewControllerLayoutGuide type="bottom" id="W6s-7p-RQr"/>
@@ -129,7 +132,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Umr-NV-rJb">
+                            <imageView contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Umr-NV-rJb">
                                 <rect key="frame" x="8" y="64" width="584" height="492"/>
                                 <gestureRecognizers/>
                             </imageView>
@@ -191,7 +194,6 @@
         <!--Upload-->
         <scene sceneID="T0Y-fN-Z19">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Woa-Bj-iEU" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="TRN-GQ-T30" customClass="SubmitPhotoViewController" customModule="LocatorCam" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="8XY-iJ-Xcx"/>
@@ -263,6 +265,7 @@
                         <outlet property="imageView" destination="4gV-P3-b6J" id="w7e-KD-TeY"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Woa-Bj-iEU" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <tapGestureRecognizer id="VZz-2o-PMc">
                     <connections>
                         <action selector="dismissKeyboard:" destination="TRN-GQ-T30" id="L7A-Uh-qQB"/>

@@ -8,11 +8,26 @@
 
 import UIKit
 import Firebase
+import MobileCoreServices
 
-class ListTableViewController: UITableViewController {
+
+class ListTableViewController: UITableViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     let firebase = Firebase(url:"https://fishboard.firebaseio.com/profiles")
     var items = [NSDictionary]()
+    var photo: UIImage?
+    
+    
+    @IBAction func addPhoto(sender: UIBarButtonItem) {
+        let alertController = UIAlertController(title: "Upload Photo", message: "Choose the method", preferredStyle: UIAlertControllerStyle.ActionSheet)
+        alertController.addAction(UIAlertAction(title: "Camera", style: UIAlertActionStyle.Default, handler: {(alert:UIAlertAction!) in self.useCamera(sender)}))
+        alertController.addAction(UIAlertAction(title: "Album", style: UIAlertActionStyle.Default, handler: {(alert:UIAlertAction!) in self.useCameraRoll(sender)}))
+        alertController.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: {(alert:UIAlertAction!) in print("Cancel")}))
+        alertController.popoverPresentationController?.sourceView = view
+        alertController.popoverPresentationController?.barButtonItem = sender
+        presentViewController(alertController, animated: true, completion: nil)
+        
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,6 +46,95 @@ class ListTableViewController: UITableViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    // MARK: - control camera
+    // use camera
+    @IBAction func useCamera(sender: AnyObject) {
+        if UIImagePickerController.isSourceTypeAvailable(
+            UIImagePickerControllerSourceType.Camera) {
+            
+            let imagePicker = UIImagePickerController()
+            
+            imagePicker.delegate = self
+            imagePicker.sourceType =
+                UIImagePickerControllerSourceType.Camera
+            imagePicker.mediaTypes = [kUTTypeImage as String]
+            imagePicker.allowsEditing = false
+            
+            self.presentViewController(imagePicker, animated: true,
+                                       completion: nil)
+        }
+    }
+    
+    // open camera roll
+    @IBAction func useCameraRoll(sender: AnyObject) {
+        if UIImagePickerController.isSourceTypeAvailable(
+            UIImagePickerControllerSourceType.SavedPhotosAlbum) {
+            
+            let imagePicker = UIImagePickerController()
+            
+            imagePicker.delegate = self
+            imagePicker.sourceType =
+                UIImagePickerControllerSourceType.PhotoLibrary
+            imagePicker.mediaTypes = [kUTTypeImage as String]
+            imagePicker.allowsEditing = false
+            self.presentViewController(imagePicker, animated: true,
+                                       completion: nil)
+        }
+    }
+    
+    // MARK: - Image picker controler delegate functions
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+        
+        let mediaType = info[UIImagePickerControllerMediaType] as! NSString
+        
+        self.dismissViewControllerAnimated(true, completion: nil)
+        
+        if mediaType.isEqualToString(kUTTypeImage as String) {
+            photo = info[UIImagePickerControllerOriginalImage]
+                as! UIImage
+            performSegueWithIdentifier("toEditPhoto", sender: self)
+            
+            
+        } else if mediaType.isEqualToString(kUTTypeMovie as String) {
+            // Code to support video here
+        }
+        
+    }
+    
+    func image(image: UIImage, didFinishSavingWithError error: NSErrorPointer, contextInfo:UnsafePointer<Void>) {
+        
+        if error != nil {
+            let alert = UIAlertController(title: "Save Failed",
+                                          message: "Failed to save image",
+                                          preferredStyle: UIAlertControllerStyle.Alert)
+            
+            let cancelAction = UIAlertAction(title: "OK",
+                                             style: .Cancel, handler: nil)
+            
+            alert.addAction(cancelAction)
+            self.presentViewController(alert, animated: true,
+                                       completion: nil)
+        }
+    }
+    
+    func imagePickerControllerDidCancel(picker: UIImagePickerController) {
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    // send image to edit photo view
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if photo == nil {
+            return
+        }
+
+        // send it to the submit view controler
+        let submitVC = (segue.destinationViewController as! EditPhotoVC)
+        submitVC.photo = photo
+    }
+    
+    
+    
     
     // MARK: - Table view data source
     
