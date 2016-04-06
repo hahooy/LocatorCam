@@ -19,13 +19,13 @@ class ListTableViewController: UITableViewController, UIImagePickerControllerDel
     
     
     @IBAction func addPhoto(sender: UIBarButtonItem) {
-        let alertController = UIAlertController(title: "Upload Photo", message: "Choose the method", preferredStyle: UIAlertControllerStyle.ActionSheet)
-        alertController.addAction(UIAlertAction(title: "Camera", style: UIAlertActionStyle.Default, handler: {(alert:UIAlertAction!) in self.useCamera(sender)}))
-        alertController.addAction(UIAlertAction(title: "Album", style: UIAlertActionStyle.Default, handler: {(alert:UIAlertAction!) in self.useCameraRoll(sender)}))
-        alertController.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: {(alert:UIAlertAction!) in print("Cancel")}))
-        alertController.popoverPresentationController?.sourceView = view
-        alertController.popoverPresentationController?.barButtonItem = sender
-        presentViewController(alertController, animated: true, completion: nil)
+        let cameraActions = UIAlertController(title: "Upload Photo", message: "Choose the method", preferredStyle: .ActionSheet)
+        cameraActions.addAction(UIAlertAction(title: "Camera", style: .Default, handler: {(alert:UIAlertAction!) in self.useCamera(sender)}))
+        cameraActions.addAction(UIAlertAction(title: "Album", style: .Default, handler: {(alert:UIAlertAction!) in self.useCameraRoll(sender)}))
+        cameraActions.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
+        cameraActions.popoverPresentationController?.sourceView = view
+        cameraActions.popoverPresentationController?.barButtonItem = sender
+        presentViewController(cameraActions, animated: true, completion: nil)
         
     }
     
@@ -92,7 +92,7 @@ class ListTableViewController: UITableViewController, UIImagePickerControllerDel
         
         if mediaType.isEqualToString(kUTTypeImage as String) {
             photo = info[UIImagePickerControllerOriginalImage]
-                as! UIImage
+                as? UIImage
             performSegueWithIdentifier("toEditPhoto", sender: self)
             
             
@@ -100,22 +100,6 @@ class ListTableViewController: UITableViewController, UIImagePickerControllerDel
             // Code to support video here
         }
         
-    }
-    
-    func image(image: UIImage, didFinishSavingWithError error: NSErrorPointer, contextInfo:UnsafePointer<Void>) {
-        
-        if error != nil {
-            let alert = UIAlertController(title: "Save Failed",
-                                          message: "Failed to save image",
-                                          preferredStyle: UIAlertControllerStyle.Alert)
-            
-            let cancelAction = UIAlertAction(title: "OK",
-                                             style: .Cancel, handler: nil)
-            
-            alert.addAction(cancelAction)
-            self.presentViewController(alert, animated: true,
-                                       completion: nil)
-        }
     }
     
     func imagePickerControllerDidCancel(picker: UIImagePickerController) {

@@ -12,19 +12,19 @@ import Firebase
 
 
 /* control the main UI view */
-class EditPhotoVC: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class EditPhotoVC: UIViewController {
     
     
     var manager: OneShotLocationManager?    /* keep an instance of the location manager */
     var newMedia: Bool?
     var lineView: LineView?
-    var photo: UIImage?
+    var photo: UIImage!
     @IBOutlet weak var imageView: UIImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         loadLineView(imageView)
-        imageView.image = photo!
+        imageView.image = photo
     }
     
     override func didReceiveMemoryWarning() {
@@ -32,44 +32,6 @@ class EditPhotoVC: UIViewController, UIImagePickerControllerDelegate, UINavigati
         // Dispose of any resources that can be recreated.
     }
     
-    // use camera
-    @IBAction func useCamera(sender: AnyObject) {
-        if UIImagePickerController.isSourceTypeAvailable(
-            UIImagePickerControllerSourceType.Camera) {
-            removeLines()
-            
-            let imagePicker = UIImagePickerController()
-            
-            imagePicker.delegate = self
-            imagePicker.sourceType =
-                UIImagePickerControllerSourceType.Camera
-            imagePicker.mediaTypes = [kUTTypeImage as String]
-            imagePicker.allowsEditing = false
-            
-            self.presentViewController(imagePicker, animated: true,
-                                       completion: nil)
-            newMedia = true
-        }
-    }
-    
-    // open camera roll
-    @IBAction func useCameraRoll(sender: AnyObject) {
-        if UIImagePickerController.isSourceTypeAvailable(
-            UIImagePickerControllerSourceType.SavedPhotosAlbum) {
-            removeLines()
-            
-            let imagePicker = UIImagePickerController()
-            
-            imagePicker.delegate = self
-            imagePicker.sourceType =
-                UIImagePickerControllerSourceType.PhotoLibrary
-            imagePicker.mediaTypes = [kUTTypeImage as String]
-            imagePicker.allowsEditing = false
-            self.presentViewController(imagePicker, animated: true,
-                                       completion: nil)
-            newMedia = false
-        }
-    }
     
     // add a line to line view
     @IBAction func addMeasurementLine(sender: UIBarButtonItem) {
@@ -83,16 +45,32 @@ class EditPhotoVC: UIViewController, UIImagePickerControllerDelegate, UINavigati
     
     // save the image locally
     @IBAction func saveImage(sender: UIBarButtonItem) {
-        if (imageView.image) != nil {
-            let views:[UIView] = [imageView]
-            let combinedImage = flattenViews(views)
-            UIImageWriteToSavedPhotosAlbum(combinedImage!, self,
-                                           #selector(EditPhotoVC.image(_:didFinishSavingWithError:contextInfo:)), nil)
-        }
+        let views:[UIView] = [imageView]
+        let combinedImage = flattenViews(views)
+        UIImageWriteToSavedPhotosAlbum(combinedImage!, self,
+                                       #selector(EditPhotoVC.image(_:didFinishSavingWithError:contextInfo:)), nil)
+        let saveSuccessAlert = UIAlertController(title: "Success", message: "Photo has been saved to your local storage", preferredStyle: UIAlertControllerStyle.Alert)
+        saveSuccessAlert.addAction(UIAlertAction(title: "Close", style: .Cancel, handler: nil))
+        presentViewController(saveSuccessAlert, animated: true, completion: nil)
     }
     
-
     
+    
+    @IBAction func embedGPSData(sender: UIBarButtonItem) {
+        manager = OneShotLocationManager() // request the current location
+        manager!.fetchWithCompletion {location, error in
+            // fetch location or an error
+            if let loc = location {
+                // embeded text to image
+                self.photo = EditPhotoVC.textToImage(loc.description, inImage: self.photo, atPoint: CGPointZero)
+            } else if let err = error {
+                print(err.localizedDescription)
+            }
+            self.imageView.image = self.photo
+            // destroy the object immediately to save memory
+            self.manager = nil
+        }
+    }
     
     // send image to the next view
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -110,40 +88,6 @@ class EditPhotoVC: UIViewController, UIImagePickerControllerDelegate, UINavigati
         removeLines()
     }
     
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
-        
-        let mediaType = info[UIImagePickerControllerMediaType] as! NSString
-        
-        self.dismissViewControllerAnimated(true, completion: nil)
-        
-        if mediaType.isEqualToString(kUTTypeImage as String) {
-            var image = info[UIImagePickerControllerOriginalImage]
-                as! UIImage
-            
-            imageView.image = image
-            
-            if (newMedia == true) {
-                /* if this is a new image, fetch the location and embed it in the image, refresh the image view with the new image and save the image to album */
-                manager = OneShotLocationManager() // request the current location
-                manager!.fetchWithCompletion {location, error in
-                    // fetch location or an error
-                    if let loc = location {
-                        // embeded text to image
-                        image = EditPhotoVC.textToImage(loc.description, inImage: image, atPoint: CGPointZero)
-                    } else if let err = error {
-                        print(err.localizedDescription)
-                    }
-                    self.imageView.image = image
-                    // destroy the object immediately to save memory
-                    self.manager = nil
-                }
-            }
-        } else if mediaType.isEqualToString(kUTTypeMovie as String) {
-            // Code to support video here
-        }
-        
-    }
-    
     func image(image: UIImage, didFinishSavingWithError error: NSErrorPointer, contextInfo:UnsafePointer<Void>) {
         
         if error != nil {
@@ -158,10 +102,6 @@ class EditPhotoVC: UIViewController, UIImagePickerControllerDelegate, UINavigati
             self.presentViewController(alert, animated: true,
                                        completion: nil)
         }
-    }
-    
-    func imagePickerControllerDidCancel(picker: UIImagePickerController) {
-        self.dismissViewControllerAnimated(true, completion: nil)
     }
     
     // embed text in UIImage
@@ -243,7 +183,7 @@ class EditPhotoVC: UIViewController, UIImagePickerControllerDelegate, UINavigati
         // Extract image & end context
         let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
-
+        
         // resize the snapshot to the size of the original image
         let x:CGFloat = imageView.frame.origin.x * UIScreen.mainScreen().scale
         let y:CGFloat = imageView.frame.origin.y * UIScreen.mainScreen().scale

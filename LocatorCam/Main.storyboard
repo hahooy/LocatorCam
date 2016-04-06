@@ -132,7 +132,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Umr-NV-rJb">
+                            <imageView contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Umr-NV-rJb">
                                 <rect key="frame" x="8" y="64" width="584" height="492"/>
                                 <gestureRecognizers/>
                             </imageView>
@@ -147,17 +147,11 @@
                         </constraints>
                     </view>
                     <toolbarItems>
-                        <barButtonItem systemItem="camera" id="EhI-T6-o0w">
+                        <barButtonItem title="Coord" id="rSH-IK-T7H">
                             <connections>
-                                <action selector="useCamera:" destination="eT3-pG-0C3" id="cFa-sP-IP5"/>
+                                <action selector="embedGPSData:" destination="eT3-pG-0C3" id="aIY-eb-hZK"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem systemItem="organize" id="ggM-oH-v2g">
-                            <connections>
-                                <action selector="useCameraRoll:" destination="eT3-pG-0C3" id="li8-Ba-1Yn"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem style="plain" systemItem="flexibleSpace" id="Bic-32-GaS"/>
                         <barButtonItem title="Ruler" id="aGk-sX-4eH">
                             <connections>
                                 <action selector="addMeasurementLine:" destination="eT3-pG-0C3" id="atf-1S-bRS"/>
@@ -168,6 +162,7 @@
                                 <action selector="removeMeasurementLine:" destination="eT3-pG-0C3" id="VJy-w5-9Hi"/>
                             </connections>
                         </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="Buw-rQ-Z4R"/>
                         <barButtonItem systemItem="save" id="p7c-cI-AJI">
                             <connections>
                                 <action selector="saveImage:" destination="eT3-pG-0C3" id="j4i-9w-oXN"/>
