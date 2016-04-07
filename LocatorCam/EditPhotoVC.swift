@@ -18,7 +18,7 @@ class EditPhotoVC: UIViewController {
     var manager: OneShotLocationManager?    /* keep an instance of the location manager */
     var newMedia: Bool?
     var lineView: LineView?
-    var photo: UIImage!
+    var photo: UIImage?
     @IBOutlet weak var imageView: UIImageView!
     
     override func viewDidLoad() {
@@ -62,11 +62,13 @@ class EditPhotoVC: UIViewController {
             // fetch location or an error
             if let loc = location {
                 // embeded text to image
-                self.photo = EditPhotoVC.textToImage(loc.description, inImage: self.photo, atPoint: CGPointZero)
+                if let img = self.imageView.image {
+                    self.imageView.image = EditPhotoVC.textToImage(loc.description, inImage: img, atPoint: CGPointZero)
+                }
             } else if let err = error {
                 print(err.localizedDescription)
             }
-            self.imageView.image = self.photo
+
             // destroy the object immediately to save memory
             self.manager = nil
         }
@@ -185,10 +187,13 @@ class EditPhotoVC: UIViewController {
         UIGraphicsEndImageContext()
         
         // resize the snapshot to the size of the original image
+        // let ratio:CGFloat = imageView.image!.size.width / imageView.frame.width
+        
         let x:CGFloat = imageView.frame.origin.x * UIScreen.mainScreen().scale
         let y:CGFloat = imageView.frame.origin.y * UIScreen.mainScreen().scale
         let width = imageView.frame.width * UIScreen.mainScreen().scale
         let height = imageView.frame.height * UIScreen.mainScreen().scale
+        // let height = imageView.image!.size.height / ratio * UIScreen.mainScreen().scale
         
         let imageRef = image.CGImage!
         let imageArea = CGRectMake(x, y, width, height)
