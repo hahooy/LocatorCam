@@ -12,7 +12,7 @@ import Firebase
 class SubmitPhotoViewController: UIViewController {
 
     @IBOutlet weak var imageView: UIImageView!
-    @IBOutlet weak var descriptionInput: UITextField!
+    @IBOutlet weak var descriptionInput: UITextView!
     var imageToSubmit: UIImage!
     var profileRef = Firebase(url: "https://fishboard.firebaseio.com/profiles")
     

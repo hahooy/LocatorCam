@@ -44,18 +44,6 @@ class LineView: UIView {
         }
     }
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-    }
-    
-    convenience init() {
-        self.init(frame: CGRect.zero)
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("This class does not support NSCoding")
-    }
-    
     
     override func drawRect(rect: CGRect) {
         // draw all lines

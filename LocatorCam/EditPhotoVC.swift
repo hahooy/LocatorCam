@@ -9,6 +9,7 @@
 import UIKit
 import MobileCoreServices
 import Firebase
+import CoreLocation
 
 
 /* control the main UI view */
@@ -19,17 +20,14 @@ class EditPhotoVC: UIViewController {
     var newMedia: Bool?
     var lineView: LineView?
     var photo: UIImage?
+    var isFromCamera = false
     @IBOutlet weak var imageView: UIImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         loadLineView(imageView)
         imageView.image = photo
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        embedGPSData()
     }
     
     
@@ -55,15 +53,20 @@ class EditPhotoVC: UIViewController {
     }
     
     
+    @IBAction func resetLines(sender: UIBarButtonItem) {
+        removeAllLines()
+    }
     
-    @IBAction func embedGPSData(sender: UIBarButtonItem) {
+    private func embedGPSData() {
         manager = OneShotLocationManager() // request the current location
         manager!.fetchWithCompletion {location, error in
             // fetch location or an error
             if let loc = location {
+                let locString = "\(formatDate(loc.timestamp))\n\(self.transformCoordinate(loc.coordinate)) +/- \(loc.horizontalAccuracy)m"
+                print(locString)
                 // embeded text to image
                 if let img = self.imageView.image {
-                    self.imageView.image = EditPhotoVC.textToImage(loc.description, inImage: img, atPoint: CGPointZero)
+                    self.imageView.image = EditPhotoVC.textToImage(locString, inImage: img, atPoint: CGPointZero)
                 }
             } else if let err = error {
                 print(err.localizedDescription)
@@ -86,8 +89,6 @@ class EditPhotoVC: UIViewController {
         // send it to the submit view controler
         let submitVC = (segue.destinationViewController as! SubmitPhotoViewController)
         submitVC.imageToSubmit = combinedImage
-        
-        removeLines()
     }
     
     func image(image: UIImage, didFinishSavingWithError error: NSErrorPointer, contextInfo:UnsafePointer<Void>) {
@@ -111,7 +112,7 @@ class EditPhotoVC: UIViewController {
         
         // configure the font
         let textColor = UIColor.whiteColor()
-        let textFont = UIFont(name: "Helvetica Neue", size: 120)!
+        let textFont = UIFont(name: "Helvetica Neue", size: inImage.size.width * 0.04)!
         let textFontAttributes = [
             NSFontAttributeName: textFont,
             NSForegroundColorAttributeName: textColor
@@ -126,7 +127,7 @@ class EditPhotoVC: UIViewController {
         
         // Creating a text container within the image that is as wide as the image, as height as the text.
         let textWidth = inImage.size.width
-        let textHeight = (ceil(drawText.size().width) / inImage.size.width * drawText.size().height) * 1.2
+        let textHeight = (ceil(drawText.size().width) / inImage.size.width * drawText.size().height) * 1.6
         let rect = CGRectMake(atPoint.x, atPoint.y, textWidth,  textHeight)
         
         // draw the background color for the text.
@@ -149,8 +150,7 @@ class EditPhotoVC: UIViewController {
     
     // add lineView to the parent view
     private func loadLineView(parentView: UIView) {
-        let lineFrame = CGRectMake(parentView.bounds.origin.x, parentView.bounds.origin.y, parentView.bounds.size.width, parentView.bounds.size.height)
-        lineView = LineView(frame: lineFrame)
+        lineView = LineView(frame: UIScreen.mainScreen().bounds)
         lineView!.backgroundColor = UIColor(white: 1, alpha: 0)
         lineView!.addGestureRecognizer(UIPanGestureRecognizer(target: lineView, action: Selector("move:")))
         lineView!.contentMode = UIViewContentMode.ScaleAspectFit
@@ -158,14 +158,14 @@ class EditPhotoVC: UIViewController {
     }
     
     // remove all lines
-    private func removeLines() {
+    private func removeAllLines() {
         if let lines = lineView {
             lines.removeAllLines()
         }
     }
     
     // Flattens <allViews> into single UIImage
-    func flattenViews(allViews: [UIView]) -> UIImage? {
+    private func flattenViews(allViews: [UIView]) -> UIImage? {
         // Return nil if <allViews> empty
         if (allViews.isEmpty) {
             return nil
@@ -201,5 +201,20 @@ class EditPhotoVC: UIViewController {
         print("x:\(x) y:\(y) width:\(width) height:\(height)")
         // Return image
         return UIImage(CGImage: subImageRef)
+    }
+    
+    // convert coordinate from degree to degree, minute and second
+    private func transformCoordinate(coordinate: CLLocationCoordinate2D) -> String {
+        // convert the degree to coresponding degree + minute + second
+        let latitudeInSeconds = abs(Int(coordinate.latitude * 3600))
+        let latitudeDegrees = latitudeInSeconds / 3600
+        let latitudeMinutes = (latitudeInSeconds - latitudeDegrees * 3600) / 60
+        let latitudeSeconds = latitudeInSeconds - latitudeDegrees * 3600 - latitudeMinutes * 60
+        let longitudeInSeconds = abs(Int(coordinate.longitude * 3600))
+        let longitudeDegrees = longitudeInSeconds / 3600
+        let longitudeMinutes = (longitudeInSeconds - longitudeDegrees * 3600) / 60
+        let longitudeSeconds = longitudeInSeconds - longitudeDegrees * 3600 - longitudeMinutes * 60
+        
+        return "\(coordinate.latitude >= 0 ? "N" : "S") \(latitudeDegrees)° \(latitudeMinutes)' \(latitudeSeconds)\", \(coordinate.longitude >= 0 ? "E" : "W") \(longitudeDegrees)° \(longitudeMinutes)' \(longitudeSeconds)\""
     }
 }

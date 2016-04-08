@@ -47,7 +47,7 @@ func styleForTableView() {
 
 func formatDate(date: NSDate) ->  String {
     let dateFormatter = NSDateFormatter()
-    dateFormatter.dateStyle = NSDateFormatterStyle.MediumStyle
+    dateFormatter.dateFormat = "MMM d, yyyy, HH:mm"
     let dateStr = dateFormatter.stringFromDate(date)
     return dateStr
 }

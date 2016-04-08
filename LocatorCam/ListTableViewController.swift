@@ -16,6 +16,7 @@ class ListTableViewController: UITableViewController, UIImagePickerControllerDel
     let firebase = Firebase(url:"https://fishboard.firebaseio.com/profiles")
     var items = [NSDictionary]()
     var photo: UIImage?
+    var isFromCamera = false // indicating if this image is taken from the camera
     
     
     @IBAction func addPhoto(sender: UIBarButtonItem) {
@@ -31,20 +32,15 @@ class ListTableViewController: UITableViewController, UIImagePickerControllerDel
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.tableView.rowHeight = 500
         self.tableView.allowsSelection = false
+        tableView.estimatedRowHeight = 300
+        tableView.rowHeight = UITableViewAutomaticDimension
     }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         items = [NSDictionary]()
-        
         loadDataFromFirebase()
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     // MARK: - control camera
@@ -60,6 +56,7 @@ class ListTableViewController: UITableViewController, UIImagePickerControllerDel
                 UIImagePickerControllerSourceType.Camera
             imagePicker.mediaTypes = [kUTTypeImage as String]
             imagePicker.allowsEditing = false
+            isFromCamera = true
             
             self.presentViewController(imagePicker, animated: true,
                                        completion: nil)
@@ -78,6 +75,8 @@ class ListTableViewController: UITableViewController, UIImagePickerControllerDel
                 UIImagePickerControllerSourceType.PhotoLibrary
             imagePicker.mediaTypes = [kUTTypeImage as String]
             imagePicker.allowsEditing = false
+            isFromCamera = false
+            
             self.presentViewController(imagePicker, animated: true,
                                        completion: nil)
         }
@@ -115,6 +114,7 @@ class ListTableViewController: UITableViewController, UIImagePickerControllerDel
         // send it to the submit view controler
         let submitVC = (segue.destinationViewController as! EditPhotoVC)
         submitVC.photo = photo
+        submitVC.isFromCamera = isFromCamera
     }
     
     
@@ -166,7 +166,6 @@ class ListTableViewController: UITableViewController, UIImagePickerControllerDel
         
         let base64String = dict["photoBase64"] as! String
         populateImage(cell, imageString: base64String)
-        
     }
     
     // MARK:- Populate Timeinterval
@@ -174,9 +173,8 @@ class ListTableViewController: UITableViewController, UIImagePickerControllerDel
     func populateTimeInterval(cell: ProfileTableViewCell, timeInterval: NSTimeInterval) {
         
         let date = NSDate(timeIntervalSince1970: timeInterval)
-        let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "MMM d, yyyy, HH:mm"
-        cell.timeLabel?.text = dateFormatter.stringFromDate(date)
+        cell.timeLabel?.text = formatDate(date)
+
     }
     
     // MARK:- Populate Image
