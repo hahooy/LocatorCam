@@ -13,7 +13,7 @@ class SubmitPhotoViewController: UIViewController {
 
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var descriptionInput: UITextView!
-    var imageToSubmit: UIImage!
+    var imageToSubmit: UIImage?
     var profileRef = Firebase(url: "https://fishboard.firebaseio.com/profiles")
     
     override func viewDidLoad() {

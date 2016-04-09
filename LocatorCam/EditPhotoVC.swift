@@ -21,6 +21,7 @@ class EditPhotoVC: UIViewController {
     var lineView: LineView?
     var photo: UIImage?
     var isFromCamera = false
+    var photoLocation: CLLocation?
     @IBOutlet weak var imageView: UIImageView!
     
     override func viewDidLoad() {
@@ -43,8 +44,16 @@ class EditPhotoVC: UIViewController {
     
     // save the image locally
     @IBAction func saveImage(sender: UIBarButtonItem) {
-        let views:[UIView] = [imageView]
-        let combinedImage = flattenViews(views)
+        var combinedImage: UIImage?
+        
+        if lineView != nil && lineView!.numberOfLines() > 0 {
+            // flatten all views on the image to embed lines
+            let views:[UIView] = [imageView]
+            combinedImage = flattenViews(views)
+        } else {
+            combinedImage = imageView.image
+        }
+
         UIImageWriteToSavedPhotosAlbum(combinedImage!, self,
                                        #selector(EditPhotoVC.image(_:didFinishSavingWithError:contextInfo:)), nil)
         let saveSuccessAlert = UIAlertController(title: "Success", message: "Photo has been saved to your local storage", preferredStyle: UIAlertControllerStyle.Alert)
@@ -62,6 +71,7 @@ class EditPhotoVC: UIViewController {
         manager!.fetchWithCompletion {location, error in
             // fetch location or an error
             if let loc = location {
+                self.photoLocation = loc
                 let locString = "\(formatDate(loc.timestamp))\n\(self.transformCoordinate(loc.coordinate)) +/- \(loc.horizontalAccuracy)m"
                 print(locString)
                 // embeded text to image
@@ -79,12 +89,15 @@ class EditPhotoVC: UIViewController {
     
     // send image to the next view
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if imageView.image == nil {
-            return
+        var combinedImage: UIImage?
+        
+        if lineView != nil && lineView!.numberOfLines() > 0 {
+            // flatten all views on the image to embed lines
+            let views:[UIView] = [imageView]
+            combinedImage = flattenViews(views)
+        } else {
+            combinedImage = imageView.image
         }
-        // flatten all views on the image
-        let views:[UIView] = [imageView]
-        let combinedImage = flattenViews(views)
         
         // send it to the submit view controler
         let submitVC = (segue.destinationViewController as! SubmitPhotoViewController)

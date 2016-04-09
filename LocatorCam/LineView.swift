@@ -140,4 +140,9 @@ class LineView: UIView {
     func removeAllLines() {
         lines.removeAll()
     }
+    
+    // determine how many lines on the view
+    func numberOfLines() -> Int {
+        return lines.count
+    }
 }
