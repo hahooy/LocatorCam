@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		0A0B1F2F1CB2102F00FC0C77 /* ProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A0B1F2E1CB2102F00FC0C77 /* ProfileTableViewCell.swift */; };
+		0A4D64481CB89C5D00CC837F /* PhotoMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A4D64461CB89C5D00CC837F /* PhotoMapViewController.swift */; };
+		0A4D644B1CB8B57C00CC837F /* MKPhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A4D644A1CB8B57C00CC837F /* MKPhoto.swift */; };
 		0A61D52E1CAE1E1000DDC276 /* LineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A61D52D1CAE1E1000DDC276 /* LineView.swift */; };
 		0AA347F91CB35772002C6319 /* SubmitPhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AA347F81CB35772002C6319 /* SubmitPhotoViewController.swift */; };
 		0AB748611CB0DEB900A18F43 /* ListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AB748601CB0DEB900A18F43 /* ListTableViewController.swift */; };
@@ -26,6 +28,8 @@
 
 /* Begin PBXFileReference section */
 		0A0B1F2E1CB2102F00FC0C77 /* ProfileTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileTableViewCell.swift; sourceTree = "<group>"; };
+		0A4D64461CB89C5D00CC837F /* PhotoMapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoMapViewController.swift; sourceTree = "<group>"; };
+		0A4D644A1CB8B57C00CC837F /* MKPhoto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MKPhoto.swift; sourceTree = "<group>"; };
 		0A61D52D1CAE1E1000DDC276 /* LineView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LineView.swift; sourceTree = "<group>"; };
 		0AA347F81CB35772002C6319 /* SubmitPhotoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubmitPhotoViewController.swift; sourceTree = "<group>"; };
 		0AB748601CB0DEB900A18F43 /* ListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListTableViewController.swift; sourceTree = "<group>"; };
@@ -76,6 +80,8 @@
 				0A0B1F2E1CB2102F00FC0C77 /* ProfileTableViewCell.swift */,
 				0AA347F81CB35772002C6319 /* SubmitPhotoViewController.swift */,
 				0AB748621CB0DECA00A18F43 /* AddUserViewController.swift */,
+				0A4D64461CB89C5D00CC837F /* PhotoMapViewController.swift */,
+				0A4D644A1CB8B57C00CC837F /* MKPhoto.swift */,
 			);
 			name = Controler;
 			sourceTree = "<group>";
@@ -281,6 +287,8 @@
 				0ADEF61F1CACCFAD008F3E6F /* LocatorCamModel.swift in Sources */,
 				0AE5BD2E1CA3B287001458DF /* AppDelegate.swift in Sources */,
 				0AA347F91CB35772002C6319 /* SubmitPhotoViewController.swift in Sources */,
+				0A4D644B1CB8B57C00CC837F /* MKPhoto.swift in Sources */,
+				0A4D64481CB89C5D00CC837F /* PhotoMapViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -39,8 +39,14 @@ class ListTableViewController: UITableViewController, UIImagePickerControllerDel
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
+        self.navigationController?.toolbarHidden = true
         items = [NSDictionary]()
         loadDataFromFirebase()
+    }
+    
+    override func viewDidDisappear(animated: Bool) {
+        super.viewDidDisappear(animated)
+        self.navigationController?.toolbarHidden = false
     }
     
     // MARK: - control camera
@@ -105,16 +111,17 @@ class ListTableViewController: UITableViewController, UIImagePickerControllerDel
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
-    // send image to edit photo view
+
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if photo == nil {
             return
         }
 
-        // send it to the submit view controler
-        let submitVC = (segue.destinationViewController as! EditPhotoVC)
-        submitVC.photo = photo
-        submitVC.isFromCamera = isFromCamera
+        // send image to edit photo view
+        let editVC = (segue.destinationViewController as! EditPhotoVC)
+        editVC.photo = photo
+        editVC.isFromCamera = isFromCamera
+        editVC.hidesBottomBarWhenPushed = true
     }
     
     

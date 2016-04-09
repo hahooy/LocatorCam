@@ -8,12 +8,14 @@
 
 import UIKit
 import Firebase
+import CoreLocation
 
 class SubmitPhotoViewController: UIViewController {
 
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var descriptionInput: UITextView!
     var imageToSubmit: UIImage?
+    var photoLocation: CLLocation?
     var profileRef = Firebase(url: "https://fishboard.firebaseio.com/profiles")
     
     override func viewDidLoad() {
@@ -52,8 +54,10 @@ class SubmitPhotoViewController: UIViewController {
             "key": itemRef.key,
             "name": "anonymous",
             "time": NSDate().timeIntervalSince1970,
-            "description": descriptionInput.text ?? "",
-            "photoBase64": base64String
+            "description": descriptionInput.text,
+            "photoBase64": base64String,
+            "latitude": photoLocation?.coordinate.latitude ?? 0,
+            "longitude": photoLocation?.coordinate.longitude ?? 0
         ]
 
         // write the photo to Firebase

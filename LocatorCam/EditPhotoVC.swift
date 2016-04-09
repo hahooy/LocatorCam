@@ -99,9 +99,11 @@ class EditPhotoVC: UIViewController {
             combinedImage = imageView.image
         }
         
-        // send it to the submit view controler
+        // send image to the submit view controler
         let submitVC = (segue.destinationViewController as! SubmitPhotoViewController)
         submitVC.imageToSubmit = combinedImage
+        // send location data to the submit view controler
+        submitVC.photoLocation = photoLocation
     }
     
     func image(image: UIImage, didFinishSavingWithError error: NSErrorPointer, contextInfo:UnsafePointer<Void>) {
