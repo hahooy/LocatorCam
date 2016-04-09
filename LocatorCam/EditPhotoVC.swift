@@ -29,6 +29,7 @@ class EditPhotoVC: UIViewController {
         loadLineView(imageView)
         imageView.image = photo
         embedGPSData()
+        self.navigationController?.setToolbarHidden(false, animated: true)
     }
     
     
@@ -53,7 +54,7 @@ class EditPhotoVC: UIViewController {
         } else {
             combinedImage = imageView.image
         }
-
+        
         UIImageWriteToSavedPhotosAlbum(combinedImage!, self,
                                        #selector(EditPhotoVC.image(_:didFinishSavingWithError:contextInfo:)), nil)
         let saveSuccessAlert = UIAlertController(title: "Success", message: "Photo has been saved to your local storage", preferredStyle: UIAlertControllerStyle.Alert)
@@ -81,7 +82,7 @@ class EditPhotoVC: UIViewController {
             } else if let err = error {
                 print(err.localizedDescription)
             }
-
+            
             // destroy the object immediately to save memory
             self.manager = nil
         }

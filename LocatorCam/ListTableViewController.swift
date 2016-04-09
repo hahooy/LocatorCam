@@ -46,7 +46,7 @@ class ListTableViewController: UITableViewController, UIImagePickerControllerDel
     
     override func viewDidDisappear(animated: Bool) {
         super.viewDidDisappear(animated)
-        self.navigationController?.toolbarHidden = false
+        
     }
     
     // MARK: - control camera
@@ -99,8 +99,6 @@ class ListTableViewController: UITableViewController, UIImagePickerControllerDel
             photo = info[UIImagePickerControllerOriginalImage]
                 as? UIImage
             performSegueWithIdentifier("toEditPhoto", sender: self)
-            
-            
         } else if mediaType.isEqualToString(kUTTypeMovie as String) {
             // Code to support video here
         }
