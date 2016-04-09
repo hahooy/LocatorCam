@@ -44,11 +44,6 @@ class ListTableViewController: UITableViewController, UIImagePickerControllerDel
         self.navigationController?.setToolbarHidden(true, animated: false)
     }
     
-    override func viewDidDisappear(animated: Bool) {
-        super.viewDidDisappear(animated)
-        
-    }
-    
     // MARK: - control camera
     // use camera
     @IBAction func useCamera(sender: AnyObject) {

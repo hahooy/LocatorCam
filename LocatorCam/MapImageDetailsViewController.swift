@@ -14,6 +14,10 @@ class MapImageDetailsViewController: UIViewController {
     var time: String?
     var image: UIImage?
     var photoDescription: String?
+    
+    override func viewDidAppear(animated: Bool) {
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
+    }
 
     @IBOutlet weak var imageView: UIImageView! {
         didSet {

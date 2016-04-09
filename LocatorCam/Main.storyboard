@@ -97,11 +97,11 @@
             </objects>
             <point key="canvasLocation" x="1996" y="193"/>
         </scene>
-        <!--List-->
+        <!--Moments-->
         <scene sceneID="MYp-gN-hWu">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" toolbarHidden="NO" id="Rxe-ZY-aB1" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="List" image="Add List-50.png" selectedImage="Add List Filled-50.png" id="LiH-ge-yXr"/>
+                    <tabBarItem key="tabBarItem" title="Moments" image="Add List-50.png" selectedImage="Add List Filled-50.png" id="LiH-ge-yXr"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="fCM-L4-4HX">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -154,10 +154,10 @@
             </objects>
             <point key="canvasLocation" x="2054" y="1100"/>
         </scene>
-        <!--Image Details-->
+        <!--Details-->
         <scene sceneID="my8-b4-dgB">
             <objects>
-                <viewController title="Image Details" id="3DU-CA-5Nx" customClass="MapImageDetailsViewController" customModule="LocatorCam" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Details" id="3DU-CA-5Nx" customClass="MapImageDetailsViewController" customModule="LocatorCam" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="fdP-SS-1sD"/>
                         <viewControllerLayoutGuide type="bottom" id="VpY-SJ-nol"/>
@@ -440,7 +440,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Add List Filled-50.png" width="80" height="80"/>
+        <image name="Add List Filled-50.png" width="25" height="25"/>
         <image name="Add List-50.png" width="25" height="25"/>
         <image name="Map Marker Filled-50.png" width="25" height="25"/>
         <image name="Map Marker-50.png" width="25" height="25"/>

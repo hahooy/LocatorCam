@@ -129,25 +129,27 @@ class EditPhotoVC: UIViewController {
         // configure the font
         let textColor = UIColor.whiteColor()
         let textFont = UIFont(name: "Helvetica Neue", size: inImage.size.width * 0.04)!
+        
         let textFontAttributes = [
             NSFontAttributeName: textFont,
             NSForegroundColorAttributeName: textColor
         ]
         let drawText = NSAttributedString(string: text as String, attributes: textFontAttributes)
+        let textWidth = inImage.size.width
+        let textHeight =  drawText.size().height
         
         //Setup the image context using the passed image.
-        UIGraphicsBeginImageContext(inImage.size)
+        UIGraphicsBeginImageContext(CGSize(width: inImage.size.width, height: inImage.size.height + textHeight))
         
         //Put the image into a rectangle as large as the original image.
-        inImage.drawInRect(CGRectMake(0, 0, inImage.size.width, inImage.size.height))
+        inImage.drawInRect(CGRectMake(0, textHeight, inImage.size.width, inImage.size.height))
         
         // Creating a text container within the image that is as wide as the image, as height as the text.
-        let textWidth = inImage.size.width
-        let textHeight = (ceil(drawText.size().width) / inImage.size.width * drawText.size().height) * 1.6
+
         let rect = CGRectMake(atPoint.x, atPoint.y, textWidth,  textHeight)
         
         // draw the background color for the text.
-        UIColor(red: 0.1, green: 0.5, blue: 0.5, alpha: 0.8).set()
+        UIColor(red: 0.1, green: 0.5, blue: 0.5, alpha: 1).set()
         UIBezierPath(rect: rect).fill()
         
         // Draw the text into the container.

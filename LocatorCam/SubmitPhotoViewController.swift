@@ -43,7 +43,7 @@ class SubmitPhotoViewController: UIViewController {
         }
         
         // compress and encode the image
-        let data = UIImageJPEGRepresentation(imageView.image!, 0.1)!
+        let data = UIImageJPEGRepresentation(imageView.image!, 0.05)!
         let base64String:NSString = data.base64EncodedStringWithOptions(NSDataBase64EncodingOptions.Encoding64CharacterLineLength)
         
         // create a new child under profiles in Firebase

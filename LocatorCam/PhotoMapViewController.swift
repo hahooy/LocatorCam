@@ -31,14 +31,8 @@ class PhotoMapViewController: UIViewController, MKMapViewDelegate {
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        self.navigationController?.navigationBarHidden = true
+        self.navigationController?.setNavigationBarHidden(true, animated: true)
     }
-    
-    override func viewDidDisappear(animated: Bool) {
-        super.viewDidDisappear(animated)
-        self.navigationController?.navigationBarHidden = false
-    }
-    
     
     // MARK: - photo points
     
