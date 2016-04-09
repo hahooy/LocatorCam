@@ -15,7 +15,7 @@ class MKPhoto: NSObject, MKAnnotation {
     
     let name: String
     let photoDescription: String?
-    let photoBase64: String?
+    let photo: UIImage?
     let latitude: CLLocationDegrees
     let longitude: CLLocationDegrees
     let date: NSDate
@@ -25,7 +25,13 @@ class MKPhoto: NSObject, MKAnnotation {
         photoDescription = data["description"] as? String
         latitude = data["latitude"] as! CLLocationDegrees
         longitude = data["longitude"] as! CLLocationDegrees
-        photoBase64 = data["photoBase64"] as? String
+        
+        if let imageString = data["photoBase64"] as? String {
+            let decodedData = NSData(base64EncodedString: imageString, options: NSDataBase64DecodingOptions.IgnoreUnknownCharacters)
+            photo = UIImage(data: decodedData!)
+        } else {
+            photo = nil
+        }
         
         let timeInterval = data["time"] as! NSTimeInterval
         date = NSDate(timeIntervalSince1970: timeInterval)

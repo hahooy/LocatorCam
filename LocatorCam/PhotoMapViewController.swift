@@ -18,6 +18,9 @@ class PhotoMapViewController: UIViewController, MKMapViewDelegate {
     @IBOutlet weak var mapView: MKMapView! {
         didSet {
             mapView.delegate = self
+            mapView.showsUserLocation = true
+            
+
         }
     }
     
@@ -25,10 +28,20 @@ class PhotoMapViewController: UIViewController, MKMapViewDelegate {
         super.viewDidLoad()
         loadDataFromFireBase()
     }
-
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        self.navigationController?.navigationBarHidden = true
+    }
+    
+    override func viewDidDisappear(animated: Bool) {
+        super.viewDidDisappear(animated)
+        self.navigationController?.navigationBarHidden = false
+    }
+    
     
     // MARK: - photo points
-
+    
     private func clearPhotoPoints() {
         if mapView?.annotations != nil {
             mapView.removeAnnotations(mapView.annotations as [MKAnnotation])
@@ -43,45 +56,70 @@ class PhotoMapViewController: UIViewController, MKMapViewDelegate {
     // MARK: - MKMapViewDelegate
     
     func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
+        if annotation.isKindOfClass(mapView.userLocation.classForCoder) {
+            return nil
+        }
+        
         var view = mapView.dequeueReusableAnnotationViewWithIdentifier(Constants.AnnotationViewReuseIdentifier)
         
         if view == nil {
             view = MKPinAnnotationView(annotation: annotation, reuseIdentifier: Constants.AnnotationViewReuseIdentifier)
             view!.canShowCallout = true
-                
+            
         } else {
             view!.annotation = annotation
         }
-        print("!")
+
         view!.leftCalloutAccessoryView = nil
         view!.rightCalloutAccessoryView = nil
         
         if let photoPoint = annotation as? MKPhoto {
-            if let imageString = photoPoint.photoBase64 {
-                print("!")
-                let decodedData = NSData(base64EncodedString: imageString, options: NSDataBase64DecodingOptions.IgnoreUnknownCharacters)
-                let decodedImage = UIImage(data: decodedData!)
+            if let photo = photoPoint.photo {
                 view!.leftCalloutAccessoryView = UIImageView(frame: Constants.LeftCalloutFrame)
-                (view!.leftCalloutAccessoryView as! UIImageView).image = decodedImage
+                (view!.leftCalloutAccessoryView as! UIImageView).image = photo
                 view!.rightCalloutAccessoryView = UIButton(type: UIButtonType.DetailDisclosure) as UIButton
             }
         }
         
         return view
     }
-   
-   
+    
+    func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+        performSegueWithIdentifier(Constants.ShowImageDetailsSegue, sender: view)
+    }
+    
+    func mapView(mapView: MKMapView, didUpdateUserLocation userLocation: MKUserLocation) {
+        if userLocation.location != nil {
+            mapView.centerCoordinate = userLocation.location!.coordinate
+        }
+    }
+    
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == Constants.ShowImageDetailsSegue {
+            if let mapImageDetailsVC = segue.destinationViewController as? MapImageDetailsViewController {
+                if let photoPoint = (sender as? MKAnnotationView)?.annotation as? MKPhoto {
+                    mapImageDetailsVC.image = photoPoint.photo
+                    mapImageDetailsVC.name = photoPoint.name
+                    mapImageDetailsVC.time = photoPoint.subtitle
+                    mapImageDetailsVC.photoDescription = photoPoint.photoDescription
+                }
+            }
+        }
+    }
+    
+    
     // MARK: - load firebase data
     
     private func loadDataFromFireBase() {
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
-
+        
         firebase.observeEventType(.Value, withBlock: { snapshot in
             
             // clean up old points
             self.photos = [MKPhoto]()
             self.clearPhotoPoints()
-
+            
             // show new points
             for item in snapshot.children {
                 let dict = (item as! FDataSnapshot).value as! NSDictionary
@@ -102,6 +140,7 @@ class PhotoMapViewController: UIViewController, MKMapViewDelegate {
     private struct Constants {
         static let LeftCalloutFrame = CGRect(x: 0, y: 0, width: 59, height: 59)
         static let AnnotationViewReuseIdentifier = "photopoint"
-        static let ShowImageSegue = "Show Image"
+        static let ShowImageDetailsSegue = "ShowImageDetails"
+        static let defaultRegionDistance: CLLocationDistance = 200000
     }
 }

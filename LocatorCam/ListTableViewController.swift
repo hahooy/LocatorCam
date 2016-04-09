@@ -39,9 +39,9 @@ class ListTableViewController: UITableViewController, UIImagePickerControllerDel
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        self.navigationController?.toolbarHidden = true
         items = [NSDictionary]()
         loadDataFromFirebase()
+        self.navigationController?.setToolbarHidden(true, animated: false)
     }
     
     override func viewDidDisappear(animated: Bool) {
@@ -108,15 +108,16 @@ class ListTableViewController: UITableViewController, UIImagePickerControllerDel
     }
     
     func imagePickerControllerDidCancel(picker: UIImagePickerController) {
+        self.navigationController?.setToolbarHidden(true, animated: false)
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
-
+    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if photo == nil {
             return
         }
-
+        
         // send image to edit photo view
         let editVC = (segue.destinationViewController as! EditPhotoVC)
         editVC.photo = photo
@@ -181,7 +182,7 @@ class ListTableViewController: UITableViewController, UIImagePickerControllerDel
         
         let date = NSDate(timeIntervalSince1970: timeInterval)
         cell.timeLabel?.text = formatDate(date)
-
+        
     }
     
     // MARK:- Populate Image
