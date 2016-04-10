@@ -11,6 +11,7 @@ import UIKit
 func applyTheme() {
     let sharedApplication = UIApplication.sharedApplication()
     sharedApplication.delegate?.window??.tintColor = mainColor
+    sharedApplication.delegate?.window??.backgroundColor = mainColor
     sharedApplication.statusBarStyle = UIStatusBarStyle.LightContent
     
     styleForTabBar()
@@ -21,7 +22,7 @@ func applyTheme() {
 }
 
 func styleForTabBar() {
-    UITabBar.appearance().barTintColor = barTintColor
+    UITabBar.appearance().barTintColor = mainColor
     UITabBar.appearance().tintColor = UIColor.whiteColor()
     
     UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName:UIColor.whiteColor()], forState:.Selected)
@@ -60,11 +61,11 @@ func formatDate(date: NSDate) ->  String {
 
 
 var mainColor: UIColor {
-    return UIColor(red: 18.0/255.0, green: 86.0/255.0, blue: 136.0/255.0, alpha: 1.0)
+    return UIColor(red: 10.0/255.0, green: 60.0/255.0, blue: 100.0/255.0, alpha: 1.0)
 }
 
 var barTintColor: UIColor {
-    return UIColor(red: 18.0/255.0, green: 86.0/255.0, blue: 136.0/255.0, alpha: 1.0)
+    return UIColor(red: 10.0/255.0, green: 60.0/255.0, blue: 100.0/255.0, alpha: 1.0)
 }
 
 var barTextColor: UIColor {
