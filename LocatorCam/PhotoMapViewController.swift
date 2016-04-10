@@ -11,27 +11,44 @@ import MapKit
 import Firebase
 
 
-class PhotoMapViewController: UIViewController, MKMapViewDelegate {
+class PhotoMapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     let firebase = Firebase(url:"https://fishboard.firebaseio.com/profiles")
     var photos = [MKPhoto]()
+    var locationManager = CLLocationManager()
     
     @IBOutlet weak var mapView: MKMapView! {
         didSet {
             mapView.delegate = self
             mapView.showsUserLocation = true
-            
+        }
+    }
+    
 
+    @IBAction func setMapType(sender: UISegmentedControl) {
+        print(sender.selectedSegmentIndex)
+        switch sender.selectedSegmentIndex {
+        case 0:
+            mapView.mapType = .Standard
+        case 1:
+            mapView.mapType = .Satellite
+        default:
+            break
         }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         loadDataFromFireBase()
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.delegate = self
+        locationManager.distanceFilter = 25
+        locationManager.startUpdatingLocation()
     }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         self.navigationController?.setNavigationBarHidden(true, animated: true)
+        
     }
     
     // MARK: - photo points
@@ -82,12 +99,17 @@ class PhotoMapViewController: UIViewController, MKMapViewDelegate {
         performSegueWithIdentifier(Constants.ShowImageDetailsSegue, sender: view)
     }
     
-    func mapView(mapView: MKMapView, didUpdateUserLocation userLocation: MKUserLocation) {
-        if userLocation.location != nil {
-            mapView.centerCoordinate = userLocation.location!.coordinate
-        }
+    // MARK - LocationManagerDelegate
+    
+    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        mapView.centerCoordinate = locations[locations.count - 1].coordinate
     }
     
+    func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
+        Helpers.showLocationFailAlert(self)
+    }    
+    
+    // MARK - Segue
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == Constants.ShowImageDetailsSegue {

@@ -13,6 +13,7 @@
 		0A0EEFA51CB981E800B4349B /* Map Marker-50@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A0EEFA41CB981E800B4349B /* Map Marker-50@2x.png */; };
 		0A0EEFA71CB983F000B4349B /* Add List-50@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A0EEFA61CB983F000B4349B /* Add List-50@2x.png */; };
 		0A0EEFA91CB983F500B4349B /* Add List Filled-50@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A0EEFA81CB983F500B4349B /* Add List Filled-50@2x.png */; };
+		0A1F1A9A1CBAA94C0025CB26 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A1F1A991CBAA94C0025CB26 /* Helpers.swift */; };
 		0A4D64481CB89C5D00CC837F /* PhotoMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A4D64461CB89C5D00CC837F /* PhotoMapViewController.swift */; };
 		0A4D644B1CB8B57C00CC837F /* MKPhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A4D644A1CB8B57C00CC837F /* MKPhoto.swift */; };
 		0A61D52E1CAE1E1000DDC276 /* LineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A61D52D1CAE1E1000DDC276 /* LineView.swift */; };
@@ -38,6 +39,7 @@
 		0A0EEFA41CB981E800B4349B /* Map Marker-50@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Map Marker-50@2x.png"; sourceTree = "<group>"; };
 		0A0EEFA61CB983F000B4349B /* Add List-50@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Add List-50@2x.png"; sourceTree = "<group>"; };
 		0A0EEFA81CB983F500B4349B /* Add List Filled-50@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Add List Filled-50@2x.png"; sourceTree = "<group>"; };
+		0A1F1A991CBAA94C0025CB26 /* Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
 		0A4D64461CB89C5D00CC837F /* PhotoMapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoMapViewController.swift; sourceTree = "<group>"; };
 		0A4D644A1CB8B57C00CC837F /* MKPhoto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MKPhoto.swift; sourceTree = "<group>"; };
 		0A61D52D1CAE1E1000DDC276 /* LineView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LineView.swift; sourceTree = "<group>"; };
@@ -151,6 +153,7 @@
 			children = (
 				0A0EEF991CB9808100B4349B /* icons */,
 				0AB748661CB0E2EF00A18F43 /* Theme.swift */,
+				0A1F1A991CBAA94C0025CB26 /* Helpers.swift */,
 				0AE5BD2D1CA3B287001458DF /* AppDelegate.swift */,
 				0AFFDC991CAA24620006E65D /* LaunchScreen.xib */,
 				0AE5BD391CA3B287001458DF /* Info.plist */,
@@ -305,6 +308,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0AE5BD301CA3B287001458DF /* EditPhotoVC.swift in Sources */,
+				0A1F1A9A1CBAA94C0025CB26 /* Helpers.swift in Sources */,
 				0AB748671CB0E2EF00A18F43 /* Theme.swift in Sources */,
 				0AE5BD401CA3BA75001458DF /* OneShotLocationManager.swift in Sources */,
 				0A0B1F2F1CB2102F00FC0C77 /* ProfileTableViewCell.swift in Sources */,

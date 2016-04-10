@@ -81,6 +81,7 @@ class EditPhotoVC: UIViewController {
                 }
             } else if let err = error {
                 print(err.localizedDescription)
+                Helpers.showLocationFailAlert(self)
             }
             
             // destroy the object immediately to save memory

@@ -17,6 +17,7 @@ func applyTheme() {
     styleForNavigationBar()
     styleForToolBar()
     styleForTableView()
+    styleForSegmentedControl()
 }
 
 func styleForTabBar() {
@@ -43,6 +44,11 @@ func styleForToolBar() {
 func styleForTableView() {
     UITableView.appearance().backgroundColor = backgroundColor
     UITableView.appearance().separatorStyle = .SingleLineEtched
+}
+
+func styleForSegmentedControl() {
+    UISegmentedControl.appearance().backgroundColor = backgroundColor
+    UISegmentedControl.appearance().tintColor = barTintColor
 }
 
 func formatDate(date: NSDate) ->  String {

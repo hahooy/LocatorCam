@@ -135,10 +135,22 @@
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="Tef-L6-2n7">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="551"/>
                             </mapView>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Qs9-hH-xJV">
+                                <rect key="frame" x="439" y="515" width="141" height="29"/>
+                                <segments>
+                                    <segment title="Standard"/>
+                                    <segment title="Satellite"/>
+                                </segments>
+                                <connections>
+                                    <action selector="setMapType:" destination="8tx-om-f6t" eventType="valueChanged" id="g9X-tM-SmY"/>
+                                </connections>
+                            </segmentedControl>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="Qs9-hH-xJV" firstAttribute="trailing" secondItem="2q4-JK-lp2" secondAttribute="trailingMargin" id="8B0-ng-VXI"/>
                             <constraint firstAttribute="trailing" secondItem="Tef-L6-2n7" secondAttribute="trailing" id="IAU-zw-857"/>
+                            <constraint firstItem="9oL-D2-NB7" firstAttribute="top" secondItem="Qs9-hH-xJV" secondAttribute="bottom" constant="8" symbolic="YES" id="Qhx-2z-6mF"/>
                             <constraint firstItem="Tef-L6-2n7" firstAttribute="leading" secondItem="2q4-JK-lp2" secondAttribute="leading" id="UwJ-Jp-New"/>
                             <constraint firstItem="Tef-L6-2n7" firstAttribute="bottom" secondItem="9oL-D2-NB7" secondAttribute="top" id="hb0-aC-gcj"/>
                             <constraint firstItem="Tef-L6-2n7" firstAttribute="top" secondItem="2q4-JK-lp2" secondAttribute="top" id="wgU-ho-JHc"/>
