@@ -9,10 +9,6 @@
 /* Begin PBXBuildFile section */
 		0A0B1F2F1CB2102F00FC0C77 /* ProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A0B1F2E1CB2102F00FC0C77 /* ProfileTableViewCell.swift */; };
 		0A0EEF981CB93AB500B4349B /* MapImageDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A0EEF971CB93AB500B4349B /* MapImageDetailsViewController.swift */; };
-		0A0EEFA31CB981E400B4349B /* Map Marker Filled-50@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A0EEFA21CB981E400B4349B /* Map Marker Filled-50@2x.png */; };
-		0A0EEFA51CB981E800B4349B /* Map Marker-50@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A0EEFA41CB981E800B4349B /* Map Marker-50@2x.png */; };
-		0A0EEFA71CB983F000B4349B /* Add List-50@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A0EEFA61CB983F000B4349B /* Add List-50@2x.png */; };
-		0A0EEFA91CB983F500B4349B /* Add List Filled-50@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A0EEFA81CB983F500B4349B /* Add List Filled-50@2x.png */; };
 		0A1F1A9A1CBAA94C0025CB26 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A1F1A991CBAA94C0025CB26 /* Helpers.swift */; };
 		0A4D64481CB89C5D00CC837F /* PhotoMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A4D64461CB89C5D00CC837F /* PhotoMapViewController.swift */; };
 		0A4D644B1CB8B57C00CC837F /* MKPhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A4D644A1CB8B57C00CC837F /* MKPhoto.swift */; };
@@ -35,10 +31,6 @@
 /* Begin PBXFileReference section */
 		0A0B1F2E1CB2102F00FC0C77 /* ProfileTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileTableViewCell.swift; sourceTree = "<group>"; };
 		0A0EEF971CB93AB500B4349B /* MapImageDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapImageDetailsViewController.swift; sourceTree = "<group>"; };
-		0A0EEFA21CB981E400B4349B /* Map Marker Filled-50@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Map Marker Filled-50@2x.png"; sourceTree = "<group>"; };
-		0A0EEFA41CB981E800B4349B /* Map Marker-50@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Map Marker-50@2x.png"; sourceTree = "<group>"; };
-		0A0EEFA61CB983F000B4349B /* Add List-50@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Add List-50@2x.png"; sourceTree = "<group>"; };
-		0A0EEFA81CB983F500B4349B /* Add List Filled-50@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Add List Filled-50@2x.png"; sourceTree = "<group>"; };
 		0A1F1A991CBAA94C0025CB26 /* Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
 		0A4D64461CB89C5D00CC837F /* PhotoMapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoMapViewController.swift; sourceTree = "<group>"; };
 		0A4D644A1CB8B57C00CC837F /* MKPhoto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MKPhoto.swift; sourceTree = "<group>"; };
@@ -75,17 +67,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0A0EEF991CB9808100B4349B /* icons */ = {
-			isa = PBXGroup;
-			children = (
-				0A0EEFA81CB983F500B4349B /* Add List Filled-50@2x.png */,
-				0A0EEFA61CB983F000B4349B /* Add List-50@2x.png */,
-				0A0EEFA41CB981E800B4349B /* Map Marker-50@2x.png */,
-				0A0EEFA21CB981E400B4349B /* Map Marker Filled-50@2x.png */,
-			);
-			name = icons;
-			sourceTree = "<group>";
-		};
 		0AB7485B1CB0D6A000A18F43 /* Layout */ = {
 			isa = PBXGroup;
 			children = (
@@ -151,7 +132,6 @@
 		0AFFDC9B1CAA24B10006E65D /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				0A0EEF991CB9808100B4349B /* icons */,
 				0AB748661CB0E2EF00A18F43 /* Theme.swift */,
 				0A1F1A991CBAA94C0025CB26 /* Helpers.swift */,
 				0AE5BD2D1CA3B287001458DF /* AppDelegate.swift */,
@@ -242,12 +222,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0A0EEFA91CB983F500B4349B /* Add List Filled-50@2x.png in Resources */,
 				0ABDFD451CB478DE0021058F /* Main.storyboard in Resources */,
-				0A0EEFA31CB981E400B4349B /* Map Marker Filled-50@2x.png in Resources */,
 				0AFFDC9A1CAA24620006E65D /* LaunchScreen.xib in Resources */,
-				0A0EEFA51CB981E800B4349B /* Map Marker-50@2x.png in Resources */,
-				0A0EEFA71CB983F000B4349B /* Add List-50@2x.png in Resources */,
 				0AE5BD351CA3B287001458DF /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

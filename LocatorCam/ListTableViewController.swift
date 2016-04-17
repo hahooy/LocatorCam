@@ -33,7 +33,7 @@ class ListTableViewController: UITableViewController, UIImagePickerControllerDel
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView.allowsSelection = false
-        tableView.estimatedRowHeight = 300
+        tableView.estimatedRowHeight = tableView.rowHeight
         tableView.rowHeight = UITableViewAutomaticDimension
     }
     

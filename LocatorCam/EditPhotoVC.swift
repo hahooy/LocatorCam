@@ -74,14 +74,19 @@ class EditPhotoVC: UIViewController {
             if let loc = location {
                 self.photoLocation = loc
                 let locString = "\(formatDate(loc.timestamp))\n\(self.transformCoordinate(loc.coordinate)) +/- \(loc.horizontalAccuracy)m"
-                print(locString)
-                // embeded text to image
-                if let img = self.imageView.image {
-                    self.imageView.image = EditPhotoVC.textToImage(locString, inImage: img, atPoint: CGPointZero)
+
+                // embeded text to image on the main queue
+                dispatch_async(dispatch_get_main_queue()) {
+                    if let img = self.imageView.image {
+                        self.imageView.image = EditPhotoVC.textToImage(locString, inImage: img, atPoint: CGPointZero)
+                    }
                 }
             } else if let err = error {
                 print(err.localizedDescription)
-                Helpers.showLocationFailAlert(self)
+                // ask user to turn on GPS
+                dispatch_async(dispatch_get_main_queue()) {
+                    Helpers.showLocationFailAlert(self)
+                }
             }
             
             // destroy the object immediately to save memory
