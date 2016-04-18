@@ -13,7 +13,6 @@ import MobileCoreServices
 
 class ListTableViewController: UITableViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
-    let firebase = Firebase(url:"https://fishboard.firebaseio.com/profiles")
     var items = [NSDictionary]()
     var photo: UIImage?
     var isFromCamera = false // indicating if this image is taken from the camera
@@ -32,7 +31,7 @@ class ListTableViewController: UITableViewController, UIImagePickerControllerDel
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.tableView.allowsSelection = false
+        self.tableView.allowsSelection = true
         tableView.estimatedRowHeight = tableView.rowHeight
         tableView.rowHeight = UITableViewAutomaticDimension
     }
@@ -105,17 +104,37 @@ class ListTableViewController: UITableViewController, UIImagePickerControllerDel
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
-    
+    // MARK: - Segue
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if photo == nil {
-            return
+        if let identifier = segue.identifier {
+            switch identifier {
+            case "toEditPhoto":
+                if photo == nil {
+                    return
+                }
+                
+                // send image to edit photo view
+                if let editVC = segue.destinationViewController as? EditPhotoVC {
+                    editVC.photo = photo
+                    editVC.isFromCamera = isFromCamera
+                    editVC.hidesBottomBarWhenPushed = true
+                }
+            case "toPhotoDetails":
+                if let mapImageDetailsVC = segue.destinationViewController as? MapImageDetailsViewController {
+                    if let cellData = sender as? NSDictionary {
+                        mapImageDetailsVC.name = cellData["name"] as? String
+                        let date = NSDate(timeIntervalSince1970: cellData["time"] as! NSTimeInterval)
+                        mapImageDetailsVC.time = formatDate(date)
+                        mapImageDetailsVC.photoDescription = cellData["description"] as? String
+                        mapImageDetailsVC.photoUrl = cellData["photoReferenceKey"] as? String
+                    }
+                }
+                
+            default:
+                break
+            }
         }
         
-        // send image to edit photo view
-        let editVC = (segue.destinationViewController as! EditPhotoVC)
-        editVC.photo = photo
-        editVC.isFromCamera = isFromCamera
-        editVC.hidesBottomBarWhenPushed = true
     }
     
     
@@ -137,8 +156,21 @@ class ListTableViewController: UITableViewController, UIImagePickerControllerDel
         
         configureCell(cell, indexPath: indexPath)
         tableViewStyle(cell)
-        
+        //cell.accessoryType = .DetailButton
         return cell
+    }
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        //tableView.cellForRowAtIndexPath(indexPath)?.accessoryType = .DetailButton
+        performSegueWithIdentifier("toPhotoDetails", sender: items[indexPath.row])
+    }
+    
+    override func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
+        //tableView.cellForRowAtIndexPath(indexPath)?.accessoryType = .None
+    }
+    
+    override func tableView(tableView: UITableView, accessoryButtonTappedForRowWithIndexPath indexPath: NSIndexPath) {
+        performSegueWithIdentifier("toPhotoDetails", sender: items[indexPath.row])
     }
     
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
@@ -149,7 +181,7 @@ class ListTableViewController: UITableViewController, UIImagePickerControllerDel
             
             // delete data from firebase
             
-            let profile = firebase.ref.childByAppendingPath(key)
+            let profile = DataBase.momentFirebaseRef.ref.childByAppendingPath(key)
             profile.removeValue()
         }
     }
@@ -165,7 +197,7 @@ class ListTableViewController: UITableViewController, UIImagePickerControllerDel
         let timeInterval = dict["time"] as! NSTimeInterval
         populateTimeInterval(cell, timeInterval: timeInterval)
         
-        let base64String = dict["photoBase64"] as! String
+        let base64String = dict["thumbnailBase64"] as? String
         populateImage(cell, imageString: base64String)
     }
     
@@ -180,14 +212,14 @@ class ListTableViewController: UITableViewController, UIImagePickerControllerDel
     
     // MARK:- Populate Image
     
-    func populateImage(cell:ProfileTableViewCell, imageString: String) {
-        
-        let decodedData = NSData(base64EncodedString: imageString, options: NSDataBase64DecodingOptions.IgnoreUnknownCharacters)
-        
-        let decodedImage = UIImage(data: decodedData!)
-        
-        cell.profileImageView?.image = decodedImage
-        
+    func populateImage(cell:ProfileTableViewCell, imageString: String?) {
+        if imageString != nil {
+            let decodedData = NSData(base64EncodedString: imageString!, options: NSDataBase64DecodingOptions.IgnoreUnknownCharacters)
+            
+            let decodedImage = UIImage(data: decodedData!)
+            
+            cell.profileImageView?.image = decodedImage
+        }
     }
     
     // MARK:- Apply TableViewCell Style
@@ -195,6 +227,9 @@ class ListTableViewController: UITableViewController, UIImagePickerControllerDel
     func tableViewStyle(cell: ProfileTableViewCell) {
         cell.contentView.backgroundColor = backgroundColor
         cell.backgroundColor = backgroundColor
+        let backgroundView = UIView(frame: cell.frame)
+        backgroundView.backgroundColor = backgroundColor
+        cell.selectedBackgroundView = backgroundView
         
         cell.nameLabel?.font =  UIFont(name: "HelveticaNeue-Medium", size: 15)
         cell.nameLabel?.textColor = textColor
@@ -211,7 +246,7 @@ class ListTableViewController: UITableViewController, UIImagePickerControllerDel
         
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         
-        firebase.queryOrderedByChild("time").observeEventType(.Value, withBlock: { snapshot in
+        DataBase.momentFirebaseRef.queryOrderedByChild("time").observeEventType(.Value, withBlock: { snapshot in
             var tempItems = [NSDictionary]()
             
             for item in snapshot.children {

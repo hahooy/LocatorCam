@@ -12,7 +12,7 @@ import Firebase
 
 
 class PhotoMapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
-    let firebase = Firebase(url:"https://fishboard.firebaseio.com/profiles")
+
     var photos = [MKPhoto]()
     var locationManager = CLLocationManager()
     
@@ -85,9 +85,9 @@ class PhotoMapViewController: UIViewController, MKMapViewDelegate, CLLocationMan
         view!.rightCalloutAccessoryView = nil
         
         if let photoPoint = annotation as? MKPhoto {
-            if let photo = photoPoint.photo {
+            if let thumbnail = photoPoint.thumbnail {
                 view!.leftCalloutAccessoryView = UIImageView(frame: Constants.LeftCalloutFrame)
-                (view!.leftCalloutAccessoryView as! UIImageView).image = photo
+                (view!.leftCalloutAccessoryView as! UIImageView).image = thumbnail
                 view!.rightCalloutAccessoryView = UIButton(type: UIButtonType.DetailDisclosure) as UIButton
             }
         }
@@ -115,10 +115,10 @@ class PhotoMapViewController: UIViewController, MKMapViewDelegate, CLLocationMan
         if segue.identifier == Constants.ShowImageDetailsSegue {
             if let mapImageDetailsVC = segue.destinationViewController as? MapImageDetailsViewController {
                 if let photoPoint = (sender as? MKAnnotationView)?.annotation as? MKPhoto {
-                    mapImageDetailsVC.image = photoPoint.photo
                     mapImageDetailsVC.name = photoPoint.name
                     mapImageDetailsVC.time = photoPoint.subtitle
                     mapImageDetailsVC.photoDescription = photoPoint.photoDescription
+                    mapImageDetailsVC.photoUrl = photoPoint.photoReferenceKey
                 }
             }
         }
@@ -130,7 +130,7 @@ class PhotoMapViewController: UIViewController, MKMapViewDelegate, CLLocationMan
     private func loadDataFromFireBase() {
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         
-        firebase.observeEventType(.Value, withBlock: { snapshot in
+        DataBase.momentFirebaseRef.observeEventType(.Value, withBlock: { snapshot in
             
             // clean up old points
             self.photos = [MKPhoto]()

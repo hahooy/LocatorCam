@@ -91,6 +91,7 @@
                     </navigationItem>
                     <connections>
                         <segue destination="eT3-pG-0C3" kind="show" identifier="toEditPhoto" id="75W-hg-J3a"/>
+                        <segue destination="3DU-CA-5Nx" kind="show" identifier="toPhotoDetails" id="8Td-Im-SQU"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="U2p-A2-NdV" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -259,7 +260,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Nnb-EC-Pos" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2998" y="1100"/>
+            <point key="canvasLocation" x="2480" y="968"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="8CO-n6-CnE">
@@ -457,4 +458,7 @@
         <image name="Map Marker Filled-50.png" width="25" height="25"/>
         <image name="Map Marker-50.png" width="25" height="25"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="8Td-Im-SQU"/>
+    </inferredMetricsTieBreakers>
 </document>

@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Firebase
 import CoreLocation
 
 class SubmitPhotoViewController: UIViewController {
@@ -16,7 +15,6 @@ class SubmitPhotoViewController: UIViewController {
     @IBOutlet weak var descriptionInput: UITextView!
     var imageToSubmit: UIImage?
     var photoLocation: CLLocation?
-    var profileRef = Firebase(url: "https://fishboard.firebaseio.com/profiles")
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,11 +41,14 @@ class SubmitPhotoViewController: UIViewController {
         }
         
         // compress and encode the image
-        let data = UIImageJPEGRepresentation(imageView.image!, 0.05)!
-        let base64String:NSString = data.base64EncodedStringWithOptions(NSDataBase64EncodingOptions.Encoding64CharacterLineLength)
+        let thumbnail = UIImageJPEGRepresentation(imageView.image!.resize(0.1), 0)!
+        let thumbnailBase64String: NSString = thumbnail.base64EncodedStringWithOptions(.Encoding64CharacterLineLength)
+        let originalPhoto = UIImageJPEGRepresentation(imageView.image!, 0.1)!
+        let originalPhotoBase64String: NSString = originalPhoto.base64EncodedStringWithOptions(.Encoding64CharacterLineLength)
         
         // create a new child under profiles in Firebase
-        let itemRef = profileRef.childByAutoId()
+        let itemRef = DataBase.momentFirebaseRef.childByAutoId()
+        let photoRef = DataBase.photoFirebaseRef.childByAutoId()
         
         // create a photo object
         let photo = [
@@ -55,13 +56,15 @@ class SubmitPhotoViewController: UIViewController {
             "name": "anonymous",
             "time": NSDate().timeIntervalSince1970,
             "description": descriptionInput.text,
-            "photoBase64": base64String,
+            "thumbnailBase64": thumbnailBase64String,
+            "photoReferenceKey": photoRef.key,
             "latitude": photoLocation?.coordinate.latitude ?? 0,
             "longitude": photoLocation?.coordinate.longitude ?? 0
         ]
-
+        print("set photo")
         // write the photo to Firebase
         itemRef.setValue(photo)
+        photoRef.setValue(originalPhotoBase64String)
         
         // return to the first page
         let viewControlers = navigationController?.viewControllers
@@ -76,15 +79,17 @@ class SubmitPhotoViewController: UIViewController {
         }
     }
 
+}
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+extension UIImage {
+    func resize(scale: CGFloat) -> UIImage {
+        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: self.size.width * scale, height: self.size.height * scale))
+        imageView.contentMode = .ScaleAspectFit
+        imageView.image = self
+        UIGraphicsBeginImageContextWithOptions(imageView.bounds.size, false, 1)
+        imageView.layer.renderInContext(UIGraphicsGetCurrentContext()!)
+        let resizedImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return resizedImage
     }
-    */
-
 }

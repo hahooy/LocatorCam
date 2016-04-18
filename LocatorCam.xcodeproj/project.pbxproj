@@ -19,6 +19,7 @@
 		0AB748651CB0DF0700A18F43 /* Firebase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0AB748641CB0DF0700A18F43 /* Firebase.framework */; };
 		0AB748671CB0E2EF00A18F43 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AB748661CB0E2EF00A18F43 /* Theme.swift */; };
 		0ABDFD451CB478DE0021058F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0ABDFD441CB478DE0021058F /* Main.storyboard */; };
+		0AC276881CC424F100AF391E /* DataBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AC276871CC424F100AF391E /* DataBase.swift */; };
 		0ADEF61F1CACCFAD008F3E6F /* LocatorCamModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ADEF61E1CACCFAD008F3E6F /* LocatorCamModel.swift */; };
 		0AE5BD2E1CA3B287001458DF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AE5BD2D1CA3B287001458DF /* AppDelegate.swift */; };
 		0AE5BD301CA3B287001458DF /* EditPhotoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AE5BD2F1CA3B287001458DF /* EditPhotoVC.swift */; };
@@ -41,6 +42,7 @@
 		0AB748641CB0DF0700A18F43 /* Firebase.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Firebase.framework; path = "../../Library/Developer/Xcode/DerivedData/LocatorCam-grftmbhhyxhqfyfnrtatzowvrclu/Build/Products/Debug-iphoneos/Firebase.framework"; sourceTree = "<group>"; };
 		0AB748661CB0E2EF00A18F43 /* Theme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		0ABDFD441CB478DE0021058F /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		0AC276871CC424F100AF391E /* DataBase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataBase.swift; sourceTree = "<group>"; };
 		0ADEF61E1CACCFAD008F3E6F /* LocatorCamModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocatorCamModel.swift; sourceTree = "<group>"; };
 		0AE5BD2A1CA3B287001458DF /* LocatorCam.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LocatorCam.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0AE5BD2D1CA3B287001458DF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -96,6 +98,7 @@
 			children = (
 				0ADEF61E1CACCFAD008F3E6F /* LocatorCamModel.swift */,
 				0AE5BD3F1CA3BA75001458DF /* OneShotLocationManager.swift */,
+				0AC276871CC424F100AF391E /* DataBase.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -293,6 +296,7 @@
 				0AB748611CB0DEB900A18F43 /* ListTableViewController.swift in Sources */,
 				0AB748631CB0DECA00A18F43 /* AddUserViewController.swift in Sources */,
 				0ADEF61F1CACCFAD008F3E6F /* LocatorCamModel.swift in Sources */,
+				0AC276881CC424F100AF391E /* DataBase.swift in Sources */,
 				0AE5BD2E1CA3B287001458DF /* AppDelegate.swift in Sources */,
 				0AA347F91CB35772002C6319 /* SubmitPhotoViewController.swift in Sources */,
 				0A4D644B1CB8B57C00CC837F /* MKPhoto.swift in Sources */,
