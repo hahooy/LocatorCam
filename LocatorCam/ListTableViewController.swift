@@ -11,12 +11,13 @@ import Firebase
 import MobileCoreServices
 
 
+
 class ListTableViewController: UITableViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
-    var items = [NSDictionary]()
     var photo: UIImage?
     var isFromCamera = false // indicating if this image is taken from the camera
     
+
     
     @IBAction func addPhoto(sender: UIBarButtonItem) {
         let cameraActions = UIAlertController(title: "Upload Photo", message: "Choose the method", preferredStyle: .ActionSheet)
@@ -34,12 +35,17 @@ class ListTableViewController: UITableViewController, UIImagePickerControllerDel
         self.tableView.allowsSelection = true
         tableView.estimatedRowHeight = tableView.rowHeight
         tableView.rowHeight = UITableViewAutomaticDimension
+        
+        // fetch initial data if there is in item in the data source
+        self.scrollToBottomSpinner.startAnimating()
+        if SharingManager.sharedInstance.items.count == 0 {
+            let currentTime = NSDate().timeIntervalSince1970
+            loadDataFromFirebase(currentTime)
+        }
     }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        items = [NSDictionary]()
-        loadDataFromFirebase()
         self.navigationController?.setToolbarHidden(true, animated: false)
     }
     
@@ -147,7 +153,7 @@ class ListTableViewController: UITableViewController, UIImagePickerControllerDel
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return items.count
+        return SharingManager.sharedInstance.items.count
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -162,7 +168,7 @@ class ListTableViewController: UITableViewController, UIImagePickerControllerDel
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         //tableView.cellForRowAtIndexPath(indexPath)?.accessoryType = .DetailButton
-        performSegueWithIdentifier("toPhotoDetails", sender: items[indexPath.row])
+        performSegueWithIdentifier("toPhotoDetails", sender: SharingManager.sharedInstance.items[indexPath.row])
     }
     
     override func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
@@ -170,13 +176,13 @@ class ListTableViewController: UITableViewController, UIImagePickerControllerDel
     }
     
     override func tableView(tableView: UITableView, accessoryButtonTappedForRowWithIndexPath indexPath: NSIndexPath) {
-        performSegueWithIdentifier("toPhotoDetails", sender: items[indexPath.row])
+        performSegueWithIdentifier("toPhotoDetails", sender: SharingManager.sharedInstance.items[indexPath.row])
     }
     
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == .Delete {
             
-            let dict = items[indexPath.row]
+            let dict = SharingManager.sharedInstance.items[indexPath.row]
             let key = dict["key"] as! String
             
             // delete data from firebase
@@ -186,10 +192,27 @@ class ListTableViewController: UITableViewController, UIImagePickerControllerDel
         }
     }
     
+
+    @IBOutlet weak var scrollToBottomSpinner: UIActivityIndicatorView!
+    
+    override func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        // the y difference between the origin of the content and the bottom of the scrollView
+        let buttomOffset = scrollView.contentOffset.y + scrollView.frame.size.height
+        let maximumOffset = scrollView.contentSize.height
+        // load more data when scroll to the buttom
+        if (maximumOffset - buttomOffset < 30) {
+            scrollToBottomSpinner.startAnimating()
+            /* Fetch data that is earlier than the timestamp of the last item */
+            let endingTime = SharingManager.sharedInstance.items[SharingManager.sharedInstance.items.count - 1]["time"] as! NSTimeInterval
+            loadDataFromFirebase(endingTime - SharingManager.Constant.minimumTimeInterval)
+        }
+    }
+    
+    
     // MARK:- Configure Cell
     
     func configureCell(cell: ProfileTableViewCell, indexPath: NSIndexPath) {
-        let dict = items[indexPath.row]
+        let dict = SharingManager.sharedInstance.items[indexPath.row]
         
         cell.nameLabel?.text = dict["name"] as? String
         cell.descriptionLable?.text = dict["description"] as? String
@@ -242,23 +265,21 @@ class ListTableViewController: UITableViewController, UIImagePickerControllerDel
     
     // MARK:- Load data from Firebase
     
-    func loadDataFromFirebase() {
-        
+    func loadDataFromFirebase(time: NSTimeInterval) {
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
-        
-        DataBase.momentFirebaseRef.queryOrderedByChild("time").observeEventType(.Value, withBlock: { snapshot in
+        DataBase.momentFirebaseRef.queryOrderedByChild("time").queryEndingAtValue(time).queryLimitedToLast(SharingManager.Constant.NumberOfItemsToFetch).observeSingleEventOfType(.Value, withBlock: { snapshot in
             var tempItems = [NSDictionary]()
-            
+
             for item in snapshot.children {
                 let child = item as! FDataSnapshot
                 let dict = child.value as! NSDictionary
                 tempItems.append(dict)
             }
             
-            self.items = tempItems.reverse()
-            self.tableView.reloadData()
+            SharingManager.sharedInstance.items += tempItems.reverse()
             UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-            
+            self.scrollToBottomSpinner.stopAnimating()
+            self.tableView.reloadData()
         })
     }
 }
