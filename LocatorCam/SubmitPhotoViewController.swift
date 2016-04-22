@@ -61,7 +61,7 @@ class SubmitPhotoViewController: UIViewController {
             "latitude": photoLocation?.coordinate.latitude ?? 0,
             "longitude": photoLocation?.coordinate.longitude ?? 0
         ]
-        print("set photo")
+
         // write the photo to Firebase
         itemRef.setValue(photo)
         photoRef.setValue(originalPhotoBase64String)

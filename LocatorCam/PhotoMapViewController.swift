@@ -25,7 +25,6 @@ class PhotoMapViewController: UIViewController, MKMapViewDelegate, CLLocationMan
     
 
     @IBAction func setMapType(sender: UISegmentedControl) {
-        print(sender.selectedSegmentIndex)
         switch sender.selectedSegmentIndex {
         case 0:
             mapView.mapType = .Standard
@@ -38,8 +37,8 @@ class PhotoMapViewController: UIViewController, MKMapViewDelegate, CLLocationMan
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        loadDataFromFireBase()
-        
+        //loadDataFromFireBase()
+        SharingManager.sharedInstance.addMomentsUpdatedHandler {self.renderAnnotations()}
         locationManager.requestWhenInUseAuthorization()
         locationManager.delegate = self
         locationManager.distanceFilter = Constants.minimumDistanceToUpdate
@@ -49,7 +48,7 @@ class PhotoMapViewController: UIViewController, MKMapViewDelegate, CLLocationMan
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         self.navigationController?.setNavigationBarHidden(true, animated: true)
-        renderAnnotations()
+        self.renderAnnotations()
     }
     
     // MARK: - photo points
@@ -129,23 +128,14 @@ class PhotoMapViewController: UIViewController, MKMapViewDelegate, CLLocationMan
     // MARK: - load firebase data
     
     private func renderAnnotations() {
-        for item in SharingManager.sharedInstance.items {
-            if item["name"] != nil && item["time"] != nil && item["latitude"] != nil && item["longitude"] != nil {
-                photos.append(MKPhoto(data: item))
+        photos = [MKPhoto]()
+        for moment in SharingManager.sharedInstance.moments {
+            if moment["name"] != nil && moment["time"] != nil && moment["latitude"] != nil && moment["longitude"] != nil {
+                photos.append(MKPhoto(data: moment))
             }
         }
+        clearPhotoPoints()
         handlePhotoPoints()
-    }
-    
-    private func loadDataFromFireBase() {
-        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
-        
-        DataBase.momentFirebaseRef.observeEventType(.ChildAdded, withBlock: { snapshot in
-            print(snapshot.value)
-            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-            }, withCancelBlock: { error in
-                print(error.description)
-        })
     }
     
     // MARK: - Constants

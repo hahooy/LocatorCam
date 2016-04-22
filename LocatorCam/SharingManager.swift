@@ -9,12 +9,66 @@
 import Foundation
 import Firebase
 
+/*
+ This class contains variables that are shared across the entire application
+*/
+
 class SharingManager {
-    var items = [NSDictionary]()
+    
+    /*
+     singleton instance of SharingManager, this instance is shared among the whole application
+    */
     static let sharedInstance = SharingManager()
+    /* 
+     handlers to be executed whenever moments get updated. usually the handler is a closure that
+     refresh the UIView
+    */
+    var momentsUpdateHandlers = Array<(Void -> Void)>()
+    // all moments download from the database
+    var moments = [NSDictionary]() {
+        didSet {
+            print(momentsUpdateHandlers.count)
+            for handler in momentsUpdateHandlers {
+                handler()
+            }
+        }
+    }
     
     struct Constant {
-        static let NumberOfItemsToFetch: UInt = 10
+        static let NumberOfMomentsToFetch: UInt = 10
         static let minimumTimeInterval = 0.000001
+    }
+    
+    init() {
+        initFirebase(NSDate().timeIntervalSince1970)
+    }
+    
+    // add a handler for updating moments
+    func addMomentsUpdatedHandler(handler: Void -> Void) {
+        momentsUpdateHandlers.append(handler)
+    }
+    
+    // initialize firebase, load the initial data set, register firebase event listener
+    func initFirebase(time: NSTimeInterval) {
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+        // fetch initial data set, this will be run only once
+        DataBase.momentFirebaseRef.queryOrderedByChild("time").queryEndingAtValue(time).queryLimitedToLast(SharingManager.Constant.NumberOfMomentsToFetch).observeSingleEventOfType(.Value, withBlock: { snapshot in
+            var tempMoments = [NSDictionary]()
+            
+            for moment in snapshot.children {
+                let child = moment as! FDataSnapshot
+                let dict = child.value as! NSDictionary
+                tempMoments.append(dict)
+            }
+            
+            SharingManager.sharedInstance.moments += tempMoments.reverse()
+            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+        })
+        // if new data is added to the database, insert it to moments
+        DataBase.momentFirebaseRef.queryOrderedByChild("time").queryStartingAtValue(time + Constant.minimumTimeInterval).observeEventType(.ChildAdded, withBlock: { snapshot in
+            if let dict = snapshot.value as? NSDictionary {
+                SharingManager.sharedInstance.moments.insert(dict, atIndex: 0)
+            }
+        })
     }
 }
