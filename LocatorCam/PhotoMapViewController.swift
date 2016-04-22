@@ -39,16 +39,17 @@ class PhotoMapViewController: UIViewController, MKMapViewDelegate, CLLocationMan
     override func viewDidLoad() {
         super.viewDidLoad()
         loadDataFromFireBase()
+        
         locationManager.requestWhenInUseAuthorization()
         locationManager.delegate = self
-        locationManager.distanceFilter = 25
+        locationManager.distanceFilter = Constants.minimumDistanceToUpdate
         locationManager.startUpdatingLocation()
     }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         self.navigationController?.setNavigationBarHidden(true, animated: true)
-        
+        renderAnnotations()
     }
     
     // MARK: - photo points
@@ -127,25 +128,21 @@ class PhotoMapViewController: UIViewController, MKMapViewDelegate, CLLocationMan
     
     // MARK: - load firebase data
     
+    private func renderAnnotations() {
+        for item in SharingManager.sharedInstance.items {
+            if item["name"] != nil && item["time"] != nil && item["latitude"] != nil && item["longitude"] != nil {
+                photos.append(MKPhoto(data: item))
+            }
+        }
+        handlePhotoPoints()
+    }
+    
     private func loadDataFromFireBase() {
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         
-        DataBase.momentFirebaseRef.observeEventType(.Value, withBlock: { snapshot in
-            
-            // clean up old points
-            self.photos = [MKPhoto]()
-            self.clearPhotoPoints()
-            
-            // show new points
-            for item in snapshot.children {
-                let dict = (item as! FDataSnapshot).value as! NSDictionary
-                if dict["name"] != nil && dict["time"] != nil && dict["latitude"] != nil && dict["longitude"] != nil {
-                    self.photos.append(MKPhoto(data: dict))
-                }
-            }
-            
-            // reload the photo data point to map view
-            self.handlePhotoPoints()
+        DataBase.momentFirebaseRef.observeEventType(.ChildAdded, withBlock: { snapshot in
+            print(snapshot.value)
+            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
             }, withCancelBlock: { error in
                 print(error.description)
         })
@@ -158,5 +155,6 @@ class PhotoMapViewController: UIViewController, MKMapViewDelegate, CLLocationMan
         static let AnnotationViewReuseIdentifier = "photopoint"
         static let ShowImageDetailsSegue = "ShowImageDetails"
         static let defaultRegionDistance: CLLocationDistance = 200000
+        static let minimumDistanceToUpdate: CLLocationDistance = 40
     }
 }
