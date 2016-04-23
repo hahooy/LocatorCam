@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Firebase
 import MobileCoreServices
 
 
@@ -196,7 +195,7 @@ class ListTableViewController: UITableViewController, UIImagePickerControllerDel
         let buttomOffset = scrollView.contentOffset.y + scrollView.frame.size.height
         let maximumOffset = scrollView.contentSize.height
         // load more data when scroll to the buttom
-        if maximumOffset - buttomOffset < 30 && SharingManager.sharedInstance.moments.count > 0 {
+        if scrollToBottomSpinner.isAnimating() == false && maximumOffset - buttomOffset < 30 && SharingManager.sharedInstance.moments.count > 0 {
             scrollToBottomSpinner.startAnimating()
             /* Fetch data that is earlier than the timestamp of the last moment */
             if let endingTime = SharingManager.sharedInstance.moments[SharingManager.sharedInstance.moments.count - 1]["time"] as? NSTimeInterval {

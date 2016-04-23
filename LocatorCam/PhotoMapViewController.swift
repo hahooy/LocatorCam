@@ -8,7 +8,6 @@
 
 import UIKit
 import MapKit
-import Firebase
 
 
 class PhotoMapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
@@ -62,6 +61,18 @@ class PhotoMapViewController: UIViewController, MKMapViewDelegate, CLLocationMan
     private func handlePhotoPoints() {
         mapView.addAnnotations(photos)
         mapView.showAnnotations(photos, animated: true)
+    }
+    
+    
+    private func renderAnnotations() {
+        photos = [MKPhoto]()
+        for moment in SharingManager.sharedInstance.moments {
+            if moment["name"] != nil && moment["time"] != nil && moment["latitude"] != nil && moment["longitude"] != nil {
+                photos.append(MKPhoto(data: moment))
+            }
+        }
+        clearPhotoPoints()
+        handlePhotoPoints()
     }
     
     // MARK: - MKMapViewDelegate
@@ -122,20 +133,6 @@ class PhotoMapViewController: UIViewController, MKMapViewDelegate, CLLocationMan
                 }
             }
         }
-    }
-    
-    
-    // MARK: - load firebase data
-    
-    private func renderAnnotations() {
-        photos = [MKPhoto]()
-        for moment in SharingManager.sharedInstance.moments {
-            if moment["name"] != nil && moment["time"] != nil && moment["latitude"] != nil && moment["longitude"] != nil {
-                photos.append(MKPhoto(data: moment))
-            }
-        }
-        clearPhotoPoints()
-        handlePhotoPoints()
     }
     
     // MARK: - Constants

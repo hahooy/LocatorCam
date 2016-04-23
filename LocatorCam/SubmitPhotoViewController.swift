@@ -47,12 +47,12 @@ class SubmitPhotoViewController: UIViewController {
         let originalPhotoBase64String: NSString = originalPhoto.base64EncodedStringWithOptions(.Encoding64CharacterLineLength)
         
         // create a new child under profiles in Firebase
-        let itemRef = DataBase.momentFirebaseRef.childByAutoId()
+        let momentRef = DataBase.momentFirebaseRef.childByAutoId()
         let photoRef = DataBase.photoFirebaseRef.childByAutoId()
         
         // create a photo object
-        let photo = [
-            "key": itemRef.key,
+        let moment = [
+            "key": momentRef.key,
             "name": "anonymous",
             "time": NSDate().timeIntervalSince1970,
             "description": descriptionInput.text,
@@ -62,9 +62,9 @@ class SubmitPhotoViewController: UIViewController {
             "longitude": photoLocation?.coordinate.longitude ?? 0
         ]
 
-        // write the photo to Firebase
-        itemRef.setValue(photo)
-        photoRef.setValue(originalPhotoBase64String)
+        // write data to Firebase
+        SharingManager.sharedInstance.addMoment(momentRef, data: moment)
+        SharingManager.sharedInstance.addPhoto(photoRef, base64String: originalPhotoBase64String)
         
         // return to the first page
         let viewControlers = navigationController?.viewControllers

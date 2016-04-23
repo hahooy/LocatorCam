@@ -89,4 +89,14 @@ class SharingManager {
             spinner.stopAnimating()
         })
     }
+    
+    // add moment to firebase
+    func addMoment(ref: Firebase, data: NSDictionary) {
+        ref.setValue(data)
+    }
+    
+    // add photo to firebase
+    func addPhoto(ref: Firebase, base64String: NSString) {
+        ref.setValue(base64String)
+    }
 }
