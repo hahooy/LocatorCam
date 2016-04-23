@@ -22,12 +22,14 @@ class MapImageDetailsViewController: UIViewController {
     
     override func viewDidLoad() {
         if photoUrl != nil {
+            UIApplication.sharedApplication().networkActivityIndicatorVisible = true
             DataBase.photoFirebaseRef.childByAppendingPath(photoUrl).observeSingleEventOfType(.Value, withBlock: {
                 snapshot in
                 if let base64EncodedString = snapshot.value as? String {
                     let decodedData = NSData(base64EncodedString: base64EncodedString, options: NSDataBase64DecodingOptions.IgnoreUnknownCharacters)
                     self.image = UIImage(data: decodedData!)
                 }
+                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
             })
         }
     }

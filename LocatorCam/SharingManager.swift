@@ -71,4 +71,22 @@ class SharingManager {
             }
         })
     }
+    
+    // load more data from firebase, data is appended to the moments array in shared instance
+    func loadDataFromFirebase(time: NSTimeInterval, spinner: UIActivityIndicatorView) {
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+        DataBase.momentFirebaseRef.queryOrderedByChild("time").queryEndingAtValue(time).queryLimitedToLast(SharingManager.Constant.NumberOfMomentsToFetch).observeSingleEventOfType(.Value, withBlock: { snapshot in
+            var tempMoments = [NSDictionary]()
+            
+            for moment in snapshot.children {
+                let child = moment as! FDataSnapshot
+                let dict = child.value as! NSDictionary
+                tempMoments.append(dict)
+            }
+            
+            SharingManager.sharedInstance.moments += tempMoments.reverse()
+            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+            spinner.stopAnimating()
+        })
+    }
 }

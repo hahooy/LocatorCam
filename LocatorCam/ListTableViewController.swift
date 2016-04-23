@@ -17,7 +17,7 @@ class ListTableViewController: UITableViewController, UIImagePickerControllerDel
     var photo: UIImage?
     var isFromCamera = false // indicating if this image is taken from the camera
     
-
+    
     
     @IBAction func addPhoto(sender: UIBarButtonItem) {
         let cameraActions = UIAlertController(title: "Upload Photo", message: "Choose the method", preferredStyle: .ActionSheet)
@@ -179,7 +179,7 @@ class ListTableViewController: UITableViewController, UIImagePickerControllerDel
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == .Delete {
             
-            let dict = SharingManager.sharedInstance.moments.removeAtIndex(indexPath.row)            
+            let dict = SharingManager.sharedInstance.moments.removeAtIndex(indexPath.row)
             let key = dict["key"] as! String
             
             // delete data from firebase
@@ -188,7 +188,7 @@ class ListTableViewController: UITableViewController, UIImagePickerControllerDel
         }
     }
     
-
+    
     @IBOutlet weak var scrollToBottomSpinner: UIActivityIndicatorView!
     
     override func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
@@ -196,11 +196,12 @@ class ListTableViewController: UITableViewController, UIImagePickerControllerDel
         let buttomOffset = scrollView.contentOffset.y + scrollView.frame.size.height
         let maximumOffset = scrollView.contentSize.height
         // load more data when scroll to the buttom
-        if (maximumOffset - buttomOffset < 30) {
+        if maximumOffset - buttomOffset < 30 && SharingManager.sharedInstance.moments.count > 0 {
             scrollToBottomSpinner.startAnimating()
             /* Fetch data that is earlier than the timestamp of the last moment */
-            let endingTime = SharingManager.sharedInstance.moments[SharingManager.sharedInstance.moments.count - 1]["time"] as! NSTimeInterval
-            loadDataFromFirebase(endingTime - SharingManager.Constant.minimumTimeInterval)
+            if let endingTime = SharingManager.sharedInstance.moments[SharingManager.sharedInstance.moments.count - 1]["time"] as? NSTimeInterval {
+                SharingManager.sharedInstance.loadDataFromFirebase(endingTime - SharingManager.Constant.minimumTimeInterval, spinner: scrollToBottomSpinner)
+            }
         }
     }
     
@@ -213,7 +214,7 @@ class ListTableViewController: UITableViewController, UIImagePickerControllerDel
         cell.nameLabel?.text = dict["name"] as? String
         cell.descriptionLable?.text = dict["description"] as? String
         
-        let timeInterval = dict["time"] as! NSTimeInterval
+        let timeInterval = dict["time"] as? NSTimeInterval
         populateTimeInterval(cell, timeInterval: timeInterval)
         
         let base64String = dict["thumbnailBase64"] as? String
@@ -222,11 +223,12 @@ class ListTableViewController: UITableViewController, UIImagePickerControllerDel
     
     // MARK:- Populate Timeinterval
     
-    func populateTimeInterval(cell: ProfileTableViewCell, timeInterval: NSTimeInterval) {
-        
-        let date = NSDate(timeIntervalSince1970: timeInterval)
+    func populateTimeInterval(cell: ProfileTableViewCell, timeInterval: NSTimeInterval?) {
+        if timeInterval == nil {
+            return
+        }
+        let date = NSDate(timeIntervalSince1970: timeInterval!)
         cell.timeLabel?.text = formatDate(date)
-        
     }
     
     // MARK:- Populate Image
@@ -257,26 +259,5 @@ class ListTableViewController: UITableViewController, UIImagePickerControllerDel
         cell.timeLabel?.font = UIFont.boldSystemFontOfSize(15)
         cell.timeLabel?.textColor = UIColor.grayColor()
         cell.timeLabel?.backgroundColor = backgroundColor
-    }
-    
-    // MARK:- Firebase
-    
-    // load more data from firebase, data is appended to the moments array in shared instance
-    func loadDataFromFirebase(time: NSTimeInterval) {
-        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
-        DataBase.momentFirebaseRef.queryOrderedByChild("time").queryEndingAtValue(time).queryLimitedToLast(SharingManager.Constant.NumberOfMomentsToFetch).observeSingleEventOfType(.Value, withBlock: { snapshot in
-            var tempMoments = [NSDictionary]()
-
-            for moment in snapshot.children {
-                let child = moment as! FDataSnapshot
-                let dict = child.value as! NSDictionary
-                tempMoments.append(dict)
-            }
-            
-            SharingManager.sharedInstance.moments += tempMoments.reverse()
-            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-            self.scrollToBottomSpinner.stopAnimating()
-            self.tableView.reloadData()
-        })
     }
 }
