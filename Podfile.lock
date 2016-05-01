@@ -1,5 +1,5 @@
 PODS:
-  - ALCameraViewController (1.1.8)
+  - ALCameraViewController (1.1.9)
   - Firebase (2.5.1)
 
 DEPENDENCIES:
@@ -7,7 +7,7 @@ DEPENDENCIES:
   - Firebase (>= 2.5.1)
 
 SPEC CHECKSUMS:
-  ALCameraViewController: be821eead12ada8f9fd6a8fafe881d2da9713159
+  ALCameraViewController: f171ffb7e84d211277a0f97823a2bda7418dc573
   Firebase: 3565ea88b830f28f2c77ecc524622bc71a20d085
 
 COCOAPODS: 0.39.0

@@ -176,7 +176,7 @@ class EditPhotoVC: UIViewController {
     private func loadLineView(parentView: UIView) {
         lineView = LineView(frame: UIScreen.mainScreen().bounds)
         lineView!.backgroundColor = UIColor(white: 1, alpha: 0)
-        lineView!.addGestureRecognizer(UIPanGestureRecognizer(target: lineView, action: Selector("move:")))
+        lineView!.addGestureRecognizer(UIPanGestureRecognizer(target: lineView, action: #selector(LineView.move)))
         lineView!.contentMode = UIViewContentMode.ScaleAspectFit
         parentView.addSubview(lineView!)
     }
