@@ -41,7 +41,7 @@ class SubmitPhotoViewController: UIViewController {
         }
         
         // compress and encode the image
-        let thumbnail = UIImageJPEGRepresentation(imageView.image!.resize(0.1), 1)!
+        let thumbnail = UIImageJPEGRepresentation(imageView.image!.getThumbnail(), 1)!
         let thumbnailBase64String: NSString = thumbnail.base64EncodedStringWithOptions(.Encoding64CharacterLineLength)
         let originalPhoto = UIImageJPEGRepresentation(imageView.image!, 0)!
         let originalPhotoBase64String: NSString = originalPhoto.base64EncodedStringWithOptions(.Encoding64CharacterLineLength)
@@ -82,8 +82,10 @@ class SubmitPhotoViewController: UIViewController {
 }
 
 extension UIImage {
-    func resize(scale: CGFloat) -> UIImage {
-        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: self.size.width * scale, height: self.size.height * scale))
+    func getThumbnail() -> UIImage {
+        let thumbnailWidth = SharingManager.Constant.thumbnailWidth
+        let thumbnailHeight = self.size.height * thumbnailWidth / self.size.width
+        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: thumbnailWidth, height: thumbnailHeight))
         imageView.contentMode = .ScaleAspectFit
         imageView.image = self
         UIGraphicsBeginImageContextWithOptions(imageView.bounds.size, false, 1)

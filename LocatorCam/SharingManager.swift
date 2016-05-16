@@ -37,6 +37,7 @@ class SharingManager {
     struct Constant {
         static let NumberOfMomentsToFetch: UInt = 10
         static let minimumTimeInterval = 0.000001
+        static let thumbnailWidth: CGFloat = 1000
     }
     
     init() {
