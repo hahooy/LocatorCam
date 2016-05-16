@@ -126,9 +126,6 @@ class PhotoMapViewController: UIViewController, MKMapViewDelegate, CLLocationMan
         if segue.identifier == Constants.ShowImageDetailsSegue {
             if let mapImageDetailsVC = segue.destinationViewController as? MapImageDetailsViewController {
                 if let photoPoint = (sender as? MKAnnotationView)?.annotation as? MKPhoto {
-                    mapImageDetailsVC.name = photoPoint.name
-                    mapImageDetailsVC.time = photoPoint.subtitle
-                    mapImageDetailsVC.photoDescription = photoPoint.photoDescription
                     mapImageDetailsVC.photoUrl = photoPoint.photoReferenceKey
                 }
             }

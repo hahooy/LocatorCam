@@ -124,10 +124,6 @@ class ListTableViewController: UITableViewController, UIImagePickerControllerDel
             case "toPhotoDetails":
                 if let mapImageDetailsVC = segue.destinationViewController as? MapImageDetailsViewController {
                     if let cellData = sender as? NSDictionary {
-                        mapImageDetailsVC.name = cellData["name"] as? String
-                        let date = NSDate(timeIntervalSince1970: cellData["time"] as! NSTimeInterval)
-                        mapImageDetailsVC.time = formatDate(date)
-                        mapImageDetailsVC.photoDescription = cellData["description"] as? String
                         mapImageDetailsVC.photoUrl = cellData["photoReferenceKey"] as? String
                     }
                 }
@@ -227,7 +223,13 @@ class ListTableViewController: UITableViewController, UIImagePickerControllerDel
             return
         }
         let date = NSDate(timeIntervalSince1970: timeInterval!)
-        cell.timeLabel?.text = formatDate(date)
+        let formatter = NSDateFormatter()
+        if NSDate().timeIntervalSinceDate(date) < 24 * 60 * 60 {
+            formatter.timeStyle = .ShortStyle
+        } else {
+            formatter.dateStyle = .ShortStyle
+        }
+        cell.timeLabel?.text = formatter.stringFromDate(date)
     }
     
     // MARK:- Populate Image
