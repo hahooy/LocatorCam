@@ -33,6 +33,8 @@ class SharingManager {
             }
         }
     }
+    // determine if the picture will be stamped by location and time data
+    var locationStampEnabled = true
     
     struct Constant {
         static let NumberOfMomentsToFetch: UInt = 10

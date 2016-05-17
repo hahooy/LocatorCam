@@ -16,7 +16,12 @@ class ListTableViewController: UITableViewController, UIImagePickerControllerDel
     var photo: UIImage?
     var isFromCamera = false // indicating if this image is taken from the camera
     
-    
+    struct Constant {
+        static let profileCellIdentifier = "profileCell"
+        static let nameFont = UIFont(name: "HelveticaNeue-Medium", size: 15)
+        static let timeFont = UIFont.boldSystemFontOfSize(15)
+        static let descriptionFont = UIFont.preferredFontForTextStyle(UIFontTextStyleBody)
+    }
     
     @IBAction func addPhoto(sender: UIBarButtonItem) {
         let cameraActions = UIAlertController(title: "Upload Photo", message: "Choose the method", preferredStyle: .ActionSheet)
@@ -136,8 +141,6 @@ class ListTableViewController: UITableViewController, UIImagePickerControllerDel
     }
     
     
-    
-    
     // MARK: - Table view data source
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -150,7 +153,7 @@ class ListTableViewController: UITableViewController, UIImagePickerControllerDel
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCellWithIdentifier("profileCell", forIndexPath: indexPath) as! ProfileTableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier(Constant.profileCellIdentifier, forIndexPath: indexPath) as! ProfileTableViewCell
         
         configureCell(cell, indexPath: indexPath)
         tableViewStyle(cell)
@@ -181,6 +184,38 @@ class ListTableViewController: UITableViewController, UIImagePickerControllerDel
             let profile = DataBase.momentFirebaseRef.ref.childByAppendingPath(key)
             profile.removeValue()
         }
+    }
+    
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        let dict = SharingManager.sharedInstance.moments[indexPath.row]
+        var imageHeight: CGFloat = 0
+        var nameLableHeight: CGFloat = 0
+        var descriptionLableHeight: CGFloat = 0
+        let lable = UILabel()
+        
+        if let name = dict["name"] as? String {
+            lable.text = name
+            lable.font = Constant.nameFont
+            let lableSize = lable.sizeThatFits(CGSize(width: UIScreen.mainScreen().bounds.width, height: CGFloat.max))
+            nameLableHeight = lableSize.height
+        }
+        if let description = dict["description"] as? String {
+            lable.numberOfLines = 0
+            lable.text = description
+            lable.font = Constant.descriptionFont
+            lable.lineBreakMode = .ByTruncatingTail
+            lable.textAlignment = .Justified
+            let lableSize = lable.sizeThatFits(CGSize(width: UIScreen.mainScreen().bounds.width, height: CGFloat.max))
+            descriptionLableHeight = lableSize.height
+        }
+        
+        if let base64String = dict["thumbnailBase64"] as? String {
+            let decodedData = NSData(base64EncodedString: base64String, options: NSDataBase64DecodingOptions.IgnoreUnknownCharacters)
+            let decodedImage = UIImage(data: decodedData!)
+            let aspectRatio = decodedImage!.size.height / decodedImage!.size.width
+            imageHeight = UIScreen.mainScreen().bounds.width * aspectRatio
+        }
+        return nameLableHeight + imageHeight + descriptionLableHeight + 20
     }
     
     
@@ -239,7 +274,6 @@ class ListTableViewController: UITableViewController, UIImagePickerControllerDel
             let decodedData = NSData(base64EncodedString: imageString!, options: NSDataBase64DecodingOptions.IgnoreUnknownCharacters)
             
             let decodedImage = UIImage(data: decodedData!)
-            
             cell.profileImageView?.image = decodedImage
         }
     }
@@ -253,12 +287,14 @@ class ListTableViewController: UITableViewController, UIImagePickerControllerDel
         backgroundView.backgroundColor = backgroundColor
         cell.selectedBackgroundView = backgroundView
         
-        cell.nameLabel?.font =  UIFont(name: "HelveticaNeue-Medium", size: 15)
+        cell.nameLabel?.font =  Constant.nameFont
         cell.nameLabel?.textColor = textColor
         cell.nameLabel?.backgroundColor = backgroundColor
         
-        cell.timeLabel?.font = UIFont.boldSystemFontOfSize(15)
+        cell.timeLabel?.font = Constant.timeFont
         cell.timeLabel?.textColor = UIColor.grayColor()
         cell.timeLabel?.backgroundColor = backgroundColor
+        
+        cell.descriptionLable?.font = Constant.descriptionFont
     }
 }

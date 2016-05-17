@@ -28,20 +28,31 @@ private struct Line {
 
 @IBDesignable
 class LineView: UIView {
-
-    /*
-    // Only override drawRect: if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func drawRect(rect: CGRect) {
-        // Drawing code
-    }
-    */
     
     @IBInspectable
     private var lines: [Line] = [] {
         didSet {
             setNeedsDisplay()
         }
+    }
+    
+    // this is the reference for measuring, the first line added to the
+    // view becomes the reference line, the length of the reference line
+    // always equals to the reference object and does not change as
+    // user draging and panning the line
+    private var measuringReference: (String, Int, String)? {
+        didSet {
+            setNeedsDisplay()
+        }
+    }
+    
+    init(frame: CGRect, reference: (String, Int, String)) {
+        super.init(frame: frame)
+        measuringReference = reference
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
     }
     
     
@@ -59,7 +70,13 @@ class LineView: UIView {
             drawCircle(lines[i].startPoint, radius: lines[i].radius / 2)
             drawCircle(lines[i].endPoint, radius: lines[i].radius / 2)
             // draw distance
-            drawText(String(Int(lines[i].distance)), atPoint: lines[i].midPoint)
+            if i == 0 && measuringReference != nil {
+                drawText("\(measuringReference!.1) \(measuringReference!.2)", atPoint: lines[i].midPoint)
+            } else if measuringReference != nil {
+                drawText("\(String(format: "%.2f",lines[i].distance / lines[0].distance * CGFloat(measuringReference!.1))) \(measuringReference!.2)", atPoint: lines[i].midPoint)
+            } else {
+                drawText(String(Int(lines[i].distance)), atPoint: lines[i].midPoint)
+            }
         }
     }
     
@@ -144,5 +161,10 @@ class LineView: UIView {
     // determine how many lines on the view
     func numberOfLines() -> Int {
         return lines.count
+    }
+    
+    // set the reference object for measurement 
+    func setMeasuringReference(reference: (String, Int, String)) {
+        measuringReference = reference
     }
 }

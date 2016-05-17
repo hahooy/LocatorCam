@@ -24,11 +24,24 @@ class EditPhotoVC: UIViewController {
     var photoLocation: CLLocation?
     @IBOutlet weak var imageView: UIImageView!
     
+    // the reference object for measuring length
+    var measuringReference = ("Drivers License", 3, "Inches") {
+        didSet {
+            lineView?.setMeasuringReference(measuringReference)
+        }
+    }
+    
+    struct Constant {
+        static let toSubmitPhotoIdentifier = "toSubmitPhoto"
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         loadLineView(imageView)
         imageView.image = photo
-        embedGPSData()
+        if (SharingManager.sharedInstance.locationStampEnabled) {
+            embedGPSData()
+        }
         self.navigationController?.setToolbarHidden(false, animated: true)
     }
     
@@ -74,7 +87,7 @@ class EditPhotoVC: UIViewController {
             if let loc = location {
                 self.photoLocation = loc
                 let locString = "\(formatDate(loc.timestamp))\n\(self.transformCoordinate(loc.coordinate)) +/- \(loc.horizontalAccuracy)m"
-
+                
                 // embeded text to image on the main queue
                 dispatch_async(dispatch_get_main_queue()) {
                     if let img = self.imageView.image {
@@ -96,21 +109,28 @@ class EditPhotoVC: UIViewController {
     
     // send image to the next view
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        var combinedImage: UIImage?
-        
-        if lineView != nil && lineView!.numberOfLines() > 0 {
-            // flatten all views on the image to embed lines
-            let views:[UIView] = [imageView]
-            combinedImage = flattenViews(views)
-        } else {
-            combinedImage = imageView.image
+        if segue.identifier == Constant.toSubmitPhotoIdentifier {
+            var combinedImage: UIImage?
+            
+            if lineView != nil && lineView!.numberOfLines() > 0 {
+                // flatten all views on the image to embed lines
+                let views:[UIView] = [imageView]
+                combinedImage = flattenViews(views)
+            } else {
+                combinedImage = imageView.image
+            }
+            
+            // send image to the submit view controler
+            if let submitVC = segue.destinationViewController as? SubmitPhotoViewController {
+                submitVC.imageToSubmit = combinedImage
+                // send location data to the submit view controler
+                submitVC.photoLocation = photoLocation
+            }
         }
+    }
+    
+    @IBAction func goBack(segue: UIStoryboardSegue) {
         
-        // send image to the submit view controler
-        let submitVC = (segue.destinationViewController as! SubmitPhotoViewController)
-        submitVC.imageToSubmit = combinedImage
-        // send location data to the submit view controler
-        submitVC.photoLocation = photoLocation
     }
     
     func image(image: UIImage, didFinishSavingWithError error: NSErrorPointer, contextInfo:UnsafePointer<Void>) {
@@ -151,7 +171,7 @@ class EditPhotoVC: UIViewController {
         inImage.drawInRect(CGRectMake(0, textHeight, inImage.size.width, inImage.size.height))
         
         // Creating a text container within the image that is as wide as the image, as height as the text.
-
+        
         let rect = CGRectMake(atPoint.x, atPoint.y, textWidth,  textHeight)
         
         // draw the background color for the text.
@@ -174,7 +194,7 @@ class EditPhotoVC: UIViewController {
     
     // add lineView to the parent view
     private func loadLineView(parentView: UIView) {
-        lineView = LineView(frame: UIScreen.mainScreen().bounds)
+        lineView = LineView(frame: UIScreen.mainScreen().bounds, reference: measuringReference)
         lineView!.backgroundColor = UIColor(white: 1, alpha: 0)
         lineView!.addGestureRecognizer(UIPanGestureRecognizer(target: lineView, action: #selector(LineView.move)))
         lineView!.contentMode = UIViewContentMode.ScaleAspectFit
