@@ -40,13 +40,13 @@ class LineView: UIView {
     // view becomes the reference line, the length of the reference line
     // always equals to the reference object and does not change as
     // user draging and panning the line
-    private var measuringReference: (String, Float, String)? {
+    private var measuringReference: (String, Double, String)? {
         didSet {
             setNeedsDisplay()
         }
     }
     
-    init(frame: CGRect, reference: (String, Float, String)?) {
+    init(frame: CGRect, reference: (String, Double, String)?) {
         super.init(frame: frame)
         measuringReference = reference
     }
@@ -164,7 +164,7 @@ class LineView: UIView {
     }
     
     // set the reference object for measurement 
-    func setMeasuringReference(reference: (String, Float, String)?) {
+    func setMeasuringReference(reference: (String, Double, String)?) {
         measuringReference = reference
     }
 }

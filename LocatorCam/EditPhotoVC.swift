@@ -25,7 +25,7 @@ class EditPhotoVC: UIViewController {
     @IBOutlet weak var imageView: UIImageView!
     
     // the reference object for measuring length
-    var measuringReference: (String, Float, String)? = ("Drivers License (width)", 3.375, "inches") {
+    var measuringReference: (String, Double, String)? = ("Drivers License (width)", 3.375, "inches") {
         didSet {
             lineView?.setMeasuringReference(measuringReference)
         }
