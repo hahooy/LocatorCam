@@ -10,11 +10,13 @@ import UIKit
 
 class measuringReferenceTableViewController: UITableViewController {
     
-    let measuringReferences = [("Drivers License", 3, "Inches"), ("4 Inches", 4, "Inches")]
+    let measuringReferences: [(String, Float, String)] = [("Drivers License (width)", 3.375, "inches"), ("Drivers License (length)", 3.622, "inches"), ("iPhone 5 (height)", 4.87, "inches"), ("iPhone 5 (width)", 2.31, "inches"), ("iPhone 6 (height)", 5.44, "inches"), ("iPhone 6 plus (height)", 6.22, "inches")]
     var selectedCellRow = 0
     struct Constant {
-        static let reusableCellIdentifier = "name and length"
-        static let unwindSegueToEditPhoto = "unwind to edit photo"
+        static let predefinedLengthCell = "predefined length"
+        static let customLengthCell = "custom length"
+        static let unwindFromPredefinedReference = "unwind from predefined reference to edit board"
+        static let unwindFromCustomReference = "unwind from custom reference to edit board"
     }
     
     override func viewDidLoad() {
@@ -25,34 +27,63 @@ class measuringReferenceTableViewController: UITableViewController {
     // MARK: - Table view data source
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 1
+        return 2
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return measuringReferences.count
+        switch section {
+        case 0:
+            return measuringReferences.count
+        case 1:
+            return 1
+        default:
+            return 0
+        }
     }
     
+    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if section == 0 {
+            return "Predefined"
+        } else if section == 1 {
+            return "Custom"
+        }
+        return nil
+    }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(Constant.reusableCellIdentifier, forIndexPath: indexPath)
-        let reference = measuringReferences[indexPath.row]
-        cell.textLabel?.text = reference.0
-        cell.detailTextLabel?.text = "\(reference.1) \(reference.2)"
-        return cell
+        if indexPath.section == 0 {
+            let cell = tableView.dequeueReusableCellWithIdentifier(Constant.predefinedLengthCell, forIndexPath: indexPath)
+            let reference = measuringReferences[indexPath.row]
+            cell.textLabel?.text = reference.0
+            cell.detailTextLabel?.text = "\(reference.1) \(reference.2)"
+            return cell
+        } else {
+            let cell = tableView.dequeueReusableCellWithIdentifier(Constant.customLengthCell, forIndexPath: indexPath)
+            return cell
+        }
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         selectedCellRow = indexPath.row
-        performSegueWithIdentifier(Constant.unwindSegueToEditPhoto, sender: tableView.cellForRowAtIndexPath(indexPath))
+        performSegueWithIdentifier(Constant.unwindFromPredefinedReference, sender: tableView.cellForRowAtIndexPath(indexPath))
     }
     
     
     // MARK: - Navigation
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == Constant.unwindSegueToEditPhoto {            
-            if let editPhotoViewController = segue.destinationViewController as? EditPhotoVC {
+        if let editPhotoViewController = segue.destinationViewController as? EditPhotoVC {
+            if segue.identifier == Constant.unwindFromPredefinedReference {
                 editPhotoViewController.measuringReference = measuringReferences[selectedCellRow]
+            } else if segue.identifier == Constant.unwindFromCustomReference {
+                if let cell = tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 1)) as? CustomLengthTableViewCell {
+                    if cell.customLengthInput.text != nil && cell.customUnitInput.text != nil {
+                        let customLength = Float(cell.customLengthInput.text!) ?? 0
+                        editPhotoViewController.measuringReference = ("Custom", customLength, cell.customUnitInput.text!)
+                    } else {
+                        editPhotoViewController.measuringReference = nil
+                    }
+                }
             }
         }
     }

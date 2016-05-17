@@ -20,6 +20,7 @@
 		0AB748611CB0DEB900A18F43 /* ListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AB748601CB0DEB900A18F43 /* ListTableViewController.swift */; };
 		0AB748651CB0DF0700A18F43 /* Firebase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0AB748641CB0DF0700A18F43 /* Firebase.framework */; };
 		0AB748671CB0E2EF00A18F43 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AB748661CB0E2EF00A18F43 /* Theme.swift */; };
+		0AB8AC2A1CEB71E4001BF2AE /* CustomLengthTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AB8AC291CEB71E4001BF2AE /* CustomLengthTableViewCell.swift */; };
 		0ABDFD451CB478DE0021058F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0ABDFD441CB478DE0021058F /* Main.storyboard */; };
 		0AC276881CC424F100AF391E /* DataBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AC276871CC424F100AF391E /* DataBase.swift */; };
 		0ADEF61F1CACCFAD008F3E6F /* LocatorCamModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ADEF61E1CACCFAD008F3E6F /* LocatorCamModel.swift */; };
@@ -45,6 +46,7 @@
 		0AB748601CB0DEB900A18F43 /* ListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListTableViewController.swift; sourceTree = "<group>"; };
 		0AB748641CB0DF0700A18F43 /* Firebase.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Firebase.framework; path = "../../Library/Developer/Xcode/DerivedData/LocatorCam-grftmbhhyxhqfyfnrtatzowvrclu/Build/Products/Debug-iphoneos/Firebase.framework"; sourceTree = "<group>"; };
 		0AB748661CB0E2EF00A18F43 /* Theme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
+		0AB8AC291CEB71E4001BF2AE /* CustomLengthTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomLengthTableViewCell.swift; sourceTree = "<group>"; };
 		0ABDFD441CB478DE0021058F /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		0AC276871CC424F100AF391E /* DataBase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataBase.swift; sourceTree = "<group>"; };
 		0ADEF61E1CACCFAD008F3E6F /* LocatorCamModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocatorCamModel.swift; sourceTree = "<group>"; };
@@ -86,6 +88,7 @@
 			children = (
 				0AE5BD2F1CA3B287001458DF /* EditPhotoVC.swift */,
 				0AA12DA51CEA901D00BAB749 /* measuringReferenceTableViewController.swift */,
+				0AB8AC291CEB71E4001BF2AE /* CustomLengthTableViewCell.swift */,
 				0A61D52D1CAE1E1000DDC276 /* LineView.swift */,
 				0AB748601CB0DEB900A18F43 /* ListTableViewController.swift */,
 				0A0B1F2E1CB2102F00FC0C77 /* ProfileTableViewCell.swift */,
@@ -302,6 +305,7 @@
 				0A929ED91CC881B9009E04AE /* SharingManager.swift in Sources */,
 				0A0EEF981CB93AB500B4349B /* MapImageDetailsViewController.swift in Sources */,
 				0AB748611CB0DEB900A18F43 /* ListTableViewController.swift in Sources */,
+				0AB8AC2A1CEB71E4001BF2AE /* CustomLengthTableViewCell.swift in Sources */,
 				0ADEF61F1CACCFAD008F3E6F /* LocatorCamModel.swift in Sources */,
 				0AC276881CC424F100AF391E /* DataBase.swift in Sources */,
 				0AE5BD2E1CA3B287001458DF /* AppDelegate.swift in Sources */,

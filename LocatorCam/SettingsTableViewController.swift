@@ -14,7 +14,6 @@ class SettingsTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(SharingManager.sharedInstance.locationStampEnabled)
         stampLocationSwitch.setOn(SharingManager.sharedInstance.locationStampEnabled, animated: false)
     }
     

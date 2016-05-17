@@ -27,7 +27,6 @@ class SharingManager {
     // all moments download from the database
     var moments = [NSDictionary]() {
         didSet {
-            print(momentsUpdateHandlers.count)
             for handler in momentsUpdateHandlers {
                 handler()
             }
