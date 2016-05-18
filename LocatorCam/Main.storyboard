@@ -288,10 +288,11 @@
                                 <rect key="frame" x="290" y="290" width="20" height="20"/>
                             </activityIndicatorView>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DFi-jO-lXp">
-                                <rect key="frame" x="0.0" y="64" width="600" height="492"/>
+                                <rect key="frame" x="0.0" y="64" width="600" height="487"/>
                                 <gestureRecognizers/>
                                 <connections>
                                     <outletCollection property="gestureRecognizers" destination="TpX-WL-gKW" appends="YES" id="CVg-ii-VjZ"/>
+                                    <outletCollection property="gestureRecognizers" destination="HFj-2y-ADt" appends="YES" id="Rwz-XQ-Dsf"/>
                                 </connections>
                             </scrollView>
                         </subviews>
@@ -307,13 +308,21 @@
                     </view>
                     <connections>
                         <outlet property="activityIndicator" destination="iZD-hB-MDo" id="5Uv-Ij-Fmi"/>
+                        <outlet property="goBackTapGesture" destination="HFj-2y-ADt" id="KdU-dB-kC5"/>
                         <outlet property="scrollView" destination="DFi-jO-lXp" id="QbX-3H-UoW"/>
+                        <outlet property="zoomOutTapGesture" destination="TpX-WL-gKW" id="Ezi-L0-Pqt"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Nnb-EC-Pos" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <tapGestureRecognizer id="TpX-WL-gKW">
+                <exit id="TGi-FV-5bb" userLabel="Exit" sceneMemberID="exit"/>
+                <tapGestureRecognizer numberOfTapsRequired="2" id="TpX-WL-gKW" userLabel="zoom out">
                     <connections>
                         <action selector="tapGesture:" destination="3DU-CA-5Nx" id="4qY-GH-XVA"/>
+                    </connections>
+                </tapGestureRecognizer>
+                <tapGestureRecognizer id="HFj-2y-ADt" userLabel="go back to moments">
+                    <connections>
+                        <segue destination="TGi-FV-5bb" kind="unwind" unwindAction="goBackToMoments:" id="ZQV-kp-1AP"/>
                     </connections>
                 </tapGestureRecognizer>
             </objects>
@@ -478,18 +487,37 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Umr-NV-rJb">
-                                <rect key="frame" x="20" y="72" width="560" height="476"/>
+                                <rect key="frame" x="0.0" y="72" width="600" height="476"/>
                                 <gestureRecognizers/>
+                                <constraints>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="50" id="FAn-13-6d5"/>
+                                </constraints>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
                         <constraints>
+                            <constraint firstItem="Umr-NV-rJb" firstAttribute="centerY" secondItem="MSD-Bf-VU2" secondAttribute="centerY" id="5kw-Nt-ZXy"/>
+                            <constraint firstItem="W6s-7p-RQr" firstAttribute="top" secondItem="Umr-NV-rJb" secondAttribute="bottom" constant="8" symbolic="YES" id="6Wk-QM-Y3X"/>
+                            <constraint firstItem="W6s-7p-RQr" firstAttribute="top" secondItem="Umr-NV-rJb" secondAttribute="bottom" constant="8" symbolic="YES" id="MUY-us-Cs4"/>
                             <constraint firstItem="Umr-NV-rJb" firstAttribute="top" secondItem="Uto-bM-M7x" secondAttribute="bottom" constant="8" symbolic="YES" id="ZQs-vW-jbD"/>
+                            <constraint firstItem="Umr-NV-rJb" firstAttribute="top" secondItem="Uto-bM-M7x" secondAttribute="bottom" constant="8" symbolic="YES" id="ag2-DR-eiY"/>
                             <constraint firstItem="W6s-7p-RQr" firstAttribute="top" secondItem="Umr-NV-rJb" secondAttribute="bottom" constant="8" symbolic="YES" id="cvp-dm-0QI"/>
-                            <constraint firstItem="Umr-NV-rJb" firstAttribute="leading" secondItem="MSD-Bf-VU2" secondAttribute="leadingMargin" id="leP-vR-teV"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="Umr-NV-rJb" secondAttribute="trailing" id="tB6-Wx-fT9"/>
+                            <constraint firstItem="Umr-NV-rJb" firstAttribute="top" secondItem="Uto-bM-M7x" secondAttribute="bottom" constant="8" symbolic="YES" id="jmV-zS-jST"/>
+                            <constraint firstItem="Umr-NV-rJb" firstAttribute="leading" secondItem="MSD-Bf-VU2" secondAttribute="leadingMargin" constant="-20" id="leP-vR-teV"/>
+                            <constraint firstItem="Umr-NV-rJb" firstAttribute="centerY" secondItem="MSD-Bf-VU2" secondAttribute="centerY" id="rej-kd-C4J"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Umr-NV-rJb" secondAttribute="trailing" constant="-20" id="tB6-Wx-fT9"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="5kw-Nt-ZXy"/>
+                                <exclude reference="ZQs-vW-jbD"/>
+                                <exclude reference="jmV-zS-jST"/>
+                                <exclude reference="rej-kd-C4J"/>
+                                <exclude reference="6Wk-QM-Y3X"/>
+                                <exclude reference="cvp-dm-0QI"/>
+                            </mask>
+                        </variation>
                     </view>
                     <toolbarItems>
                         <barButtonItem title="Ruler" id="aGk-sX-4eH">
@@ -650,6 +678,6 @@
         <image name="Settings Filled" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="8Td-Im-SQU"/>
+        <segue reference="VT8-ae-0b9"/>
     </inferredMetricsTieBreakers>
 </document>

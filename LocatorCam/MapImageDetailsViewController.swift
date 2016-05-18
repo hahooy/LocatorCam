@@ -20,8 +20,11 @@ class MapImageDetailsViewController: UIViewController, UIScrollViewDelegate {
         }
     }
     
+    @IBOutlet var zoomOutTapGesture: UITapGestureRecognizer!
+    @IBOutlet var goBackTapGesture: UITapGestureRecognizer!
+    
     @IBAction func tapGesture(sender: UITapGestureRecognizer) {
-        scrollView.setZoomScale(1.0, animated: true)
+        scrollView.setZoomScale(1.0, animated: true)        
     }
     
     var image: UIImage? {
@@ -33,12 +36,15 @@ class MapImageDetailsViewController: UIViewController, UIScrollViewDelegate {
             imageView.image = image
             scrollView.contentSize = imageView.frame.size
             scrollView.addSubview(imageView)
+            imageView.center = scrollView.center
         }
     }
     var photoDescription: String?
     var photoUrl: String?
     
     override func viewDidLoad() {
+        self.navigationController?.navigationBarHidden = true
+        goBackTapGesture.requireGestureRecognizerToFail(zoomOutTapGesture)
         activityIndicator.startAnimating()
         if photoUrl != nil {
             UIApplication.sharedApplication().networkActivityIndicatorVisible = true
@@ -54,9 +60,9 @@ class MapImageDetailsViewController: UIViewController, UIScrollViewDelegate {
         }
     }
     
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
-        self.navigationController?.setNavigationBarHidden(false, animated: true)
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.navigationController?.navigationBarHidden = false
     }
     
     // MARK: - ScrollView Delegate Method

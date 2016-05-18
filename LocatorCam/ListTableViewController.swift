@@ -297,4 +297,9 @@ class ListTableViewController: UITableViewController, UIImagePickerControllerDel
         
         cell.descriptionLable?.font = Constant.descriptionFont
     }
+    
+    // MARK: - Navigation
+    @IBAction func goBackToMoments(segue: UIStoryboardSegue) {
+        
+    }
 }

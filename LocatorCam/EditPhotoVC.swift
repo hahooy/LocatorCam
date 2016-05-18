@@ -38,6 +38,8 @@ class EditPhotoVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         loadLineView(imageView)
+        imageView.layer.borderColor = UIColor.blackColor().CGColor
+        imageView.layer.borderWidth = 5
         imageView.image = photo
         if (SharingManager.sharedInstance.locationStampEnabled) {
             embedGPSData()
