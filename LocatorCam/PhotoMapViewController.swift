@@ -44,9 +44,9 @@ class PhotoMapViewController: UIViewController, MKMapViewDelegate, CLLocationMan
         locationManager.startUpdatingLocation()
     }
     
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
-        self.navigationController?.setNavigationBarHidden(true, animated: true)
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.navigationBarHidden = true
         self.renderAnnotations()
     }
     

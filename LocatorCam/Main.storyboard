@@ -298,13 +298,21 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="DFi-jO-lXp" firstAttribute="top" secondItem="fdP-SS-1sD" secondAttribute="bottom" id="04K-ra-c4K"/>
+                            <constraint firstItem="DFi-jO-lXp" firstAttribute="top" secondItem="fdP-SS-1sD" secondAttribute="bottom" constant="8" symbolic="YES" id="04K-ra-c4K"/>
                             <constraint firstItem="DFi-jO-lXp" firstAttribute="leading" secondItem="hzP-1N-ZOx" secondAttribute="leading" id="1dh-FF-V2t"/>
-                            <constraint firstItem="DFi-jO-lXp" firstAttribute="bottom" secondItem="VpY-SJ-nol" secondAttribute="top" id="W7o-rA-VPS"/>
+                            <constraint firstItem="DFi-jO-lXp" firstAttribute="bottom" secondItem="VpY-SJ-nol" secondAttribute="top" constant="8" symbolic="YES" id="W7o-rA-VPS"/>
                             <constraint firstItem="iZD-hB-MDo" firstAttribute="centerY" secondItem="hzP-1N-ZOx" secondAttribute="centerY" id="azc-J6-PvZ"/>
                             <constraint firstItem="iZD-hB-MDo" firstAttribute="centerX" secondItem="hzP-1N-ZOx" secondAttribute="centerX" id="iOg-lb-0S5"/>
+                            <constraint firstItem="DFi-jO-lXp" firstAttribute="top" secondItem="fdP-SS-1sD" secondAttribute="bottom" id="kda-Cm-VBI"/>
                             <constraint firstAttribute="trailing" secondItem="DFi-jO-lXp" secondAttribute="trailing" id="o6U-HA-hjE"/>
+                            <constraint firstItem="VpY-SJ-nol" firstAttribute="top" secondItem="DFi-jO-lXp" secondAttribute="bottom" id="qdz-fL-gSp"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="04K-ra-c4K"/>
+                                <exclude reference="W7o-rA-VPS"/>
+                            </mask>
+                        </variation>
                     </view>
                     <connections>
                         <outlet property="activityIndicator" destination="iZD-hB-MDo" id="5Uv-Ij-Fmi"/>
@@ -314,7 +322,6 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Nnb-EC-Pos" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <exit id="TGi-FV-5bb" userLabel="Exit" sceneMemberID="exit"/>
                 <tapGestureRecognizer numberOfTapsRequired="2" id="TpX-WL-gKW" userLabel="zoom out">
                     <connections>
                         <action selector="tapGesture:" destination="3DU-CA-5Nx" id="4qY-GH-XVA"/>
@@ -322,7 +329,7 @@
                 </tapGestureRecognizer>
                 <tapGestureRecognizer id="HFj-2y-ADt" userLabel="go back to moments">
                     <connections>
-                        <segue destination="TGi-FV-5bb" kind="unwind" unwindAction="goBackToMoments:" id="ZQV-kp-1AP"/>
+                        <action selector="goBackTapGestureHandler:" destination="3DU-CA-5Nx" id="m4h-xV-znC"/>
                     </connections>
                 </tapGestureRecognizer>
             </objects>

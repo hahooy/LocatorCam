@@ -22,6 +22,9 @@ class MapImageDetailsViewController: UIViewController, UIScrollViewDelegate {
     
     @IBOutlet var zoomOutTapGesture: UITapGestureRecognizer!
     @IBOutlet var goBackTapGesture: UITapGestureRecognizer!
+    @IBAction func goBackTapGestureHandler(sender: UITapGestureRecognizer) {
+        self.navigationController?.popViewControllerAnimated(true)
+    }
     
     @IBAction func tapGesture(sender: UITapGestureRecognizer) {
         scrollView.setZoomScale(1.0, animated: true)        
@@ -43,7 +46,7 @@ class MapImageDetailsViewController: UIViewController, UIScrollViewDelegate {
     var photoUrl: String?
     
     override func viewDidLoad() {
-        self.navigationController?.navigationBarHidden = true
+        //self.navigationController?.navigationBarHidden = true
         goBackTapGesture.requireGestureRecognizerToFail(zoomOutTapGesture)
         activityIndicator.startAnimating()
         if photoUrl != nil {
@@ -60,9 +63,10 @@ class MapImageDetailsViewController: UIViewController, UIScrollViewDelegate {
         }
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillAppear(animated: Bool) {
         super.viewWillDisappear(animated)
-        self.navigationController?.navigationBarHidden = false
+        self.navigationController?.navigationBarHidden = true
+        self.navigationController?.toolbarHidden = true
     }
     
     // MARK: - ScrollView Delegate Method

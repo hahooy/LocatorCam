@@ -45,9 +45,15 @@ class ListTableViewController: UITableViewController, UIImagePickerControllerDel
         SharingManager.sharedInstance.addMomentsUpdatedHandler { self.tableView.reloadData() }
     }
     
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
-        self.navigationController?.setToolbarHidden(true, animated: false)
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.toolbarHidden = true
+        self.navigationController?.navigationBarHidden = false
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.navigationController?.toolbarHidden = false
     }
     
     // MARK: - control camera
@@ -297,9 +303,5 @@ class ListTableViewController: UITableViewController, UIImagePickerControllerDel
         
         cell.descriptionLable?.font = Constant.descriptionFont
     }
-    
-    // MARK: - Navigation
-    @IBAction func goBackToMoments(segue: UIStoryboardSegue) {
-        
-    }
+
 }
