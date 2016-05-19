@@ -17,8 +17,14 @@ class SettingsTableViewController: UITableViewController {
         stampLocationSwitch.setOn(SharingManager.sharedInstance.locationStampEnabled, animated: false)
     }
     
-    override func viewDidDisappear(animated: Bool) {
-        super.viewDidDisappear(animated)
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.toolbarHidden = true
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.navigationController?.toolbarHidden = false
         SharingManager.sharedInstance.locationStampEnabled = stampLocationSwitch.on
     }
 }

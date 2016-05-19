@@ -11,18 +11,18 @@ import Firebase
 
 /*
  This class contains variables that are shared across the entire application
-*/
+ */
 
 class SharingManager {
     
     /*
      singleton instance of SharingManager, this instance is shared among the whole application
-    */
+     */
     static let sharedInstance = SharingManager()
-    /* 
+    /*
      handlers to be executed whenever moments get updated. usually the handler is a closure that
      refresh the UIView
-    */
+     */
     var momentsUpdateHandlers = Array<(Void -> Void)>()
     // all moments download from the database
     var moments = [NSDictionary]() {
@@ -32,8 +32,21 @@ class SharingManager {
             }
         }
     }
+    let defaults = NSUserDefaults.standardUserDefaults()
+    
     // determine if the picture will be stamped by location and time data
-    var locationStampEnabled = true
+    var locationStampEnabled: Bool {
+        get {
+            if defaults.objectForKey("locationStampEnabled") == nil {
+                return true
+            }
+            return defaults.boolForKey("locationStampEnabled")
+        }
+        
+        set {
+            defaults.setBool(newValue, forKey: "locationStampEnabled")
+        }
+    }
     
     struct Constant {
         static let NumberOfMomentsToFetch: UInt = 10
