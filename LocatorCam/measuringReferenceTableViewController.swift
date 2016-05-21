@@ -65,6 +65,16 @@ class measuringReferenceTableViewController: UITableViewController, UIPickerView
         }
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.toolbarHidden = true
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.toolbarHidden = false
+    }
+    
     // MARK: - Table view data source
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
