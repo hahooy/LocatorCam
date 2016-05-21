@@ -9,16 +9,8 @@
 import UIKit
 
 class CustomLengthTableViewCell: UITableViewCell, UITextFieldDelegate {
-    @IBOutlet weak var customLengthInput: UITextField! {
-        didSet {
-            print(customLengthInput.text)
-        }
-    }
-    @IBOutlet weak var customUnitInput: UITextField! {
-        didSet {
-            print(customUnitInput.text)
-        }
-    }
+    @IBOutlet weak var customLengthInput: UITextField!
+    @IBOutlet weak var customUnitInput: UITextField!
 
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         return true;

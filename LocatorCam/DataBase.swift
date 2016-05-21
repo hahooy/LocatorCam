@@ -10,6 +10,6 @@ import Foundation
 import Firebase
 
 struct DataBase {
-    static let momentFirebaseRef = Firebase(url:"https://fishboard.firebaseio.com/dev/moments")
-    static let photoFirebaseRef = Firebase(url:"https://fishboard.firebaseio.com/dev/photos")
+    static let momentFirebaseRef = Firebase(url:"https://fishboard.firebaseio.com/sandbox/moments")
+    static let photoFirebaseRef = Firebase(url:"https://fishboard.firebaseio.com/sandbox/photos")
 }

@@ -23,11 +23,13 @@
 		0AB8AC2A1CEB71E4001BF2AE /* CustomLengthTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AB8AC291CEB71E4001BF2AE /* CustomLengthTableViewCell.swift */; };
 		0ABDFD451CB478DE0021058F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0ABDFD441CB478DE0021058F /* Main.storyboard */; };
 		0AC276881CC424F100AF391E /* DataBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AC276871CC424F100AF391E /* DataBase.swift */; };
+		0AD8BE8C1CF0DD5100DA829F /* MeasureReference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AD8BE8B1CF0DD5100DA829F /* MeasureReference.swift */; };
 		0ADEF61F1CACCFAD008F3E6F /* LocatorCamModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ADEF61E1CACCFAD008F3E6F /* LocatorCamModel.swift */; };
 		0AE5BD2E1CA3B287001458DF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AE5BD2D1CA3B287001458DF /* AppDelegate.swift */; };
 		0AE5BD301CA3B287001458DF /* EditPhotoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AE5BD2F1CA3B287001458DF /* EditPhotoVC.swift */; };
 		0AE5BD351CA3B287001458DF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0AE5BD341CA3B287001458DF /* Assets.xcassets */; };
 		0AE5BD401CA3BA75001458DF /* OneShotLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AE5BD3F1CA3BA75001458DF /* OneShotLocationManager.swift */; };
+		0AF5B8E01CF0C611004FBB3F /* NewReferenceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF5B8DF1CF0C611004FBB3F /* NewReferenceViewController.swift */; };
 		0AFFDC9A1CAA24620006E65D /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0AFFDC991CAA24620006E65D /* LaunchScreen.xib */; };
 		AB14DEDE776EA6213B5AE712 /* Pods_LocatorCam.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C0DC8607C3FC40239DAAD4A /* Pods_LocatorCam.framework */; };
 /* End PBXBuildFile section */
@@ -49,6 +51,7 @@
 		0AB8AC291CEB71E4001BF2AE /* CustomLengthTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomLengthTableViewCell.swift; sourceTree = "<group>"; };
 		0ABDFD441CB478DE0021058F /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		0AC276871CC424F100AF391E /* DataBase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataBase.swift; sourceTree = "<group>"; };
+		0AD8BE8B1CF0DD5100DA829F /* MeasureReference.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeasureReference.swift; sourceTree = "<group>"; };
 		0ADEF61E1CACCFAD008F3E6F /* LocatorCamModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocatorCamModel.swift; sourceTree = "<group>"; };
 		0AE5BD2A1CA3B287001458DF /* LocatorCam.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LocatorCam.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0AE5BD2D1CA3B287001458DF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -56,6 +59,7 @@
 		0AE5BD341CA3B287001458DF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0AE5BD391CA3B287001458DF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0AE5BD3F1CA3BA75001458DF /* OneShotLocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OneShotLocationManager.swift; sourceTree = "<group>"; };
+		0AF5B8DF1CF0C611004FBB3F /* NewReferenceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewReferenceViewController.swift; sourceTree = "<group>"; };
 		0AFFDC991CAA24620006E65D /* LaunchScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LaunchScreen.xib; sourceTree = "<group>"; };
 		125E085099445A5609024AFB /* Pods-LocatorCam.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LocatorCam.release.xcconfig"; path = "Pods/Target Support Files/Pods-LocatorCam/Pods-LocatorCam.release.xcconfig"; sourceTree = "<group>"; };
 		26E6DDCD150B630BE8AA7259 /* Pods-LocatorCam.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LocatorCam.debug.xcconfig"; path = "Pods/Target Support Files/Pods-LocatorCam/Pods-LocatorCam.debug.xcconfig"; sourceTree = "<group>"; };
@@ -87,6 +91,7 @@
 			isa = PBXGroup;
 			children = (
 				0AE5BD2F1CA3B287001458DF /* EditPhotoVC.swift */,
+				0AF5B8DF1CF0C611004FBB3F /* NewReferenceViewController.swift */,
 				0AA12DA51CEA901D00BAB749 /* measuringReferenceTableViewController.swift */,
 				0AB8AC291CEB71E4001BF2AE /* CustomLengthTableViewCell.swift */,
 				0A61D52D1CAE1E1000DDC276 /* LineView.swift */,
@@ -107,6 +112,7 @@
 				0ADEF61E1CACCFAD008F3E6F /* LocatorCamModel.swift */,
 				0A929ED81CC881B9009E04AE /* SharingManager.swift */,
 				0AE5BD3F1CA3BA75001458DF /* OneShotLocationManager.swift */,
+				0AD8BE8B1CF0DD5100DA829F /* MeasureReference.swift */,
 				0AC276871CC424F100AF391E /* DataBase.swift */,
 			);
 			name = Models;
@@ -305,8 +311,10 @@
 				0A929ED91CC881B9009E04AE /* SharingManager.swift in Sources */,
 				0A0EEF981CB93AB500B4349B /* MapImageDetailsViewController.swift in Sources */,
 				0AB748611CB0DEB900A18F43 /* ListTableViewController.swift in Sources */,
+				0AD8BE8C1CF0DD5100DA829F /* MeasureReference.swift in Sources */,
 				0AB8AC2A1CEB71E4001BF2AE /* CustomLengthTableViewCell.swift in Sources */,
 				0ADEF61F1CACCFAD008F3E6F /* LocatorCamModel.swift in Sources */,
+				0AF5B8E01CF0C611004FBB3F /* NewReferenceViewController.swift in Sources */,
 				0AC276881CC424F100AF391E /* DataBase.swift in Sources */,
 				0AE5BD2E1CA3B287001458DF /* AppDelegate.swift in Sources */,
 				0AA12DA41CEA6ED700BAB749 /* SettingsTableViewController.swift in Sources */,

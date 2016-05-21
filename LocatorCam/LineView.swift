@@ -40,13 +40,13 @@ class LineView: UIView {
     // view becomes the reference line, the length of the reference line
     // always equals to the reference object and does not change as
     // user draging and panning the line
-    private var measuringReference: (String, Double, String)? {
+    private var measuringReference: MeasureReference? {
         didSet {
             setNeedsDisplay()
         }
     }
     
-    init(frame: CGRect, reference: (String, Double, String)?) {
+    init(frame: CGRect, reference: MeasureReference?) {
         super.init(frame: frame)
         measuringReference = reference
     }
@@ -71,9 +71,9 @@ class LineView: UIView {
             drawCircle(lines[i].endPoint, radius: lines[i].radius / 2)
             // draw distance
             if i == 0 && measuringReference != nil {
-                drawText("\(String(format: "%.2f", measuringReference!.1)) \(measuringReference!.2)", atPoint: lines[i].midPoint)
+                drawText("\(String(format: "%.2f", measuringReference!.length)) \(measuringReference!.unit)", atPoint: lines[i].midPoint)
             } else if measuringReference != nil {
-                drawText("\(String(format: "%.2f",lines[i].distance / lines[0].distance * CGFloat(measuringReference!.1))) \(measuringReference!.2)", atPoint: lines[i].midPoint)
+                drawText("\(String(format: "%.2f",lines[i].distance / lines[0].distance * CGFloat(measuringReference!.length))) \(measuringReference!.unit)", atPoint: lines[i].midPoint)
             } else {
                 drawText(String(Int(lines[i].distance)), atPoint: lines[i].midPoint)
             }
@@ -164,7 +164,7 @@ class LineView: UIView {
     }
     
     // set the reference object for measurement 
-    func setMeasuringReference(reference: (String, Double, String)?) {
+    func setMeasuringReference(reference: MeasureReference?) {
         measuringReference = reference
     }
 }

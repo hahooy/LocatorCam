@@ -25,7 +25,7 @@ class EditPhotoVC: UIViewController {
     @IBOutlet weak var imageView: UIImageView!
     
     // the reference object for measuring length
-    var measuringReference: (String, Double, String)? = ("Drivers License (width)", 3.375, "inches") {
+    var measuringReference: MeasureReference? = MeasureReference(name: "Drivers License (width)", length: 3.375, unit: "inches") {
         didSet {
             lineView?.setMeasuringReference(measuringReference)
         }
@@ -241,7 +241,6 @@ class EditPhotoVC: UIViewController {
         let imageRef = image.CGImage!
         let imageArea = CGRectMake(x, y, width, height)
         let subImageRef: CGImageRef = CGImageCreateWithImageInRect(imageRef, imageArea)!
-        print("x:\(x) y:\(y) width:\(width) height:\(height)")
         // Return image
         return UIImage(CGImage: subImageRef)
     }
