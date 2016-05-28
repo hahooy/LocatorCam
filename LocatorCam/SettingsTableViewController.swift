@@ -11,10 +11,14 @@ import UIKit
 class SettingsTableViewController: UITableViewController {
 
     @IBOutlet weak var stampLocationSwitch: UISwitch!
+    @IBOutlet weak var usernameLabel: UILabel!
+    @IBOutlet weak var emailLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         stampLocationSwitch.setOn(SharingManager.sharedInstance.locationStampEnabled, animated: false)
+        usernameLabel.text = UserInfo.username
+        emailLabel.text = UserInfo.email
     }
     
     override func viewWillAppear(animated: Bool) {

@@ -52,6 +52,7 @@ class SharingManager {
         static let NumberOfMomentsToFetch: UInt = 10
         static let minimumTimeInterval = 0.000001
         static let thumbnailWidth: CGFloat = 1000
+        static let baseServerURL: String = "http://127.0.0.1:8000/locator-cam/"
     }
     
     init() {

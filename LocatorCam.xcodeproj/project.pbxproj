@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0A05C03D1CF9EEED002F9BB5 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A05C03C1CF9EEED002F9BB5 /* LoginViewController.swift */; };
+		0A05C03F1CFA42F4002F9BB5 /* UserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A05C03E1CFA42F4002F9BB5 /* UserInfo.swift */; };
+		0A05C0411CFA5539002F9BB5 /* UserRegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A05C0401CFA5539002F9BB5 /* UserRegistrationViewController.swift */; };
 		0A0B1F2F1CB2102F00FC0C77 /* ProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A0B1F2E1CB2102F00FC0C77 /* ProfileTableViewCell.swift */; };
 		0A0EEF981CB93AB500B4349B /* MapImageDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A0EEF971CB93AB500B4349B /* MapImageDetailsViewController.swift */; };
 		0A1F1A9A1CBAA94C0025CB26 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A1F1A991CBAA94C0025CB26 /* Helpers.swift */; };
@@ -24,7 +27,6 @@
 		0ABDFD451CB478DE0021058F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0ABDFD441CB478DE0021058F /* Main.storyboard */; };
 		0AC276881CC424F100AF391E /* DataBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AC276871CC424F100AF391E /* DataBase.swift */; };
 		0AD8BE8C1CF0DD5100DA829F /* MeasureReference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AD8BE8B1CF0DD5100DA829F /* MeasureReference.swift */; };
-		0ADEF61F1CACCFAD008F3E6F /* LocatorCamModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ADEF61E1CACCFAD008F3E6F /* LocatorCamModel.swift */; };
 		0AE5BD2E1CA3B287001458DF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AE5BD2D1CA3B287001458DF /* AppDelegate.swift */; };
 		0AE5BD301CA3B287001458DF /* EditPhotoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AE5BD2F1CA3B287001458DF /* EditPhotoVC.swift */; };
 		0AE5BD351CA3B287001458DF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0AE5BD341CA3B287001458DF /* Assets.xcassets */; };
@@ -35,6 +37,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0A05C03C1CF9EEED002F9BB5 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		0A05C03E1CFA42F4002F9BB5 /* UserInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserInfo.swift; sourceTree = "<group>"; };
+		0A05C0401CFA5539002F9BB5 /* UserRegistrationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserRegistrationViewController.swift; sourceTree = "<group>"; };
 		0A0B1F2E1CB2102F00FC0C77 /* ProfileTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileTableViewCell.swift; sourceTree = "<group>"; };
 		0A0EEF971CB93AB500B4349B /* MapImageDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapImageDetailsViewController.swift; sourceTree = "<group>"; };
 		0A1F1A991CBAA94C0025CB26 /* Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
@@ -52,7 +57,6 @@
 		0ABDFD441CB478DE0021058F /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		0AC276871CC424F100AF391E /* DataBase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataBase.swift; sourceTree = "<group>"; };
 		0AD8BE8B1CF0DD5100DA829F /* MeasureReference.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeasureReference.swift; sourceTree = "<group>"; };
-		0ADEF61E1CACCFAD008F3E6F /* LocatorCamModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocatorCamModel.swift; sourceTree = "<group>"; };
 		0AE5BD2A1CA3B287001458DF /* LocatorCam.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LocatorCam.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0AE5BD2D1CA3B287001458DF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0AE5BD2F1CA3B287001458DF /* EditPhotoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPhotoVC.swift; sourceTree = "<group>"; };
@@ -91,6 +95,7 @@
 			isa = PBXGroup;
 			children = (
 				0AE5BD2F1CA3B287001458DF /* EditPhotoVC.swift */,
+				0A05C0401CFA5539002F9BB5 /* UserRegistrationViewController.swift */,
 				0AF5B8DF1CF0C611004FBB3F /* NewReferenceViewController.swift */,
 				0AA12DA51CEA901D00BAB749 /* measuringReferenceTableViewController.swift */,
 				0AB8AC291CEB71E4001BF2AE /* CustomLengthTableViewCell.swift */,
@@ -102,6 +107,7 @@
 				0A4D644A1CB8B57C00CC837F /* MKPhoto.swift */,
 				0A0EEF971CB93AB500B4349B /* MapImageDetailsViewController.swift */,
 				0AA12DA31CEA6ED700BAB749 /* SettingsTableViewController.swift */,
+				0A05C03C1CF9EEED002F9BB5 /* LoginViewController.swift */,
 			);
 			name = Controler;
 			sourceTree = "<group>";
@@ -109,8 +115,8 @@
 		0AB7485D1CB0D71200A18F43 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				0ADEF61E1CACCFAD008F3E6F /* LocatorCamModel.swift */,
 				0A929ED81CC881B9009E04AE /* SharingManager.swift */,
+				0A05C03E1CFA42F4002F9BB5 /* UserInfo.swift */,
 				0AE5BD3F1CA3BA75001458DF /* OneShotLocationManager.swift */,
 				0AD8BE8B1CF0DD5100DA829F /* MeasureReference.swift */,
 				0AC276871CC424F100AF391E /* DataBase.swift */,
@@ -301,6 +307,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0A05C03D1CF9EEED002F9BB5 /* LoginViewController.swift in Sources */,
 				0AE5BD301CA3B287001458DF /* EditPhotoVC.swift in Sources */,
 				0A1F1A9A1CBAA94C0025CB26 /* Helpers.swift in Sources */,
 				0AB748671CB0E2EF00A18F43 /* Theme.swift in Sources */,
@@ -308,18 +315,19 @@
 				0A0B1F2F1CB2102F00FC0C77 /* ProfileTableViewCell.swift in Sources */,
 				0AA12DA61CEA901D00BAB749 /* measuringReferenceTableViewController.swift in Sources */,
 				0A61D52E1CAE1E1000DDC276 /* LineView.swift in Sources */,
+				0A05C0411CFA5539002F9BB5 /* UserRegistrationViewController.swift in Sources */,
 				0A929ED91CC881B9009E04AE /* SharingManager.swift in Sources */,
 				0A0EEF981CB93AB500B4349B /* MapImageDetailsViewController.swift in Sources */,
 				0AB748611CB0DEB900A18F43 /* ListTableViewController.swift in Sources */,
 				0AD8BE8C1CF0DD5100DA829F /* MeasureReference.swift in Sources */,
 				0AB8AC2A1CEB71E4001BF2AE /* CustomLengthTableViewCell.swift in Sources */,
-				0ADEF61F1CACCFAD008F3E6F /* LocatorCamModel.swift in Sources */,
 				0AF5B8E01CF0C611004FBB3F /* NewReferenceViewController.swift in Sources */,
 				0AC276881CC424F100AF391E /* DataBase.swift in Sources */,
 				0AE5BD2E1CA3B287001458DF /* AppDelegate.swift in Sources */,
 				0AA12DA41CEA6ED700BAB749 /* SettingsTableViewController.swift in Sources */,
 				0AA347F91CB35772002C6319 /* SubmitPhotoViewController.swift in Sources */,
 				0A4D644B1CB8B57C00CC837F /* MKPhoto.swift in Sources */,
+				0A05C03F1CFA42F4002F9BB5 /* UserInfo.swift in Sources */,
 				0A4D64481CB89C5D00CC837F /* PhotoMapViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
