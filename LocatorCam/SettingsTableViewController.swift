@@ -13,12 +13,17 @@ class SettingsTableViewController: UITableViewController {
     @IBOutlet weak var stampLocationSwitch: UISwitch!
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var emailLabel: UILabel!
+    @IBOutlet weak var numberOfFriendsButton: UIButton!
+    @IBAction func numberOfFriendsButtonAction(sender: UIButton) {
+        
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         stampLocationSwitch.setOn(SharingManager.sharedInstance.locationStampEnabled, animated: false)
         usernameLabel.text = UserInfo.username
         emailLabel.text = UserInfo.email
+        getNumberOfFriends()
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -30,5 +35,37 @@ class SettingsTableViewController: UITableViewController {
         super.viewWillDisappear(animated)
         self.navigationController?.toolbarHidden = false
         SharingManager.sharedInstance.locationStampEnabled = stampLocationSwitch.on
+    }
+    
+    private func getNumberOfFriends() {
+        let url:NSURL = NSURL(string: SharingManager.Constant.numberOfFriendsURL)!
+        let session = NSURLSession.sharedSession()
+        
+        let request = NSMutableURLRequest(URL: url)
+        request.HTTPMethod = "POST"
+        request.cachePolicy = NSURLRequestCachePolicy.ReloadIgnoringCacheData
+        
+        let paramString = "content_type=JSON"
+        request.HTTPBody = paramString.dataUsingEncoding(NSUTF8StringEncoding)
+        
+        let task = session.dataTaskWithRequest(request) {
+            (let data, let response, let error) in
+            
+            guard let _:NSData = data, let _:NSURLResponse = response  where error == nil else {
+                print("error: \(error)")
+                return
+            }
+            do {
+                let json = try NSJSONSerialization.JSONObjectWithData(data!, options: .AllowFragments) as! NSDictionary
+                if let numberOfFriends = json["number_of_friends"] as? Int {
+                    dispatch_async(dispatch_get_main_queue(), {
+                        self.numberOfFriendsButton.setTitle(String(numberOfFriends), forState: .Normal)
+                    })
+                }
+            } catch {
+                print("error serializing JSON: \(error)")
+            }
+        }
+        task.resume()
     }
 }

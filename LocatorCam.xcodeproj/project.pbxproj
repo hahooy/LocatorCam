@@ -17,6 +17,10 @@
 		0A4D644B1CB8B57C00CC837F /* MKPhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A4D644A1CB8B57C00CC837F /* MKPhoto.swift */; };
 		0A61D52E1CAE1E1000DDC276 /* LineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A61D52D1CAE1E1000DDC276 /* LineView.swift */; };
 		0A929ED91CC881B9009E04AE /* SharingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A929ED81CC881B9009E04AE /* SharingManager.swift */; };
+		0A94B52B1D0283410064053B /* SearchTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A94B52A1D0283410064053B /* SearchTableViewController.swift */; };
+		0A94B52F1D0333B60064053B /* SearchUserResultsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A94B52E1D0333B60064053B /* SearchUserResultsTableViewCell.swift */; };
+		0A94B5311D03819E0064053B /* FriendTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A94B5301D03819E0064053B /* FriendTableViewCell.swift */; };
+		0A94B5331D0381BB0064053B /* FriendsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A94B5321D0381BB0064053B /* FriendsTableViewController.swift */; };
 		0AA12DA41CEA6ED700BAB749 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AA12DA31CEA6ED700BAB749 /* SettingsTableViewController.swift */; };
 		0AA12DA61CEA901D00BAB749 /* measuringReferenceTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AA12DA51CEA901D00BAB749 /* measuringReferenceTableViewController.swift */; };
 		0AA347F91CB35772002C6319 /* SubmitPhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AA347F81CB35772002C6319 /* SubmitPhotoViewController.swift */; };
@@ -47,6 +51,10 @@
 		0A4D644A1CB8B57C00CC837F /* MKPhoto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MKPhoto.swift; sourceTree = "<group>"; };
 		0A61D52D1CAE1E1000DDC276 /* LineView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LineView.swift; sourceTree = "<group>"; };
 		0A929ED81CC881B9009E04AE /* SharingManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharingManager.swift; sourceTree = "<group>"; };
+		0A94B52A1D0283410064053B /* SearchTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchTableViewController.swift; sourceTree = "<group>"; };
+		0A94B52E1D0333B60064053B /* SearchUserResultsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchUserResultsTableViewCell.swift; sourceTree = "<group>"; };
+		0A94B5301D03819E0064053B /* FriendTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendTableViewCell.swift; sourceTree = "<group>"; };
+		0A94B5321D0381BB0064053B /* FriendsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendsTableViewController.swift; sourceTree = "<group>"; };
 		0AA12DA31CEA6ED700BAB749 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
 		0AA12DA51CEA901D00BAB749 /* measuringReferenceTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = measuringReferenceTableViewController.swift; sourceTree = "<group>"; };
 		0AA347F81CB35772002C6319 /* SubmitPhotoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubmitPhotoViewController.swift; sourceTree = "<group>"; };
@@ -95,6 +103,8 @@
 			isa = PBXGroup;
 			children = (
 				0AE5BD2F1CA3B287001458DF /* EditPhotoVC.swift */,
+				0A94B52A1D0283410064053B /* SearchTableViewController.swift */,
+				0A94B52E1D0333B60064053B /* SearchUserResultsTableViewCell.swift */,
 				0A05C0401CFA5539002F9BB5 /* UserRegistrationViewController.swift */,
 				0AF5B8DF1CF0C611004FBB3F /* NewReferenceViewController.swift */,
 				0AA12DA51CEA901D00BAB749 /* measuringReferenceTableViewController.swift */,
@@ -108,6 +118,8 @@
 				0A0EEF971CB93AB500B4349B /* MapImageDetailsViewController.swift */,
 				0AA12DA31CEA6ED700BAB749 /* SettingsTableViewController.swift */,
 				0A05C03C1CF9EEED002F9BB5 /* LoginViewController.swift */,
+				0A94B5301D03819E0064053B /* FriendTableViewCell.swift */,
+				0A94B5321D0381BB0064053B /* FriendsTableViewController.swift */,
 			);
 			name = Controler;
 			sourceTree = "<group>";
@@ -308,13 +320,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				0A05C03D1CF9EEED002F9BB5 /* LoginViewController.swift in Sources */,
+				0A94B52F1D0333B60064053B /* SearchUserResultsTableViewCell.swift in Sources */,
+				0A94B5331D0381BB0064053B /* FriendsTableViewController.swift in Sources */,
 				0AE5BD301CA3B287001458DF /* EditPhotoVC.swift in Sources */,
 				0A1F1A9A1CBAA94C0025CB26 /* Helpers.swift in Sources */,
 				0AB748671CB0E2EF00A18F43 /* Theme.swift in Sources */,
 				0AE5BD401CA3BA75001458DF /* OneShotLocationManager.swift in Sources */,
 				0A0B1F2F1CB2102F00FC0C77 /* ProfileTableViewCell.swift in Sources */,
+				0A94B5311D03819E0064053B /* FriendTableViewCell.swift in Sources */,
 				0AA12DA61CEA901D00BAB749 /* measuringReferenceTableViewController.swift in Sources */,
 				0A61D52E1CAE1E1000DDC276 /* LineView.swift in Sources */,
+				0A94B52B1D0283410064053B /* SearchTableViewController.swift in Sources */,
 				0A05C0411CFA5539002F9BB5 /* UserRegistrationViewController.swift in Sources */,
 				0A929ED91CC881B9009E04AE /* SharingManager.swift in Sources */,
 				0A0EEF981CB93AB500B4349B /* MapImageDetailsViewController.swift in Sources */,

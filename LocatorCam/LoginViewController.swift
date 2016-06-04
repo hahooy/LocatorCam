@@ -21,7 +21,6 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var passcodeTextField: UITextField!
     
     struct Constant {
-        static let loginURL = SharingManager.Constant.baseServerURL + "login/"
         static let segueToApp = "login to app"
     }
     
@@ -35,7 +34,7 @@ class LoginViewController: UIViewController {
     // MARK: - Helper functions
     
     func login_request(username: String, password: String) {
-        let url:NSURL = NSURL(string: Constant.loginURL)!
+        let url:NSURL = NSURL(string: SharingManager.Constant.loginURL)!
         let session = NSURLSession.sharedSession()
         
         let request = NSMutableURLRequest(URL: url)
