@@ -27,7 +27,7 @@ class LoginViewController: UIViewController {
     // MARK: - Navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == Constant.segueToApp {
-            print("segueing to the app")
+            SharingManager.sharedInstance.fetchMoments(nil, spinner: nil)
         }
     }
     

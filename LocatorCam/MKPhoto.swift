@@ -19,24 +19,23 @@ class MKPhoto: NSObject, MKAnnotation {
     let latitude: CLLocationDegrees
     let longitude: CLLocationDegrees
     let date: NSDate
-    let photoReferenceKey: String?
+    let momentID: Int?
     
-    init(data: NSDictionary) {
-        name = data["name"] as! String
-        photoDescription = data["description"] as? String
-        latitude = data["latitude"] as! CLLocationDegrees
-        longitude = data["longitude"] as! CLLocationDegrees
-        photoReferenceKey = data["photoReferenceKey"] as? String
+    init(moment: Moment) {
+        name = moment.username!
+        photoDescription = moment.description
+        latitude = moment.latitude! 
+        longitude = moment.longitude! 
+        momentID = moment.id
         
-        if let imageString = data["thumbnailBase64"] as? String {
+        if let imageString = moment.thumbnail_base64 {
             let decodedData = NSData(base64EncodedString: imageString, options: NSDataBase64DecodingOptions.IgnoreUnknownCharacters)
             thumbnail = UIImage(data: decodedData!)
         } else {
             thumbnail = nil
         }
         
-        let timeInterval = data["time"] as! NSTimeInterval
-        date = NSDate(timeIntervalSince1970: timeInterval)
+        date = NSDate(timeIntervalSince1970: moment.pub_time_interval!)
     }
     
     

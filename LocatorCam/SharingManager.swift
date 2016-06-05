@@ -25,7 +25,7 @@ class SharingManager {
      */
     var momentsUpdateHandlers = Array<(Void -> Void)>()
     // all moments download from the database
-    var moments = [NSDictionary]() {
+    var moments = [Moment]() {
         didSet {
             for handler in momentsUpdateHandlers {
                 handler()
@@ -60,10 +60,13 @@ class SharingManager {
         static let getAllFriendsURL = baseServerURL + "get-all-friends/"
         static let unfriendURL = baseServerURL + "unfriend/"
         static let uploadMomentURL = baseServerURL + "upload-moment/"
+        static let fetchMomentsURL = baseServerURL + "fetch-moments/"
+        static let fetchPhotoURL = baseServerURL + "fetch-photo/"
+        static let logoutURL = baseServerURL + "logout/"
     }
     
     init() {
-        initFirebase(NSDate().timeIntervalSince1970)
+        
     }
     
     // add a handler for updating moments
@@ -71,55 +74,68 @@ class SharingManager {
         momentsUpdateHandlers.append(handler)
     }
     
-    // initialize firebase, load the initial data set, register firebase event listener
-    func initFirebase(time: NSTimeInterval) {
-        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
-        // fetch initial data set, this will be run only once
-        DataBase.momentFirebaseRef.queryOrderedByChild("time").queryEndingAtValue(time).queryLimitedToLast(SharingManager.Constant.NumberOfMomentsToFetch).observeSingleEventOfType(.Value, withBlock: { snapshot in
-            var tempMoments = [NSDictionary]()
+    
+    func fetchMoments(endTime: NSTimeInterval?, spinner: UIActivityIndicatorView?) {
+        // fetch moments happened before endTime
+        // make API request to upload the photo
+        let url:NSURL = NSURL(string: SharingManager.Constant.fetchMomentsURL)!
+        let session = NSURLSession.sharedSession()
+        let request = NSMutableURLRequest(URL: url)
+        request.HTTPMethod = "POST"
+        request.cachePolicy = NSURLRequestCachePolicy.ReloadIgnoringCacheData
+        
+        let paramString = endTime == nil ? "content_type=JSON" : "content_type=JSON&time_interval=\(endTime!)"
+        
+        request.HTTPBody = paramString.dataUsingEncoding(NSUTF8StringEncoding)
+        
+        let task = session.dataTaskWithRequest(request) {
+            (let data, let response, let error) in
             
-            for moment in snapshot.children {
-                let child = moment as! FDataSnapshot
-                let dict = child.value as! NSDictionary
-                tempMoments.append(dict)
+            guard let _:NSData = data, let _:NSURLResponse = response  where error == nil else {
+                print("error: \(error)")
+                return
             }
             
-            SharingManager.sharedInstance.moments += tempMoments.reverse()
-            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-        })
-        // if new data is added to the database, insert it to moments
-        DataBase.momentFirebaseRef.queryOrderedByChild("time").queryStartingAtValue(time + Constant.minimumTimeInterval).observeEventType(.ChildAdded, withBlock: { snapshot in
-            if let dict = snapshot.value as? NSDictionary {
-                SharingManager.sharedInstance.moments.insert(dict, atIndex: 0)
+            do {
+                let momentsJSON = try NSJSONSerialization.JSONObjectWithData(data!, options: .AllowFragments) as! NSArray
+                var tempMoments = [Moment]()
+                for moment in momentsJSON {
+                    
+                    let tempMoment = Moment()
+                    if let id = moment["id"] as? Int {
+                        tempMoment.id = id
+                    }
+                    if let username = moment["username"] as? String {
+                        tempMoment.username = username
+                    }
+                    if let description = moment["description"] as? String {
+                        tempMoment.description = description
+                    }
+                    if let latitude = moment["latitude"] as? Double {
+                        tempMoment.latitude = latitude
+                    }
+                    if let longitude = moment["longitude"] as? Double {
+                        tempMoment.longitude = longitude
+                    }
+                    if let pub_time_interval = moment["pub_time_interval"] as? NSTimeInterval {
+                        tempMoment.pub_time_interval = pub_time_interval
+                    }
+                    if let thumbnail_base64 = moment["thumbnail_base64"] as? String {
+                        tempMoment.thumbnail_base64 = thumbnail_base64
+                    }
+                    tempMoments.append(tempMoment)
+                }
+                self.moments += tempMoments
+            } catch {
+                print("error serializing JSON: \(error)")
             }
-        })
-    }
-    
-    // load more data from firebase, data is appended to the moments array in shared instance
-    func loadDataFromFirebase(time: NSTimeInterval, spinner: UIActivityIndicatorView) {
-        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
-        DataBase.momentFirebaseRef.queryOrderedByChild("time").queryEndingAtValue(time).queryLimitedToLast(SharingManager.Constant.NumberOfMomentsToFetch).observeSingleEventOfType(.Value, withBlock: { snapshot in
-            var tempMoments = [NSDictionary]()
-            
-            for moment in snapshot.children {
-                let child = moment as! FDataSnapshot
-                let dict = child.value as! NSDictionary
-                tempMoments.append(dict)
+            if spinner != nil {
+                dispatch_async(dispatch_get_main_queue(), {
+                    spinner!.stopAnimating()
+                })
             }
-            
-            SharingManager.sharedInstance.moments += tempMoments.reverse()
-            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-            spinner.stopAnimating()
-        })
-    }
-    
-    // add moment to firebase
-    func addMoment(ref: Firebase, data: NSDictionary) {
-        ref.setValue(data)
-    }
-    
-    // add photo to firebase
-    func addPhoto(ref: Firebase, base64String: NSString) {
-        ref.setValue(base64String)
+        }
+        task.resume()
+        
     }
 }

@@ -43,24 +43,50 @@ class MapImageDetailsViewController: UIViewController, UIScrollViewDelegate {
         }
     }
     var photoDescription: String?
-    var photoUrl: String?
+    var momentID: Int?
     
     override func viewDidLoad() {
-        //self.navigationController?.navigationBarHidden = true
+        guard let id = momentID else {
+            return
+        }
         goBackTapGesture.requireGestureRecognizerToFail(zoomOutTapGesture)
         activityIndicator.startAnimating()
-        if photoUrl != nil {
-            UIApplication.sharedApplication().networkActivityIndicatorVisible = true
-            DataBase.photoFirebaseRef.childByAppendingPath(photoUrl).observeSingleEventOfType(.Value, withBlock: {
-                snapshot in
-                if let base64EncodedString = snapshot.value as? String {
-                    let decodedData = NSData(base64EncodedString: base64EncodedString, options: NSDataBase64DecodingOptions.IgnoreUnknownCharacters)
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+        
+        // make API request to fetch the photo
+        let url:NSURL = NSURL(string: SharingManager.Constant.fetchPhotoURL)!
+        let session = NSURLSession.sharedSession()
+        let request = NSMutableURLRequest(URL: url)
+        request.HTTPMethod = "POST"
+        request.cachePolicy = NSURLRequestCachePolicy.ReloadIgnoringCacheData
+        request.addValue("application/x-www-form-urlencoded; charset=utf-8", forHTTPHeaderField: "Content-Type")
+        let paramString = "content_type=JSON&moment_id=\(id)"
+        request.HTTPBody = paramString.dataUsingEncoding(NSUTF8StringEncoding)
+        
+        let task = session.dataTaskWithRequest(request) {
+            (let data, let response, let error) in
+            
+            guard let _:NSData = data, let _:NSURLResponse = response  where error == nil else {
+                print("error: \(error)")
+                return
+            }
+            
+            do {
+                let json = try NSJSONSerialization.JSONObjectWithData(data!, options: .AllowFragments) as! NSDictionary
+                if let photoBase64String = json["photo_base64"] as? String {
+                    let decodedData = NSData(base64EncodedString: photoBase64String, options: NSDataBase64DecodingOptions.IgnoreUnknownCharacters)
                     self.image = UIImage(data: decodedData!)
+                    print(photoBase64String.substringToIndex(photoBase64String.startIndex.advancedBy(20)))
+                    dispatch_async(dispatch_get_main_queue(), {
+                        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                        self.activityIndicator.stopAnimating()
+                    })
                 }
-                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-                self.activityIndicator.stopAnimating()
-            })
+            } catch {
+                print("error serializing JSON: \(error)")
+            }
         }
+        task.resume()
     }
     
     override func viewWillAppear(animated: Bool) {

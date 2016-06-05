@@ -67,8 +67,8 @@ class PhotoMapViewController: UIViewController, MKMapViewDelegate, CLLocationMan
     private func renderAnnotations() {
         photos = [MKPhoto]()
         for moment in SharingManager.sharedInstance.moments {
-            if moment["name"] != nil && moment["time"] != nil && moment["latitude"] != nil && moment["longitude"] != nil {
-                photos.append(MKPhoto(data: moment))
+            if moment.username != nil && moment.pub_time_interval != nil && moment.latitude != nil && moment.longitude != nil && moment.id != nil {
+                photos.append(MKPhoto(moment: moment))
             }
         }
         clearPhotoPoints()
@@ -126,7 +126,7 @@ class PhotoMapViewController: UIViewController, MKMapViewDelegate, CLLocationMan
         if segue.identifier == Constants.ShowImageDetailsSegue {
             if let mapImageDetailsVC = segue.destinationViewController as? MapImageDetailsViewController {
                 if let photoPoint = (sender as? MKAnnotationView)?.annotation as? MKPhoto {
-                    mapImageDetailsVC.photoUrl = photoPoint.photoReferenceKey
+                    mapImageDetailsVC.momentID = photoPoint.momentID
                 }
             }
         }

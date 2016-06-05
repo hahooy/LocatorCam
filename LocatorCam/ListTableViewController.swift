@@ -134,8 +134,8 @@ class ListTableViewController: UITableViewController, UIImagePickerControllerDel
                 }
             case "toPhotoDetails":
                 if let mapImageDetailsVC = segue.destinationViewController as? MapImageDetailsViewController {
-                    if let cellData = sender as? NSDictionary {
-                        mapImageDetailsVC.photoUrl = cellData["photoReferenceKey"] as? String
+                    if let cellData = sender as? Moment {
+                        mapImageDetailsVC.momentID = cellData.id
                     }
                 }
                 
@@ -180,6 +180,7 @@ class ListTableViewController: UITableViewController, UIImagePickerControllerDel
         performSegueWithIdentifier("toPhotoDetails", sender: SharingManager.sharedInstance.moments[indexPath.row])
     }
     
+    /*
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == .Delete {
             
@@ -191,21 +192,22 @@ class ListTableViewController: UITableViewController, UIImagePickerControllerDel
             profile.removeValue()
         }
     }
+ */
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        let dict = SharingManager.sharedInstance.moments[indexPath.row]
+        let moment = SharingManager.sharedInstance.moments[indexPath.row]
         var imageHeight: CGFloat = 0
         var nameLableHeight: CGFloat = 0
         var descriptionLableHeight: CGFloat = 0
         let lable = UILabel()
         
-        if let name = dict["name"] as? String {
+        if let name = moment.username {
             lable.text = name
             lable.font = Constant.nameFont
             let lableSize = lable.sizeThatFits(CGSize(width: UIScreen.mainScreen().bounds.width, height: CGFloat.max))
             nameLableHeight = lableSize.height
         }
-        if let description = dict["description"] as? String {
+        if let description = moment.description {
             lable.numberOfLines = 0
             lable.text = description
             lable.font = Constant.descriptionFont
@@ -215,7 +217,7 @@ class ListTableViewController: UITableViewController, UIImagePickerControllerDel
             descriptionLableHeight = lableSize.height
         }
         
-        if let base64String = dict["thumbnailBase64"] as? String {
+        if let base64String = moment.thumbnail_base64 {
             let decodedData = NSData(base64EncodedString: base64String, options: NSDataBase64DecodingOptions.IgnoreUnknownCharacters)
             let decodedImage = UIImage(data: decodedData!)
             let aspectRatio = decodedImage!.size.height / decodedImage!.size.width
@@ -235,8 +237,9 @@ class ListTableViewController: UITableViewController, UIImagePickerControllerDel
         if scrollToBottomSpinner.isAnimating() == false && maximumOffset - buttomOffset < 30 && SharingManager.sharedInstance.moments.count > 0 {
             scrollToBottomSpinner.startAnimating()
             /* Fetch data that is earlier than the timestamp of the last moment */
-            if let endingTime = SharingManager.sharedInstance.moments[SharingManager.sharedInstance.moments.count - 1]["time"] as? NSTimeInterval {
-                SharingManager.sharedInstance.loadDataFromFirebase(endingTime - SharingManager.Constant.minimumTimeInterval, spinner: scrollToBottomSpinner)
+            if let endingTime = SharingManager.sharedInstance.moments[SharingManager.sharedInstance.moments.count - 1].pub_time_interval {
+                print("fetching")
+                SharingManager.sharedInstance.fetchMoments(endingTime, spinner: scrollToBottomSpinner)
             }
         }
     }
@@ -245,15 +248,15 @@ class ListTableViewController: UITableViewController, UIImagePickerControllerDel
     // MARK:- Configure Cell
     
     func configureCell(cell: ProfileTableViewCell, indexPath: NSIndexPath) {
-        let dict = SharingManager.sharedInstance.moments[indexPath.row]
+        let moment = SharingManager.sharedInstance.moments[indexPath.row]
         
-        cell.nameLabel?.text = dict["name"] as? String
-        cell.descriptionLable?.text = dict["description"] as? String
+        cell.nameLabel?.text = moment.username
+        cell.descriptionLable?.text = moment.description
         
-        let timeInterval = dict["time"] as? NSTimeInterval
+        let timeInterval = moment.pub_time_interval
         populateTimeInterval(cell, timeInterval: timeInterval)
         
-        let base64String = dict["thumbnailBase64"] as? String
+        let base64String = moment.thumbnail_base64
         populateImage(cell, imageString: base64String)
     }
     

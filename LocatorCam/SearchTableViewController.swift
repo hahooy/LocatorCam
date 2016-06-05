@@ -15,7 +15,6 @@ class SearchTableViewController: UITableViewController,UISearchBarDelegate,UISea
     let searchController = UISearchController(searchResultsController: nil)
     var searchResults: [String] = [] {
         didSet {
-            print("reload data")
             self.tableView.reloadData()
         }
     }
@@ -46,7 +45,6 @@ class SearchTableViewController: UITableViewController,UISearchBarDelegate,UISea
     
     // MARK: - UISearchResultsUpdating Protocol Method
     func updateSearchResultsForSearchController(searchController: UISearchController) {
-        print("updating")
         let searchKeyword = searchController.searchBar.text!
         let searchScope = searchController.searchBar.scopeButtonTitles![searchController.searchBar.selectedScopeButtonIndex]
         searchRequest(searchKeyword, scope: searchScope)

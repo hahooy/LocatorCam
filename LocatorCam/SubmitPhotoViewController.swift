@@ -35,10 +35,14 @@ class SubmitPhotoViewController: UIViewController {
         }
         
         // compress and encode the image
+        
         let thumbnail = UIImageJPEGRepresentation(image.getThumbnail(), 1)!
-        let thumbnailBase64String: NSString = thumbnail.base64EncodedStringWithOptions(.Encoding64CharacterLineLength)
         let originalPhoto = UIImageJPEGRepresentation(image, 0)!
-        let originalPhotoBase64String: NSString = originalPhoto.base64EncodedStringWithOptions(.Encoding64CharacterLineLength)
+        // need to form url encoded the query string!!! otherwise + will be interpreted as space
+        let s = NSCharacterSet.URLQueryAllowedCharacterSet().mutableCopy()
+        s.removeCharactersInString("+&")
+        let thumbnailBase64String: NSString = thumbnail.base64EncodedStringWithOptions(.Encoding64CharacterLineLength).stringByAddingPercentEncodingWithAllowedCharacters(s as! NSCharacterSet)!
+        let originalPhotoBase64String: NSString = originalPhoto.base64EncodedStringWithOptions(.Encoding64CharacterLineLength).stringByAddingPercentEncodingWithAllowedCharacters(s as! NSCharacterSet)!
         
         // create a photo object
         let moment = [
@@ -51,11 +55,10 @@ class SubmitPhotoViewController: UIViewController {
             "thumbnail_base64": thumbnailBase64String,
             "photo_base64": originalPhotoBase64String
         ]
-        
+
         // make API request to upload the photo
         let url:NSURL = NSURL(string: SharingManager.Constant.uploadMomentURL)!
         let session = NSURLSession.sharedSession()
-        
         let request = NSMutableURLRequest(URL: url)
         request.HTTPMethod = "POST"
         request.cachePolicy = NSURLRequestCachePolicy.ReloadIgnoringCacheData
@@ -65,9 +68,8 @@ class SubmitPhotoViewController: UIViewController {
         for (key, value) in moment {
             paramString += "\(key)=\(value)&"
         }
-        
-        print(paramString)
-        
+ 
+        request.addValue("application/x-www-form-urlencoded; charset=utf-8", forHTTPHeaderField: "Content-Type")
         request.HTTPBody = paramString.dataUsingEncoding(NSUTF8StringEncoding)
         
         let task = session.dataTaskWithRequest(request) {

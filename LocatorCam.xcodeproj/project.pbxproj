@@ -16,6 +16,7 @@
 		0A4D64481CB89C5D00CC837F /* PhotoMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A4D64461CB89C5D00CC837F /* PhotoMapViewController.swift */; };
 		0A4D644B1CB8B57C00CC837F /* MKPhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A4D644A1CB8B57C00CC837F /* MKPhoto.swift */; };
 		0A61D52E1CAE1E1000DDC276 /* LineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A61D52D1CAE1E1000DDC276 /* LineView.swift */; };
+		0A6BA02C1D049E00005EB620 /* Moment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A6BA02B1D049E00005EB620 /* Moment.swift */; };
 		0A929ED91CC881B9009E04AE /* SharingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A929ED81CC881B9009E04AE /* SharingManager.swift */; };
 		0A94B52B1D0283410064053B /* SearchTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A94B52A1D0283410064053B /* SearchTableViewController.swift */; };
 		0A94B52F1D0333B60064053B /* SearchUserResultsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A94B52E1D0333B60064053B /* SearchUserResultsTableViewCell.swift */; };
@@ -50,6 +51,7 @@
 		0A4D64461CB89C5D00CC837F /* PhotoMapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoMapViewController.swift; sourceTree = "<group>"; };
 		0A4D644A1CB8B57C00CC837F /* MKPhoto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MKPhoto.swift; sourceTree = "<group>"; };
 		0A61D52D1CAE1E1000DDC276 /* LineView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LineView.swift; sourceTree = "<group>"; };
+		0A6BA02B1D049E00005EB620 /* Moment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Moment.swift; sourceTree = "<group>"; };
 		0A929ED81CC881B9009E04AE /* SharingManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharingManager.swift; sourceTree = "<group>"; };
 		0A94B52A1D0283410064053B /* SearchTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchTableViewController.swift; sourceTree = "<group>"; };
 		0A94B52E1D0333B60064053B /* SearchUserResultsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchUserResultsTableViewCell.swift; sourceTree = "<group>"; };
@@ -132,6 +134,7 @@
 				0AE5BD3F1CA3BA75001458DF /* OneShotLocationManager.swift */,
 				0AD8BE8B1CF0DD5100DA829F /* MeasureReference.swift */,
 				0AC276871CC424F100AF391E /* DataBase.swift */,
+				0A6BA02B1D049E00005EB620 /* Moment.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -327,6 +330,7 @@
 				0AB748671CB0E2EF00A18F43 /* Theme.swift in Sources */,
 				0AE5BD401CA3BA75001458DF /* OneShotLocationManager.swift in Sources */,
 				0A0B1F2F1CB2102F00FC0C77 /* ProfileTableViewCell.swift in Sources */,
+				0A6BA02C1D049E00005EB620 /* Moment.swift in Sources */,
 				0A94B5311D03819E0064053B /* FriendTableViewCell.swift in Sources */,
 				0AA12DA61CEA901D00BAB749 /* measuringReferenceTableViewController.swift in Sources */,
 				0A61D52E1CAE1E1000DDC276 /* LineView.swift in Sources */,

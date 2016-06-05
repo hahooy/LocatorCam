@@ -10,12 +10,20 @@ import UIKit
 
 class SettingsTableViewController: UITableViewController {
 
+    // MARK: - Properties
     @IBOutlet weak var stampLocationSwitch: UISwitch!
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var emailLabel: UILabel!
     @IBOutlet weak var numberOfFriendsButton: UIButton!
     @IBAction func numberOfFriendsButtonAction(sender: UIButton) {
         
+    }
+    @IBAction func logout(sender: UIBarButtonItem) {
+        logoutUser()
+    }
+    
+    struct Constant {
+        static let toLogin = "to login"
     }
     
     override func viewDidLoad() {
@@ -67,5 +75,34 @@ class SettingsTableViewController: UITableViewController {
             }
         }
         task.resume()
+    }
+    
+    private func logoutUser() {
+        let url:NSURL = NSURL(string: SharingManager.Constant.loginURL)!
+        let session = NSURLSession.sharedSession()
+        let request = NSMutableURLRequest(URL: url)
+        request.HTTPMethod = "POST"
+        request.cachePolicy = NSURLRequestCachePolicy.ReloadIgnoringCacheData
+        
+        let task = session.dataTaskWithRequest(request) {
+            (let data, let response, let error) in
+            
+            guard let _:NSData = data, let _:NSURLResponse = response  where error == nil else {
+                print("error: \(error)")
+                return
+            }
+        }
+        task.resume()
+        
+        // cleanup
+        
+        UserInfo.email = nil
+        UserInfo.friends = nil
+        UserInfo.username = nil
+        
+        SharingManager.sharedInstance.moments = [Moment]()
+        SharingManager.sharedInstance.momentsUpdateHandlers = Array<(Void -> Void)>()
+        
+        performSegueWithIdentifier(Constant.toLogin, sender: self)
     }
 }
