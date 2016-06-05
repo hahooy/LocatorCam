@@ -23,12 +23,12 @@ class SettingsTableViewController: UITableViewController {
         stampLocationSwitch.setOn(SharingManager.sharedInstance.locationStampEnabled, animated: false)
         usernameLabel.text = UserInfo.username
         emailLabel.text = UserInfo.email
-        getNumberOfFriends()
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.toolbarHidden = true
+        getNumberOfFriends()
     }
     
     override func viewWillDisappear(animated: Bool) {
