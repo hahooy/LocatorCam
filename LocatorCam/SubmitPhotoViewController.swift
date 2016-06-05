@@ -20,51 +20,78 @@ class SubmitPhotoViewController: UIViewController {
         super.viewDidLoad()
         self.view.backgroundColor = backgroundColorDarker
         imageView.image = imageToSubmit
-        // Do any additional setup after loading the view.
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     @IBAction func dismissKeyboard(sender: UITapGestureRecognizer) {
         descriptionInput.resignFirstResponder()
     }
     
-    // upload the photo to firebase
+    // upload the photo
     @IBAction func uploadPhoto(sender: UIBarButtonItem) {
         
         // quit if no photo available for upload
-        if imageView.image == nil {
+        guard let image = imageView.image, let username = UserInfo.username else {
             return
         }
         
         // compress and encode the image
-        let thumbnail = UIImageJPEGRepresentation(imageView.image!.getThumbnail(), 1)!
+        let thumbnail = UIImageJPEGRepresentation(image.getThumbnail(), 1)!
         let thumbnailBase64String: NSString = thumbnail.base64EncodedStringWithOptions(.Encoding64CharacterLineLength)
-        let originalPhoto = UIImageJPEGRepresentation(imageView.image!, 0)!
+        let originalPhoto = UIImageJPEGRepresentation(image, 0)!
         let originalPhotoBase64String: NSString = originalPhoto.base64EncodedStringWithOptions(.Encoding64CharacterLineLength)
-        
-        // create a new child under profiles in Firebase
-        let momentRef = DataBase.momentFirebaseRef.childByAutoId()
-        let photoRef = DataBase.photoFirebaseRef.childByAutoId()
         
         // create a photo object
         let moment = [
-            "key": momentRef.key,
-            "name": "anonymous",
-            "time": NSDate().timeIntervalSince1970,
+            "username": username,
+            "content_type": "JSON",
             "description": descriptionInput.text,
-            "thumbnailBase64": thumbnailBase64String,
-            "photoReferenceKey": photoRef.key,
             "latitude": photoLocation?.coordinate.latitude ?? 0,
-            "longitude": photoLocation?.coordinate.longitude ?? 0
+            "longitude": photoLocation?.coordinate.longitude ?? 0,
+            "pub_time_interval": NSDate().timeIntervalSince1970,
+            "thumbnail_base64": thumbnailBase64String,
+            "photo_base64": originalPhotoBase64String
         ]
+        
+        // make API request to upload the photo
+        let url:NSURL = NSURL(string: SharingManager.Constant.uploadMomentURL)!
+        let session = NSURLSession.sharedSession()
+        
+        let request = NSMutableURLRequest(URL: url)
+        request.HTTPMethod = "POST"
+        request.cachePolicy = NSURLRequestCachePolicy.ReloadIgnoringCacheData
+        
+        var paramString = ""
+        
+        for (key, value) in moment {
+            paramString += "\(key)=\(value)&"
+        }
+        
+        print(paramString)
+        
+        request.HTTPBody = paramString.dataUsingEncoding(NSUTF8StringEncoding)
+        
+        let task = session.dataTaskWithRequest(request) {
+            (let data, let response, let error) in
+            
+            guard let _:NSData = data, let _:NSURLResponse = response  where error == nil else {
+                print("error: \(error)")
+                return
+            }
+            
+            do {
+                let json = try NSJSONSerialization.JSONObjectWithData(data!, options: .AllowFragments) as! NSDictionary
+                if let message = json["message"] as? String {
+                    print(message)
+                    dispatch_async(dispatch_get_main_queue(), {
 
-        // write data to Firebase
-        SharingManager.sharedInstance.addMoment(momentRef, data: moment)
-        SharingManager.sharedInstance.addPhoto(photoRef, base64String: originalPhotoBase64String)
+                    })
+                }
+            } catch {
+                print("error serializing JSON: \(error)")
+            }
+        }
+        task.resume()
+
         
         // return to the first page
         let viewControlers = navigationController?.viewControllers

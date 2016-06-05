@@ -59,6 +59,7 @@ class SharingManager {
         static let numberOfFriendsURL = baseServerURL + "number-of-friends/"
         static let getAllFriendsURL = baseServerURL + "get-all-friends/"
         static let unfriendURL = baseServerURL + "unfriend/"
+        static let uploadMomentURL = baseServerURL + "upload-moment/"
     }
     
     init() {
