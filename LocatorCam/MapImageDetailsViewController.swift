@@ -75,9 +75,8 @@ class MapImageDetailsViewController: UIViewController, UIScrollViewDelegate {
                 let json = try NSJSONSerialization.JSONObjectWithData(data!, options: .AllowFragments) as! NSDictionary
                 if let photoBase64String = json["photo_base64"] as? String {
                     let decodedData = NSData(base64EncodedString: photoBase64String, options: NSDataBase64DecodingOptions.IgnoreUnknownCharacters)
-                    self.image = UIImage(data: decodedData!)
-                    print(photoBase64String.substringToIndex(photoBase64String.startIndex.advancedBy(20)))
                     dispatch_async(dispatch_get_main_queue(), {
+                        self.image = UIImage(data: decodedData!)
                         UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                         self.activityIndicator.stopAnimating()
                     })

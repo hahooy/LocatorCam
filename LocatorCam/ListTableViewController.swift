@@ -235,10 +235,8 @@ class ListTableViewController: UITableViewController, UIImagePickerControllerDel
         let maximumOffset = scrollView.contentSize.height
         // load more data when scroll to the buttom
         if scrollToBottomSpinner.isAnimating() == false && maximumOffset - buttomOffset < 30 && SharingManager.sharedInstance.moments.count > 0 {
-            scrollToBottomSpinner.startAnimating()
             /* Fetch data that is earlier than the timestamp of the last moment */
             if let endingTime = SharingManager.sharedInstance.moments[SharingManager.sharedInstance.moments.count - 1].pub_time_interval {
-                print("fetching")
                 SharingManager.sharedInstance.fetchMoments(endingTime, spinner: scrollToBottomSpinner)
             }
         }

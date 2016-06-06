@@ -27,7 +27,7 @@ class LoginViewController: UIViewController {
     // MARK: - Navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == Constant.segueToApp {
-            SharingManager.sharedInstance.fetchMoments(nil, spinner: nil)
+            print("to app")
         }
     }
     
@@ -52,7 +52,8 @@ class LoginViewController: UIViewController {
                 return
             }
             
-            //let dataString = NSString(data: data!, encoding: NSUTF8StringEncoding)
+            // let dataString = NSString(data: data!, encoding: NSUTF8StringEncoding)
+
             do {
                 let json = try NSJSONSerialization.JSONObjectWithData(data!, options: .AllowFragments) as! NSDictionary
                 

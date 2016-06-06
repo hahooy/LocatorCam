@@ -52,7 +52,7 @@ class SharingManager {
         static let NumberOfMomentsToFetch: UInt = 10
         static let minimumTimeInterval = 0.000001
         static let thumbnailWidth: CGFloat = 1000
-        static let baseServerURL = "http://127.0.0.1:8000/locator-cam/"
+        static let baseServerURL = "https://locatorcam.herokuapp.com/locator-cam/"
         static let loginURL = baseServerURL + "login/"
         static let searchUserURL = baseServerURL + "search-user/"
         static let addFriendURL = baseServerURL + "add-friend/"
@@ -66,7 +66,7 @@ class SharingManager {
     }
     
     init() {
-        
+        fetchMoments(nil, spinner: nil)
     }
     
     // add a handler for updating moments
@@ -87,6 +87,13 @@ class SharingManager {
         let paramString = endTime == nil ? "content_type=JSON" : "content_type=JSON&time_interval=\(endTime!)"
         
         request.HTTPBody = paramString.dataUsingEncoding(NSUTF8StringEncoding)
+        
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+        if spinner != nil {
+            dispatch_async(dispatch_get_main_queue(), {
+                spinner!.startAnimating()
+            })
+        }
         
         let task = session.dataTaskWithRequest(request) {
             (let data, let response, let error) in
@@ -125,15 +132,18 @@ class SharingManager {
                     }
                     tempMoments.append(tempMoment)
                 }
-                self.moments += tempMoments
+                dispatch_async(dispatch_get_main_queue(), {
+                    self.moments += tempMoments
+                })
             } catch {
                 print("error serializing JSON: \(error)")
             }
-            if spinner != nil {
-                dispatch_async(dispatch_get_main_queue(), {
+            dispatch_async(dispatch_get_main_queue(), {
+                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                if spinner != nil {
                     spinner!.stopAnimating()
-                })
-            }
+                }
+            })
         }
         task.resume()
         
