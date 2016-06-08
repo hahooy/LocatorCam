@@ -52,7 +52,8 @@ class SharingManager {
         static let NumberOfMomentsToFetch: UInt = 10
         static let minimumTimeInterval = 0.000001
         static let thumbnailWidth: CGFloat = 1000
-        static let baseServerURL = "https://locatorcam.herokuapp.com/locator-cam/"
+        static let baseServerURL = "http://127.0.0.1:8000/locator-cam/"
+        //static let baseServerURL = "https://locatorcam.herokuapp.com/locator-cam/"
         static let loginURL = baseServerURL + "login/"
         static let searchUserURL = baseServerURL + "search-user/"
         static let addFriendURL = baseServerURL + "add-friend/"
@@ -66,7 +67,7 @@ class SharingManager {
     }
     
     init() {
-        fetchMoments(nil, spinner: nil)
+        fetchMoments(startTime: nil, endTime: nil, spinner: nil, refreshControl: nil)
     }
     
     // add a handler for updating moments
@@ -75,7 +76,7 @@ class SharingManager {
     }
     
     
-    func fetchMoments(endTime: NSTimeInterval?, spinner: UIActivityIndicatorView?) {
+    func fetchMoments(startTime startTime: NSTimeInterval?, endTime: NSTimeInterval?, spinner: UIActivityIndicatorView?, refreshControl: UIRefreshControl?) {
         // fetch moments happened before endTime
         // make API request to upload the photo
         let url:NSURL = NSURL(string: SharingManager.Constant.fetchMomentsURL)!
@@ -84,7 +85,13 @@ class SharingManager {
         request.HTTPMethod = "POST"
         request.cachePolicy = NSURLRequestCachePolicy.ReloadIgnoringCacheData
         
-        let paramString = endTime == nil ? "content_type=JSON" : "content_type=JSON&time_interval=\(endTime!)"
+        var paramString = "content_type=JSON"
+        if endTime != nil {
+            paramString += "&ending_time=\(endTime!)"
+        }
+        if startTime != nil {
+            paramString += "&starting_time=\(startTime!)"
+        }
         
         request.HTTPBody = paramString.dataUsingEncoding(NSUTF8StringEncoding)
         
@@ -133,7 +140,11 @@ class SharingManager {
                     tempMoments.append(tempMoment)
                 }
                 dispatch_async(dispatch_get_main_queue(), {
-                    self.moments += tempMoments
+                    if startTime != nil && endTime == nil {
+                        self.moments = tempMoments + self.moments
+                    } else {
+                        self.moments += tempMoments
+                    }
                 })
             } catch {
                 print("error serializing JSON: \(error)")
@@ -142,6 +153,9 @@ class SharingManager {
                 UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                 if spinner != nil {
                     spinner!.stopAnimating()
+                }
+                if refreshControl != nil {
+                    refreshControl?.endRefreshing()
                 }
             })
         }

@@ -43,17 +43,27 @@ class ListTableViewController: UITableViewController, UIImagePickerControllerDel
         // add a handler to the sharedInstance, so that the tableView is refresh whenever
         // the moments data are updated
         SharingManager.sharedInstance.addMomentsUpdatedHandler { self.tableView.reloadData() }
+        self.refreshControl?.addTarget(self, action: #selector(ListTableViewController.fetchNewMoments), forControlEvents: UIControlEvents.ValueChanged)
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.toolbarHidden = true
         self.navigationController?.navigationBarHidden = false
+        fetchNewMoments() // automatically fetch new moments when user gets to this view
     }
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         self.navigationController?.toolbarHidden = false
+    }
+    
+    @objc private func fetchNewMoments() {
+        print("fetching moments")
+        if SharingManager.sharedInstance.moments.count > 0 {
+            let startTime = SharingManager.sharedInstance.moments[0].pub_time_interval
+            SharingManager.sharedInstance.fetchMoments(startTime: startTime, endTime: nil, spinner: nil, refreshControl: refreshControl)
+        }
     }
     
     // MARK: - control camera
@@ -237,7 +247,7 @@ class ListTableViewController: UITableViewController, UIImagePickerControllerDel
         if scrollToBottomSpinner.isAnimating() == false && maximumOffset - buttomOffset < 30 && SharingManager.sharedInstance.moments.count > 0 {
             /* Fetch data that is earlier than the timestamp of the last moment */
             if let endingTime = SharingManager.sharedInstance.moments[SharingManager.sharedInstance.moments.count - 1].pub_time_interval {
-                SharingManager.sharedInstance.fetchMoments(endingTime, spinner: scrollToBottomSpinner)
+                SharingManager.sharedInstance.fetchMoments(startTime: nil, endTime: endingTime, spinner: scrollToBottomSpinner, refreshControl: nil)
             }
         }
     }

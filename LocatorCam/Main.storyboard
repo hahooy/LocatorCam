@@ -301,6 +301,17 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="bJH-7A-I8h">
+                        <autoresizingMask key="autoresizingMask"/>
+                        <attributedString key="attributedTitle">
+                            <fragment content="refreshing">
+                                <attributes>
+                                    <font key="NSFont" metaFont="controlContent" size="11"/>
+                                    <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                </attributes>
+                            </fragment>
+                        </attributedString>
+                    </refreshControl>
                     <connections>
                         <outlet property="scrollToBottomSpinner" destination="Eg8-wi-Uw4" id="eZH-Hq-Oht"/>
                         <segue destination="eT3-pG-0C3" kind="show" identifier="toEditPhoto" id="75W-hg-J3a"/>
@@ -1130,6 +1141,6 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="e6P-H6-MDK"/>
-        <segue reference="VT8-ae-0b9"/>
+        <segue reference="8Td-Im-SQU"/>
     </inferredMetricsTieBreakers>
 </document>
