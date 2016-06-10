@@ -62,7 +62,8 @@ class ListTableViewController: UITableViewController, UIImagePickerControllerDel
         print("fetching moments")
         if SharingManager.sharedInstance.moments.count > 0 {
             let startTime = SharingManager.sharedInstance.moments[0].pub_time_interval
-            SharingManager.sharedInstance.fetchMoments(startTime: startTime, endTime: nil, spinner: nil, refreshControl: refreshControl)
+            print(startTime)
+            SharingManager.sharedInstance.fetchMoments(publishedEarlier: false, publishedLater: true, spinner: nil, refreshControl: refreshControl)
         }
     }
     
@@ -191,18 +192,18 @@ class ListTableViewController: UITableViewController, UIImagePickerControllerDel
     }
     
     /*
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
-            
-            let dict = SharingManager.sharedInstance.moments.removeAtIndex(indexPath.row)
-            let key = dict["key"] as! String
-            
-            // delete data from firebase
-            let profile = DataBase.momentFirebaseRef.ref.childByAppendingPath(key)
-            profile.removeValue()
-        }
-    }
- */
+     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+     if editingStyle == .Delete {
+     
+     let dict = SharingManager.sharedInstance.moments.removeAtIndex(indexPath.row)
+     let key = dict["key"] as! String
+     
+     // delete data from firebase
+     let profile = DataBase.momentFirebaseRef.ref.childByAppendingPath(key)
+     profile.removeValue()
+     }
+     }
+     */
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         let moment = SharingManager.sharedInstance.moments[indexPath.row]
@@ -246,9 +247,7 @@ class ListTableViewController: UITableViewController, UIImagePickerControllerDel
         // load more data when scroll to the buttom
         if scrollToBottomSpinner.isAnimating() == false && maximumOffset - buttomOffset < 30 && SharingManager.sharedInstance.moments.count > 0 {
             /* Fetch data that is earlier than the timestamp of the last moment */
-            if let endingTime = SharingManager.sharedInstance.moments[SharingManager.sharedInstance.moments.count - 1].pub_time_interval {
-                SharingManager.sharedInstance.fetchMoments(startTime: nil, endTime: endingTime, spinner: scrollToBottomSpinner, refreshControl: nil)
-            }
+            SharingManager.sharedInstance.fetchMoments(publishedEarlier: true, publishedLater: false, spinner: scrollToBottomSpinner, refreshControl: nil)
         }
     }
     
@@ -314,5 +313,5 @@ class ListTableViewController: UITableViewController, UIImagePickerControllerDel
         
         cell.descriptionLable?.font = Constant.descriptionFont
     }
-
+    
 }

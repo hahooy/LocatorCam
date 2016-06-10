@@ -45,16 +45,19 @@ class SubmitPhotoViewController: UIViewController {
         let originalPhotoBase64String: NSString = originalPhoto.base64EncodedStringWithOptions(.Encoding64CharacterLineLength).stringByAddingPercentEncodingWithAllowedCharacters(s as! NSCharacterSet)!
         
         // create a photo object
-        let moment = [
+        var moment = [
             "username": username,
             "content_type": "JSON",
             "description": descriptionInput.text,
-            "latitude": photoLocation?.coordinate.latitude ?? 0,
-            "longitude": photoLocation?.coordinate.longitude ?? 0,
             "pub_time_interval": NSDate().timeIntervalSince1970,
             "thumbnail_base64": thumbnailBase64String,
             "photo_base64": originalPhotoBase64String
         ]
+        
+        if let lat = photoLocation?.coordinate.latitude, let lon = photoLocation?.coordinate.longitude {
+            moment["latitude"] = lat
+            moment["longitude"] = lon
+        }
 
         // make API request to upload the photo
         let url:NSURL = NSURL(string: SharingManager.Constant.uploadMomentURL)!

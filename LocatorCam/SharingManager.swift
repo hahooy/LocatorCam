@@ -52,8 +52,8 @@ class SharingManager {
         static let NumberOfMomentsToFetch: UInt = 10
         static let minimumTimeInterval = 0.000001
         static let thumbnailWidth: CGFloat = 1000
-        static let baseServerURL = "http://127.0.0.1:8000/locator-cam/"
-        //static let baseServerURL = "https://locatorcam.herokuapp.com/locator-cam/"
+        //static let baseServerURL = "http://127.0.0.1:8000/locator-cam/"
+        static let baseServerURL = "https://locatorcam.herokuapp.com/locator-cam/"
         static let loginURL = baseServerURL + "login/"
         static let searchUserURL = baseServerURL + "search-user/"
         static let addFriendURL = baseServerURL + "add-friend/"
@@ -67,7 +67,7 @@ class SharingManager {
     }
     
     init() {
-        fetchMoments(startTime: nil, endTime: nil, spinner: nil, refreshControl: nil)
+        fetchMoments(publishedEarlier: false, publishedLater: false, spinner: nil, refreshControl: nil)
     }
     
     // add a handler for updating moments
@@ -76,7 +76,7 @@ class SharingManager {
     }
     
     
-    func fetchMoments(startTime startTime: NSTimeInterval?, endTime: NSTimeInterval?, spinner: UIActivityIndicatorView?, refreshControl: UIRefreshControl?) {
+    func fetchMoments(publishedEarlier publishedEarlier: Bool, publishedLater: Bool, spinner: UIActivityIndicatorView?, refreshControl: UIRefreshControl?) {
         // fetch moments happened before endTime
         // make API request to upload the photo
         let url:NSURL = NSURL(string: SharingManager.Constant.fetchMomentsURL)!
@@ -84,16 +84,29 @@ class SharingManager {
         let request = NSMutableURLRequest(URL: url)
         request.HTTPMethod = "POST"
         request.cachePolicy = NSURLRequestCachePolicy.ReloadIgnoringCacheData
+        request.addValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
         
-        var paramString = "content_type=JSON"
-        if endTime != nil {
-            paramString += "&ending_time=\(endTime!)"
+        var param: [String: AnyObject] = ["content_type": "JSON"]
+
+        if publishedEarlier == true {
+            param["published_earlier_than"] = true
         }
-        if startTime != nil {
-            paramString += "&starting_time=\(startTime!)"
+        if publishedLater == true {
+            param["published_later_than"] = true
         }
         
-        request.HTTPBody = paramString.dataUsingEncoding(NSUTF8StringEncoding)
+        var existingMomentID: [Int] = []
+        for moment in moments {
+            existingMomentID.append(moment.id!)
+        }
+        param["existing_moments_id"] = existingMomentID
+        
+        do {
+            request.HTTPBody = try NSJSONSerialization.dataWithJSONObject(param, options: .PrettyPrinted)
+        } catch {
+            print("error serializing JSON: \(error)")
+        }
         
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         if spinner != nil {
@@ -113,6 +126,7 @@ class SharingManager {
             do {
                 let momentsJSON = try NSJSONSerialization.JSONObjectWithData(data!, options: .AllowFragments) as! NSArray
                 var tempMoments = [Moment]()
+
                 for moment in momentsJSON {
                     
                     let tempMoment = Moment()
@@ -139,8 +153,11 @@ class SharingManager {
                     }
                     tempMoments.append(tempMoment)
                 }
+                if tempMoments.count > 0 {
+                    print(tempMoments[0].pub_time_interval)
+                }
                 dispatch_async(dispatch_get_main_queue(), {
-                    if startTime != nil && endTime == nil {
+                    if publishedLater == true {
                         self.moments = tempMoments + self.moments
                     } else {
                         self.moments += tempMoments
