@@ -15,6 +15,7 @@ class SettingsTableViewController: UITableViewController {
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var emailLabel: UILabel!
     @IBOutlet weak var numberOfFriendsButton: UIButton!
+    @IBOutlet weak var numberOfChannelsButton: UIButton!
     @IBAction func numberOfFriendsButtonAction(sender: UIButton) {
         
     }
@@ -37,6 +38,7 @@ class SettingsTableViewController: UITableViewController {
         super.viewWillAppear(animated)
         self.navigationController?.toolbarHidden = true
         getNumberOfFriends()
+        getNumOfChannels()
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -75,6 +77,36 @@ class SettingsTableViewController: UITableViewController {
             }
         }
         task.resume()
+    }
+    
+    private func getNumOfChannels() {
+        let url:NSURL = NSURL(string: SharingManager.Constant.fetchChannelsCountURL)!
+        let session = NSURLSession.sharedSession()
+        
+        let request = NSMutableURLRequest(URL: url)
+        request.HTTPMethod = "POST"
+        request.cachePolicy = NSURLRequestCachePolicy.ReloadIgnoringCacheData
+        
+        let task = session.dataTaskWithRequest(request) {
+            (let data, let response, let error) in
+            
+            guard let _:NSData = data, let _:NSURLResponse = response  where error == nil else {
+                print("error: \(error)")
+                return
+            }
+            do {
+                let json = try NSJSONSerialization.JSONObjectWithData(data!, options: .AllowFragments) as! NSDictionary
+                if let numberOfChannels = json["channels_count"] as? Int {
+                    dispatch_async(dispatch_get_main_queue(), {
+                        self.numberOfChannelsButton.setTitle(String(numberOfChannels), forState: .Normal)
+                    })
+                }
+            } catch {
+                print("error serializing JSON: \(error)")
+            }
+        }
+        task.resume()
+
     }
     
     private func logoutUser() {

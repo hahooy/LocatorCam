@@ -55,7 +55,6 @@ class ChannelsTableViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, accessoryButtonTappedForRowWithIndexPath indexPath: NSIndexPath) {
-        print("tapping")
         performSegueWithIdentifier(Constant.toChannelSettingsSegueIdentifier, sender: indexPath)
     }
     
@@ -109,6 +108,9 @@ class ChannelsTableViewController: UITableViewController {
                     if let numOfMembers = channel["num_members"] as? Int {
                         tempChannel.numOfMembers = numOfMembers
                     }
+                    if let numOfAdmins = channel["num_admins"] as? Int {
+                        tempChannel.numOfAdmins = numOfAdmins
+                    }
                     tempChannels.append(tempChannel)
                 }
                 
@@ -135,6 +137,7 @@ class ChannelsTableViewController: UITableViewController {
             channelSettingsVC.channelTitle = channel.name
             channelSettingsVC.channelDescription = channel.description
             channelSettingsVC.numOfMembers = channel.numOfMembers
+            channelSettingsVC.numOfAdmins = channel.numOfAdmins
         }
     }
 

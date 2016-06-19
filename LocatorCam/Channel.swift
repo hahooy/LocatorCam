@@ -14,4 +14,5 @@ class Channel {
     var description: String?
     var members: String?
     var numOfMembers: Int?
+    var numOfAdmins: Int?
 }

@@ -65,6 +65,7 @@ class SharingManager {
         static let fetchPhotoURL = baseServerURL + "fetch-photo/"
         static let logoutURL = baseServerURL + "logout/"
         static let fetchChannelURL = baseServerURL + "fetch-channels/"
+        static let fetchChannelsCountURL = baseServerURL + "fetch-channels-count/"
     }
     
     init() {

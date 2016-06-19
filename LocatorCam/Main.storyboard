@@ -116,8 +116,32 @@
                             </tableViewSection>
                             <tableViewSection id="VUi-uD-MX2">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="QT7-iz-kch" detailTextLabel="aBB-Gx-v6K" style="IBUITableViewCellStyleValue1" id="gPs-i7-1ox">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="m9h-a7-Utn" detailTextLabel="DuG-yF-aQ8" style="IBUITableViewCellStyleValue1" id="XPM-wu-g4S">
                                         <rect key="frame" x="0.0" y="203" width="600" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="XPM-wu-g4S" id="YTV-HD-E2V">
+                                            <rect key="frame" x="0.0" y="0.0" width="567" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Administrators" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="m9h-a7-Utn">
+                                                    <rect key="frame" x="15" y="12" width="106" height="20"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="0" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="DuG-yF-aQ8">
+                                                    <rect key="frame" x="555" y="12" width="10" height="20"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="QT7-iz-kch" detailTextLabel="aBB-Gx-v6K" style="IBUITableViewCellStyleValue1" id="gPs-i7-1ox">
+                                        <rect key="frame" x="0.0" y="247" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="gPs-i7-1ox" id="ilG-JS-Ttu">
                                             <rect key="frame" x="0.0" y="0.0" width="567" height="43"/>
@@ -141,7 +165,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="vje-Td-jmx">
-                                        <rect key="frame" x="0.0" y="247" width="600" height="44"/>
+                                        <rect key="frame" x="0.0" y="291" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="vje-Td-jmx" id="ptQ-ja-WsA">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
@@ -173,6 +197,7 @@
                     <connections>
                         <outlet property="channelDescriptionLabel" destination="wW5-L1-zbe" id="BGh-El-Rn6"/>
                         <outlet property="channelTitleLable" destination="8a4-w2-bsH" id="6r4-f6-J5C"/>
+                        <outlet property="numberOfAdministratorsLabel" destination="DuG-yF-aQ8" id="Mt3-Cr-guy"/>
                         <outlet property="numberOfMembersLabel" destination="aBB-Gx-v6K" id="80w-52-Tke"/>
                     </connections>
                 </tableViewController>
@@ -240,7 +265,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <view key="tableFooterView" contentMode="scaleToFill" id="3mR-yj-dsN">
-                            <rect key="frame" x="0.0" y="271" width="600" height="348"/>
+                            <rect key="frame" x="0.0" y="296" width="600" height="348"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         </view>
@@ -285,11 +310,11 @@
                             </tableViewSection>
                             <tableViewSection headerTitle="Account" id="fTx-2T-KUO">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="107" id="IRd-r8-AuC">
-                                        <rect key="frame" x="0.0" y="164" width="600" height="107"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="132" id="IRd-r8-AuC">
+                                        <rect key="frame" x="0.0" y="164" width="600" height="132"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="IRd-r8-AuC" id="IjL-51-Hpl">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="106"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="131"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="User Name:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G7g-TG-o8u">
@@ -330,8 +355,23 @@
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Channels:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wO4-qu-4AH">
+                                                    <rect key="frame" x="8" y="93" width="76" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ul4-4w-Asm">
+                                                    <rect key="frame" x="102" y="89" width="30" height="30"/>
+                                                    <state key="normal" title="0"/>
+                                                    <connections>
+                                                        <segue destination="Kns-UP-jzA" kind="show" id="Hcj-rt-TA7"/>
+                                                    </connections>
+                                                </button>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstItem="Ul4-4w-Asm" firstAttribute="centerY" secondItem="wO4-qu-4AH" secondAttribute="centerY" id="1l3-K7-46L"/>
+                                                <constraint firstItem="wO4-qu-4AH" firstAttribute="top" secondItem="uD3-aF-lgp" secondAttribute="bottom" constant="8" symbolic="YES" id="1r8-1A-waO"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="eUS-ob-juM" secondAttribute="trailing" id="34Y-8e-4IF"/>
                                                 <constraint firstItem="uD3-aF-lgp" firstAttribute="top" secondItem="Uyx-xP-wjz" secondAttribute="bottom" constant="8" symbolic="YES" id="5KI-c0-blV"/>
                                                 <constraint firstItem="WgK-Xl-lTB" firstAttribute="top" secondItem="yVO-uL-k7Y" secondAttribute="bottom" constant="8" id="5Mj-H4-dcB"/>
@@ -340,7 +380,11 @@
                                                 <constraint firstItem="WgK-Xl-lTB" firstAttribute="centerY" secondItem="uD3-aF-lgp" secondAttribute="centerY" id="NMY-Va-zsN"/>
                                                 <constraint firstItem="WgK-Xl-lTB" firstAttribute="leading" secondItem="yVO-uL-k7Y" secondAttribute="leading" id="NnD-Z0-k5G"/>
                                                 <constraint firstItem="yVO-uL-k7Y" firstAttribute="leading" secondItem="eUS-ob-juM" secondAttribute="leading" id="SdA-lc-2kh"/>
+                                                <constraint firstItem="Ul4-4w-Asm" firstAttribute="leading" secondItem="wO4-qu-4AH" secondAttribute="trailing" constant="8" symbolic="YES" id="VRg-EE-rca"/>
+                                                <constraint firstItem="wO4-qu-4AH" firstAttribute="leading" secondItem="uD3-aF-lgp" secondAttribute="leading" id="Zvg-bY-2HC"/>
+                                                <constraint firstItem="Ul4-4w-Asm" firstAttribute="leading" secondItem="yVO-uL-k7Y" secondAttribute="leading" id="cAY-pT-9z5"/>
                                                 <constraint firstAttribute="leadingMargin" secondItem="G7g-TG-o8u" secondAttribute="leading" id="cdI-0r-6EU"/>
+                                                <constraint firstItem="Ul4-4w-Asm" firstAttribute="top" secondItem="WgK-Xl-lTB" secondAttribute="bottom" constant="8" symbolic="YES" id="hZn-eT-O0n"/>
                                                 <constraint firstItem="Uyx-xP-wjz" firstAttribute="top" secondItem="G7g-TG-o8u" secondAttribute="bottom" constant="8" symbolic="YES" id="knA-Ep-vtl"/>
                                                 <constraint firstItem="G7g-TG-o8u" firstAttribute="top" secondItem="IjL-51-Hpl" secondAttribute="topMargin" id="mM2-on-s5Y"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="yVO-uL-k7Y" secondAttribute="trailing" id="oDR-Ww-noo"/>
@@ -351,6 +395,8 @@
                                             <variation key="default">
                                                 <mask key="constraints">
                                                     <exclude reference="5Mj-H4-dcB"/>
+                                                    <exclude reference="VRg-EE-rca"/>
+                                                    <exclude reference="hZn-eT-O0n"/>
                                                 </mask>
                                             </variation>
                                         </tableViewCellContentView>
@@ -372,6 +418,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="emailLabel" destination="yVO-uL-k7Y" id="L5s-fO-RdQ"/>
+                        <outlet property="numberOfChannelsButton" destination="Ul4-4w-Asm" id="79D-F4-G8J"/>
                         <outlet property="numberOfFriendsButton" destination="WgK-Xl-lTB" id="dEh-c1-O70"/>
                         <outlet property="stampLocationSwitch" destination="9Jk-9L-JVv" id="Iz5-9e-KzU"/>
                         <outlet property="usernameLabel" destination="eUS-ob-juM" id="S4d-0n-h5y"/>
@@ -1321,5 +1368,6 @@
     <inferredMetricsTieBreakers>
         <segue reference="e6P-H6-MDK"/>
         <segue reference="8Td-Im-SQU"/>
+        <segue reference="Hcj-rt-TA7"/>
     </inferredMetricsTieBreakers>
 </document>
