@@ -12,4 +12,5 @@ class UserInfo {
     static var username: String?;
     static var email: String?;
     static var friends: [String]?;
+    static var currentChannel: Channel?;
 }

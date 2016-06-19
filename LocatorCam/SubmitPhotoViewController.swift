@@ -58,6 +58,10 @@ class SubmitPhotoViewController: UIViewController {
             moment["latitude"] = lat
             moment["longitude"] = lon
         }
+        
+        if let channelID = UserInfo.currentChannel?.id {
+            moment["channel_id"] = channelID
+        }
 
         // make API request to upload the photo
         let url:NSURL = NSURL(string: SharingManager.Constant.uploadMomentURL)!

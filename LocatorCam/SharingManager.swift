@@ -52,8 +52,8 @@ class SharingManager {
         static let NumberOfMomentsToFetch: UInt = 10
         static let minimumTimeInterval = 0.000001
         static let thumbnailWidth: CGFloat = 1000
-        //static let baseServerURL = "http://127.0.0.1:8000/locator-cam/"
-        static let baseServerURL = "https://locatorcam.herokuapp.com/locator-cam/"
+        static let baseServerURL = "http://127.0.0.1:8000/locator-cam/"
+        //static let baseServerURL = "https://locatorcam.herokuapp.com/locator-cam/"
         static let loginURL = baseServerURL + "login/"
         static let searchUserURL = baseServerURL + "search-user/"
         static let addFriendURL = baseServerURL + "add-friend/"
@@ -64,6 +64,7 @@ class SharingManager {
         static let fetchMomentsURL = baseServerURL + "fetch-moments/"
         static let fetchPhotoURL = baseServerURL + "fetch-photo/"
         static let logoutURL = baseServerURL + "logout/"
+        static let fetchChannelURL = baseServerURL + "fetch-channels/"
     }
     
     init() {
@@ -89,11 +90,17 @@ class SharingManager {
         
         var param: [String: AnyObject] = ["content_type": "JSON"]
 
+        // specify the time condition for the request
         if publishedEarlier == true {
             param["published_earlier_than"] = true
         }
         if publishedLater == true {
             param["published_later_than"] = true
+        }
+        
+        // is the user in a channel?
+        if let channelID = UserInfo.currentChannel?.id {
+            param["channel_id"] = channelID
         }
         
         var existingMomentID: [Int] = []

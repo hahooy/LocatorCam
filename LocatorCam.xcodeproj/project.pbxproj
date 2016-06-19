@@ -31,6 +31,9 @@
 		0AB8AC2A1CEB71E4001BF2AE /* CustomLengthTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AB8AC291CEB71E4001BF2AE /* CustomLengthTableViewCell.swift */; };
 		0ABDFD451CB478DE0021058F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0ABDFD441CB478DE0021058F /* Main.storyboard */; };
 		0AC276881CC424F100AF391E /* DataBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AC276871CC424F100AF391E /* DataBase.swift */; };
+		0ACAE6EB1D16D86400775412 /* ChannelsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACAE6EA1D16D86400775412 /* ChannelsTableViewController.swift */; };
+		0ACAE6ED1D16F58C00775412 /* Channel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACAE6EC1D16F58C00775412 /* Channel.swift */; };
+		0ACAE6EF1D1703E100775412 /* ChannelSettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACAE6EE1D1703E100775412 /* ChannelSettingsTableViewController.swift */; };
 		0AD8BE8C1CF0DD5100DA829F /* MeasureReference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AD8BE8B1CF0DD5100DA829F /* MeasureReference.swift */; };
 		0AE5BD2E1CA3B287001458DF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AE5BD2D1CA3B287001458DF /* AppDelegate.swift */; };
 		0AE5BD301CA3B287001458DF /* EditPhotoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AE5BD2F1CA3B287001458DF /* EditPhotoVC.swift */; };
@@ -66,6 +69,9 @@
 		0AB8AC291CEB71E4001BF2AE /* CustomLengthTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomLengthTableViewCell.swift; sourceTree = "<group>"; };
 		0ABDFD441CB478DE0021058F /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		0AC276871CC424F100AF391E /* DataBase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataBase.swift; sourceTree = "<group>"; };
+		0ACAE6EA1D16D86400775412 /* ChannelsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChannelsTableViewController.swift; sourceTree = "<group>"; };
+		0ACAE6EC1D16F58C00775412 /* Channel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Channel.swift; sourceTree = "<group>"; };
+		0ACAE6EE1D1703E100775412 /* ChannelSettingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChannelSettingsTableViewController.swift; sourceTree = "<group>"; };
 		0AD8BE8B1CF0DD5100DA829F /* MeasureReference.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeasureReference.swift; sourceTree = "<group>"; };
 		0AE5BD2A1CA3B287001458DF /* LocatorCam.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LocatorCam.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0AE5BD2D1CA3B287001458DF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -122,6 +128,8 @@
 				0A05C03C1CF9EEED002F9BB5 /* LoginViewController.swift */,
 				0A94B5301D03819E0064053B /* FriendTableViewCell.swift */,
 				0A94B5321D0381BB0064053B /* FriendsTableViewController.swift */,
+				0ACAE6EA1D16D86400775412 /* ChannelsTableViewController.swift */,
+				0ACAE6EE1D1703E100775412 /* ChannelSettingsTableViewController.swift */,
 			);
 			name = Controler;
 			sourceTree = "<group>";
@@ -135,6 +143,7 @@
 				0AD8BE8B1CF0DD5100DA829F /* MeasureReference.swift */,
 				0AC276871CC424F100AF391E /* DataBase.swift */,
 				0A6BA02B1D049E00005EB620 /* Moment.swift */,
+				0ACAE6EC1D16F58C00775412 /* Channel.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -323,6 +332,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0A05C03D1CF9EEED002F9BB5 /* LoginViewController.swift in Sources */,
+				0ACAE6EB1D16D86400775412 /* ChannelsTableViewController.swift in Sources */,
 				0A94B52F1D0333B60064053B /* SearchUserResultsTableViewCell.swift in Sources */,
 				0A94B5331D0381BB0064053B /* FriendsTableViewController.swift in Sources */,
 				0AE5BD301CA3B287001458DF /* EditPhotoVC.swift in Sources */,
@@ -337,6 +347,7 @@
 				0A94B52B1D0283410064053B /* SearchTableViewController.swift in Sources */,
 				0A05C0411CFA5539002F9BB5 /* UserRegistrationViewController.swift in Sources */,
 				0A929ED91CC881B9009E04AE /* SharingManager.swift in Sources */,
+				0ACAE6ED1D16F58C00775412 /* Channel.swift in Sources */,
 				0A0EEF981CB93AB500B4349B /* MapImageDetailsViewController.swift in Sources */,
 				0AB748611CB0DEB900A18F43 /* ListTableViewController.swift in Sources */,
 				0AD8BE8C1CF0DD5100DA829F /* MeasureReference.swift in Sources */,
@@ -348,6 +359,7 @@
 				0AA347F91CB35772002C6319 /* SubmitPhotoViewController.swift in Sources */,
 				0A4D644B1CB8B57C00CC837F /* MKPhoto.swift in Sources */,
 				0A05C03F1CFA42F4002F9BB5 /* UserInfo.swift in Sources */,
+				0ACAE6EF1D1703E100775412 /* ChannelSettingsTableViewController.swift in Sources */,
 				0A4D64481CB89C5D00CC837F /* PhotoMapViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

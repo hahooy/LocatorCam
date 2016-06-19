@@ -50,6 +50,7 @@ class ListTableViewController: UITableViewController, UIImagePickerControllerDel
         super.viewWillAppear(animated)
         self.navigationController?.toolbarHidden = true
         self.navigationController?.navigationBarHidden = false
+        self.navigationItem.title = UserInfo.currentChannel != nil ? "\(UserInfo.currentChannel!.name!)" : "Public"
         fetchNewMoments() // automatically fetch new moments when user gets to this view
     }
     
@@ -59,11 +60,10 @@ class ListTableViewController: UITableViewController, UIImagePickerControllerDel
     }
     
     @objc private func fetchNewMoments() {
-        print("fetching moments")
         if SharingManager.sharedInstance.moments.count > 0 {
-            let startTime = SharingManager.sharedInstance.moments[0].pub_time_interval
-            print(startTime)
             SharingManager.sharedInstance.fetchMoments(publishedEarlier: false, publishedLater: true, spinner: nil, refreshControl: refreshControl)
+        } else {
+            SharingManager.sharedInstance.fetchMoments(publishedEarlier: false, publishedLater: false, spinner: nil, refreshControl: refreshControl)
         }
     }
     

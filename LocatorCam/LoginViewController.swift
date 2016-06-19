@@ -13,7 +13,7 @@ class LoginViewController: UIViewController {
     // MARK: - Properties
     @IBAction func signinButton(sender: UIButton) {
         if let username = userIDTextField.text, let password = passcodeTextField.text {
-            login_request(username, password: password)
+            login_request(username.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet()), password: password.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet()))
         }
         
     }
