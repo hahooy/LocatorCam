@@ -19,11 +19,11 @@ class ChannelsTableViewController: UITableViewController {
     
     struct Constant {
         static let leftDetailChannelCellIdentifier = "left detail channel cell"
-        static let toChannelSettingsSegueIdentifier = "to channel settings"
+        static let toChannelSettingsSegueIdentifier = "to channel settings"        
     }
-
-    override func viewDidLoad() {
-        super.viewDidLoad()        
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
         self.navigationController?.toolbarHidden = true
         fetchChannels()
     }
@@ -62,7 +62,6 @@ class ChannelsTableViewController: UITableViewController {
         // user switch channel, refetch all the moments
         UserInfo.currentChannel = channels[indexPath.row]
         SharingManager.sharedInstance.moments = [Moment]()
-        SharingManager.sharedInstance.fetchMoments(publishedEarlier: false, publishedLater: false, spinner: nil, refreshControl: nil)
         navigationController?.popViewControllerAnimated(true)
     }
     
@@ -134,10 +133,7 @@ class ChannelsTableViewController: UITableViewController {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if let channelSettingsVC = segue.destinationViewController as? ChannelSettingsTableViewController, let indexPath = sender as? NSIndexPath {
             let channel = channels[indexPath.row]
-            channelSettingsVC.channelTitle = channel.name
-            channelSettingsVC.channelDescription = channel.description
-            channelSettingsVC.numOfMembers = channel.numOfMembers
-            channelSettingsVC.numOfAdmins = channel.numOfAdmins
+            channelSettingsVC.channel = channel
         }
     }
 

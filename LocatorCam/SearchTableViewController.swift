@@ -11,7 +11,6 @@ import UIKit
 class SearchTableViewController: UITableViewController,UISearchBarDelegate,UISearchResultsUpdating {
     
     // MARK: - Properties
-    
     let searchController = UISearchController(searchResultsController: nil)
     var searchResults: [String] = [] {
         didSet {
@@ -26,6 +25,7 @@ class SearchTableViewController: UITableViewController,UISearchBarDelegate,UISea
             case Other = "Other"
         }
         static let userResultCellIdentifier = "user"
+        static let minimumNumberOfSearchCharacters = 2
     }
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,6 +46,11 @@ class SearchTableViewController: UITableViewController,UISearchBarDelegate,UISea
     // MARK: - UISearchResultsUpdating Protocol Method
     func updateSearchResultsForSearchController(searchController: UISearchController) {
         let searchKeyword = searchController.searchBar.text!
+        
+        // set the minimum number of search characters to 2
+        if searchKeyword.characters.count < Constant.minimumNumberOfSearchCharacters {
+            return
+        }
         let searchScope = searchController.searchBar.scopeButtonTitles![searchController.searchBar.selectedScopeButtonIndex]
         searchRequest(searchKeyword, scope: searchScope)
     }
@@ -61,6 +66,7 @@ class SearchTableViewController: UITableViewController,UISearchBarDelegate,UISea
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        // 
         let cell = tableView.dequeueReusableCellWithIdentifier(Constant.userResultCellIdentifier, forIndexPath: indexPath)
         if let cell = cell as? SearchUserResultsTableViewCell {
             cell.username.text = searchResults[indexPath.row]

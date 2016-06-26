@@ -30,6 +30,9 @@
 		0AB748671CB0E2EF00A18F43 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AB748661CB0E2EF00A18F43 /* Theme.swift */; };
 		0AB8AC2A1CEB71E4001BF2AE /* CustomLengthTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AB8AC291CEB71E4001BF2AE /* CustomLengthTableViewCell.swift */; };
 		0ABDFD451CB478DE0021058F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0ABDFD441CB478DE0021058F /* Main.storyboard */; };
+		0ABFA8241D1F33E500E17906 /* ChannelInvitationTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ABFA8231D1F33E400E17906 /* ChannelInvitationTableViewController.swift */; };
+		0ABFA8261D1F341200E17906 /* ChannelInvitationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ABFA8251D1F341200E17906 /* ChannelInvitationTableViewCell.swift */; };
+		0ABFA8281D1F466700E17906 /* CreateChannelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ABFA8271D1F466700E17906 /* CreateChannelViewController.swift */; };
 		0AC276881CC424F100AF391E /* DataBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AC276871CC424F100AF391E /* DataBase.swift */; };
 		0ACAE6EB1D16D86400775412 /* ChannelsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACAE6EA1D16D86400775412 /* ChannelsTableViewController.swift */; };
 		0ACAE6ED1D16F58C00775412 /* Channel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACAE6EC1D16F58C00775412 /* Channel.swift */; };
@@ -68,6 +71,9 @@
 		0AB748661CB0E2EF00A18F43 /* Theme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		0AB8AC291CEB71E4001BF2AE /* CustomLengthTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomLengthTableViewCell.swift; sourceTree = "<group>"; };
 		0ABDFD441CB478DE0021058F /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		0ABFA8231D1F33E400E17906 /* ChannelInvitationTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChannelInvitationTableViewController.swift; sourceTree = "<group>"; };
+		0ABFA8251D1F341200E17906 /* ChannelInvitationTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChannelInvitationTableViewCell.swift; sourceTree = "<group>"; };
+		0ABFA8271D1F466700E17906 /* CreateChannelViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateChannelViewController.swift; sourceTree = "<group>"; };
 		0AC276871CC424F100AF391E /* DataBase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataBase.swift; sourceTree = "<group>"; };
 		0ACAE6EA1D16D86400775412 /* ChannelsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChannelsTableViewController.swift; sourceTree = "<group>"; };
 		0ACAE6EC1D16F58C00775412 /* Channel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Channel.swift; sourceTree = "<group>"; };
@@ -111,6 +117,7 @@
 			isa = PBXGroup;
 			children = (
 				0AE5BD2F1CA3B287001458DF /* EditPhotoVC.swift */,
+				0ABFA8271D1F466700E17906 /* CreateChannelViewController.swift */,
 				0A94B52A1D0283410064053B /* SearchTableViewController.swift */,
 				0A94B52E1D0333B60064053B /* SearchUserResultsTableViewCell.swift */,
 				0A05C0401CFA5539002F9BB5 /* UserRegistrationViewController.swift */,
@@ -129,6 +136,8 @@
 				0A94B5301D03819E0064053B /* FriendTableViewCell.swift */,
 				0A94B5321D0381BB0064053B /* FriendsTableViewController.swift */,
 				0ACAE6EA1D16D86400775412 /* ChannelsTableViewController.swift */,
+				0ABFA8231D1F33E400E17906 /* ChannelInvitationTableViewController.swift */,
+				0ABFA8251D1F341200E17906 /* ChannelInvitationTableViewCell.swift */,
 				0ACAE6EE1D1703E100775412 /* ChannelSettingsTableViewController.swift */,
 			);
 			name = Controler;
@@ -331,6 +340,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0ABFA8261D1F341200E17906 /* ChannelInvitationTableViewCell.swift in Sources */,
 				0A05C03D1CF9EEED002F9BB5 /* LoginViewController.swift in Sources */,
 				0ACAE6EB1D16D86400775412 /* ChannelsTableViewController.swift in Sources */,
 				0A94B52F1D0333B60064053B /* SearchUserResultsTableViewCell.swift in Sources */,
@@ -343,6 +353,7 @@
 				0A6BA02C1D049E00005EB620 /* Moment.swift in Sources */,
 				0A94B5311D03819E0064053B /* FriendTableViewCell.swift in Sources */,
 				0AA12DA61CEA901D00BAB749 /* measuringReferenceTableViewController.swift in Sources */,
+				0ABFA8241D1F33E500E17906 /* ChannelInvitationTableViewController.swift in Sources */,
 				0A61D52E1CAE1E1000DDC276 /* LineView.swift in Sources */,
 				0A94B52B1D0283410064053B /* SearchTableViewController.swift in Sources */,
 				0A05C0411CFA5539002F9BB5 /* UserRegistrationViewController.swift in Sources */,
@@ -354,6 +365,7 @@
 				0AB8AC2A1CEB71E4001BF2AE /* CustomLengthTableViewCell.swift in Sources */,
 				0AF5B8E01CF0C611004FBB3F /* NewReferenceViewController.swift in Sources */,
 				0AC276881CC424F100AF391E /* DataBase.swift in Sources */,
+				0ABFA8281D1F466700E17906 /* CreateChannelViewController.swift in Sources */,
 				0AE5BD2E1CA3B287001458DF /* AppDelegate.swift in Sources */,
 				0AA12DA41CEA6ED700BAB749 /* SettingsTableViewController.swift in Sources */,
 				0AA347F91CB35772002C6319 /* SubmitPhotoViewController.swift in Sources */,

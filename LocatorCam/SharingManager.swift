@@ -66,6 +66,8 @@ class SharingManager {
         static let logoutURL = baseServerURL + "logout/"
         static let fetchChannelURL = baseServerURL + "fetch-channels/"
         static let fetchChannelsCountURL = baseServerURL + "fetch-channels-count/"
+        static let addMemberToChannelURL = baseServerURL + "add-member-to-channel/"
+        static let createChannelURL = baseServerURL + "create-channel/"
     }
     
     init() {

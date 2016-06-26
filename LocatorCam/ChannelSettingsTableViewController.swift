@@ -11,10 +11,11 @@ import UIKit
 class ChannelSettingsTableViewController: UITableViewController {
     
     // MARK: - Properties
-    var channelTitle: String?
-    var channelDescription: String?
-    var numOfMembers: Int?
-    var numOfAdmins: Int?
+    var channel: Channel?
+    
+    struct Constant {
+        static let segueToSearchUserIdentifier = "to search user for invitation"
+    }
 
     @IBOutlet weak var channelTitleLable: UILabel!
     @IBOutlet weak var channelDescriptionLabel: UILabel!
@@ -25,14 +26,24 @@ class ChannelSettingsTableViewController: UITableViewController {
         
     }
     
-    override func viewDidLoad() {
-        channelTitleLable.text = channelTitle
-        channelDescriptionLabel.text = channelDescription
-        if let numOfMembers = numOfMembers {
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        channelTitleLable.text = channel?.name
+        channelDescriptionLabel.text = channel?.description
+        if let numOfAdmins = channel?.numOfAdmins {
+            numberOfAdministratorsLabel.text = "\(numOfAdmins)"
+        }
+        if let numOfMembers = channel?.numOfMembers {
             numberOfMembersLabel.text = "\(numOfMembers)"
         }
-        if let numOfAdmins = numOfAdmins {
-            numberOfAdministratorsLabel.text = "\(numOfAdmins)"
+    }
+    
+    // MARK: - Navigation
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == Constant.segueToSearchUserIdentifier {
+            if let searchUserVC = segue.destinationViewController as? ChannelInvitationTableViewController {
+                searchUserVC.channelToJoin = channel
+            }
         }
     }
     
