@@ -20,6 +20,11 @@ class CreateChannelViewController: UIViewController {
         }
     }
     
+    @IBAction func dismissKeyboard(sender: UITapGestureRecognizer) {
+        channelNameTextField.resignFirstResponder()
+        channelDescriptionTextField.resignFirstResponder()
+    }
+    
     // MARK: - API Requests
     private func createChannel(channelName: String, description: String?) {
         let url:NSURL = NSURL(string: SharingManager.Constant.createChannelURL)!

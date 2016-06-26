@@ -52,8 +52,8 @@ class SharingManager {
         static let NumberOfMomentsToFetch: UInt = 10
         static let minimumTimeInterval = 0.000001
         static let thumbnailWidth: CGFloat = 1000
-        static let baseServerURL = "http://127.0.0.1:8000/locator-cam/"
-        //static let baseServerURL = "https://locatorcam.herokuapp.com/locator-cam/"
+        //static let baseServerURL = "http://127.0.0.1:8000/locator-cam/"
+        static let baseServerURL = "https://locatorcam.herokuapp.com/locator-cam/"
         static let loginURL = baseServerURL + "login/"
         static let searchUserURL = baseServerURL + "search-user/"
         static let addFriendURL = baseServerURL + "add-friend/"
@@ -69,10 +69,7 @@ class SharingManager {
         static let addMemberToChannelURL = baseServerURL + "add-member-to-channel/"
         static let createChannelURL = baseServerURL + "create-channel/"
     }
-    
-    init() {
-        fetchMoments(publishedEarlier: false, publishedLater: false, spinner: nil, refreshControl: nil)
-    }
+
     
     // add a handler for updating moments
     func addMomentsUpdatedHandler(handler: Void -> Void) {

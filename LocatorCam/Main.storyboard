@@ -423,6 +423,7 @@
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="mAR-RS-wyN" firstAttribute="top" secondItem="UZR-H6-ZbR" secondAttribute="bottom" constant="8" symbolic="YES" id="1rn-Ey-swA"/>
                             <constraint firstItem="ZGq-S0-A1s" firstAttribute="trailing" secondItem="uSy-3G-c1N" secondAttribute="trailing" id="3is-9Y-KyC"/>
@@ -458,6 +459,9 @@
                                 <exclude reference="x8n-Wz-ifi"/>
                             </mask>
                         </variation>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="Krk-zG-qDE" appends="YES" id="k9B-ba-hoT"/>
+                        </connections>
                     </view>
                     <connections>
                         <outlet property="EnablePrivateChannelSwitch" destination="mAR-RS-wyN" id="RSd-XV-qz8"/>
@@ -466,6 +470,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pgE-HH-a1O" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="Krk-zG-qDE">
+                    <connections>
+                        <action selector="dismissKeyboard:" destination="6Cv-2C-ubF" id="PQM-Yu-dms"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="2709" y="-1180"/>
         </scene>
