@@ -202,11 +202,11 @@
                                             <segue destination="5R9-IQ-KFc" kind="show" identifier="from channel settings to member list" id="WLm-Pm-303"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="100" id="vje-Td-jmx">
-                                        <rect key="frame" x="0.0" y="291" width="600" height="100"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="310" id="vje-Td-jmx">
+                                        <rect key="frame" x="0.0" y="291" width="600" height="310"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="vje-Td-jmx" id="ptQ-ja-WsA">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="99"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="309"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oV2-s6-PKS">
@@ -217,7 +217,7 @@
                                                     </connections>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LTd-YM-Wa8">
-                                                    <rect key="frame" x="234" y="61" width="132" height="30"/>
+                                                    <rect key="frame" x="234" y="78" width="132" height="30"/>
                                                     <state key="normal" title="Delete this channel">
                                                         <color key="titleColor" red="1" green="0.1843246993989397" blue="0.036081313039146967" alpha="1" colorSpace="calibratedRGB"/>
                                                     </state>
@@ -227,19 +227,11 @@
                                                 </button>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="bottomMargin" secondItem="LTd-YM-Wa8" secondAttribute="bottom" id="46Q-om-m4a"/>
                                                 <constraint firstAttribute="topMargin" secondItem="oV2-s6-PKS" secondAttribute="top" id="J0l-C8-eSZ"/>
+                                                <constraint firstItem="LTd-YM-Wa8" firstAttribute="top" secondItem="oV2-s6-PKS" secondAttribute="bottom" constant="40" id="WON-Uk-5kz"/>
                                                 <constraint firstItem="LTd-YM-Wa8" firstAttribute="centerX" secondItem="ptQ-ja-WsA" secondAttribute="centerX" id="a3s-RQ-dsk"/>
                                                 <constraint firstItem="oV2-s6-PKS" firstAttribute="centerX" secondItem="ptQ-ja-WsA" secondAttribute="centerX" id="g0K-Cl-9xP"/>
                                             </constraints>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="204" id="1He-Fv-Dv4">
-                                        <rect key="frame" x="0.0" y="391" width="600" height="204"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="1He-Fv-Dv4" id="bAE-ZE-ml0">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="203"/>
-                                            <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </cells>
