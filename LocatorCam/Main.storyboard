@@ -202,11 +202,11 @@
                                             <segue destination="5R9-IQ-KFc" kind="show" identifier="from channel settings to member list" id="WLm-Pm-303"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="94" id="vje-Td-jmx">
-                                        <rect key="frame" x="0.0" y="291" width="600" height="94"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="310" id="vje-Td-jmx">
+                                        <rect key="frame" x="0.0" y="291" width="600" height="310"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="vje-Td-jmx" id="ptQ-ja-WsA">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="93"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="309"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oV2-s6-PKS">
@@ -216,7 +216,7 @@
                                                         <segue destination="zzL-f8-Ngm" kind="show" identifier="to search user for invitation" id="KKA-Re-9hn"/>
                                                     </connections>
                                                 </button>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LTd-YM-Wa8">
+                                                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LTd-YM-Wa8">
                                                     <rect key="frame" x="234" y="55" width="132" height="30"/>
                                                     <state key="normal" title="Delete this channel">
                                                         <color key="titleColor" red="1" green="0.1843246993989397" blue="0.036081313039146967" alpha="1" colorSpace="calibratedRGB"/>
