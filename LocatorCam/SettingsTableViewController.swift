@@ -9,7 +9,7 @@
 import UIKit
 
 class SettingsTableViewController: UITableViewController {
-
+    
     // MARK: - Properties
     @IBOutlet weak var stampLocationSwitch: UISwitch!
     @IBOutlet weak var usernameLabel: UILabel!
@@ -25,6 +25,7 @@ class SettingsTableViewController: UITableViewController {
     
     struct Constant {
         static let toLogin = "to login"
+        static let toFriends = "from settings to friends"
     }
     
     override func viewDidLoad() {
@@ -106,7 +107,7 @@ class SettingsTableViewController: UITableViewController {
             }
         }
         task.resume()
-
+        
     }
     
     private func logoutUser() {
@@ -136,5 +137,14 @@ class SettingsTableViewController: UITableViewController {
         SharingManager.sharedInstance.momentsUpdateHandlers = Array<(Void -> Void)>()
         
         performSegueWithIdentifier(Constant.toLogin, sender: self)
+    }
+    
+    // MARK: - Navigation
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == Constant.toFriends {
+            if let userTable = segue.destinationViewController as? UsersListTableViewController {
+                userTable.userType = UsersListTableViewController.UserType.Friend
+            }
+        }
     }
 }

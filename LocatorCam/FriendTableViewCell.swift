@@ -23,7 +23,7 @@ class FriendTableViewCell: UITableViewCell {
         }
     }
     
-    weak var friendTableViewController: FriendsTableViewController?
+    weak var friendTableViewController: UsersListTableViewController?
     
     // MARK: - API Requests
     private func unfriend(username: String) {

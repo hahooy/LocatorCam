@@ -21,19 +21,18 @@
 		0A94B52B1D0283410064053B /* SearchTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A94B52A1D0283410064053B /* SearchTableViewController.swift */; };
 		0A94B52F1D0333B60064053B /* SearchUserResultsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A94B52E1D0333B60064053B /* SearchUserResultsTableViewCell.swift */; };
 		0A94B5311D03819E0064053B /* FriendTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A94B5301D03819E0064053B /* FriendTableViewCell.swift */; };
-		0A94B5331D0381BB0064053B /* FriendsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A94B5321D0381BB0064053B /* FriendsTableViewController.swift */; };
+		0A94B5331D0381BB0064053B /* UsersListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A94B5321D0381BB0064053B /* UsersListTableViewController.swift */; };
 		0AA12DA41CEA6ED700BAB749 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AA12DA31CEA6ED700BAB749 /* SettingsTableViewController.swift */; };
 		0AA12DA61CEA901D00BAB749 /* measuringReferenceTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AA12DA51CEA901D00BAB749 /* measuringReferenceTableViewController.swift */; };
 		0AA347F91CB35772002C6319 /* SubmitPhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AA347F81CB35772002C6319 /* SubmitPhotoViewController.swift */; };
 		0AB748611CB0DEB900A18F43 /* ListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AB748601CB0DEB900A18F43 /* ListTableViewController.swift */; };
-		0AB748651CB0DF0700A18F43 /* Firebase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0AB748641CB0DF0700A18F43 /* Firebase.framework */; };
 		0AB748671CB0E2EF00A18F43 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AB748661CB0E2EF00A18F43 /* Theme.swift */; };
 		0AB8AC2A1CEB71E4001BF2AE /* CustomLengthTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AB8AC291CEB71E4001BF2AE /* CustomLengthTableViewCell.swift */; };
 		0ABDFD451CB478DE0021058F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0ABDFD441CB478DE0021058F /* Main.storyboard */; };
 		0ABFA8241D1F33E500E17906 /* ChannelInvitationTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ABFA8231D1F33E400E17906 /* ChannelInvitationTableViewController.swift */; };
 		0ABFA8261D1F341200E17906 /* ChannelInvitationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ABFA8251D1F341200E17906 /* ChannelInvitationTableViewCell.swift */; };
 		0ABFA8281D1F466700E17906 /* CreateChannelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ABFA8271D1F466700E17906 /* CreateChannelViewController.swift */; };
-		0AC276881CC424F100AF391E /* DataBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AC276871CC424F100AF391E /* DataBase.swift */; };
+		0ABFA82A1D207D0500E17906 /* AdministratorTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ABFA8291D207D0500E17906 /* AdministratorTableViewCell.swift */; };
 		0ACAE6EB1D16D86400775412 /* ChannelsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACAE6EA1D16D86400775412 /* ChannelsTableViewController.swift */; };
 		0ACAE6ED1D16F58C00775412 /* Channel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACAE6EC1D16F58C00775412 /* Channel.swift */; };
 		0ACAE6EF1D1703E100775412 /* ChannelSettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACAE6EE1D1703E100775412 /* ChannelSettingsTableViewController.swift */; };
@@ -62,7 +61,7 @@
 		0A94B52A1D0283410064053B /* SearchTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchTableViewController.swift; sourceTree = "<group>"; };
 		0A94B52E1D0333B60064053B /* SearchUserResultsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchUserResultsTableViewCell.swift; sourceTree = "<group>"; };
 		0A94B5301D03819E0064053B /* FriendTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendTableViewCell.swift; sourceTree = "<group>"; };
-		0A94B5321D0381BB0064053B /* FriendsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendsTableViewController.swift; sourceTree = "<group>"; };
+		0A94B5321D0381BB0064053B /* UsersListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UsersListTableViewController.swift; sourceTree = "<group>"; };
 		0AA12DA31CEA6ED700BAB749 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
 		0AA12DA51CEA901D00BAB749 /* measuringReferenceTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = measuringReferenceTableViewController.swift; sourceTree = "<group>"; };
 		0AA347F81CB35772002C6319 /* SubmitPhotoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubmitPhotoViewController.swift; sourceTree = "<group>"; };
@@ -74,7 +73,7 @@
 		0ABFA8231D1F33E400E17906 /* ChannelInvitationTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChannelInvitationTableViewController.swift; sourceTree = "<group>"; };
 		0ABFA8251D1F341200E17906 /* ChannelInvitationTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChannelInvitationTableViewCell.swift; sourceTree = "<group>"; };
 		0ABFA8271D1F466700E17906 /* CreateChannelViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateChannelViewController.swift; sourceTree = "<group>"; };
-		0AC276871CC424F100AF391E /* DataBase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataBase.swift; sourceTree = "<group>"; };
+		0ABFA8291D207D0500E17906 /* AdministratorTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdministratorTableViewCell.swift; sourceTree = "<group>"; };
 		0ACAE6EA1D16D86400775412 /* ChannelsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChannelsTableViewController.swift; sourceTree = "<group>"; };
 		0ACAE6EC1D16F58C00775412 /* Channel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Channel.swift; sourceTree = "<group>"; };
 		0ACAE6EE1D1703E100775412 /* ChannelSettingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChannelSettingsTableViewController.swift; sourceTree = "<group>"; };
@@ -97,7 +96,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0AB748651CB0DF0700A18F43 /* Firebase.framework in Frameworks */,
 				AB14DEDE776EA6213B5AE712 /* Pods_LocatorCam.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -134,7 +132,8 @@
 				0AA12DA31CEA6ED700BAB749 /* SettingsTableViewController.swift */,
 				0A05C03C1CF9EEED002F9BB5 /* LoginViewController.swift */,
 				0A94B5301D03819E0064053B /* FriendTableViewCell.swift */,
-				0A94B5321D0381BB0064053B /* FriendsTableViewController.swift */,
+				0ABFA8291D207D0500E17906 /* AdministratorTableViewCell.swift */,
+				0A94B5321D0381BB0064053B /* UsersListTableViewController.swift */,
 				0ACAE6EA1D16D86400775412 /* ChannelsTableViewController.swift */,
 				0ABFA8231D1F33E400E17906 /* ChannelInvitationTableViewController.swift */,
 				0ABFA8251D1F341200E17906 /* ChannelInvitationTableViewCell.swift */,
@@ -150,7 +149,6 @@
 				0A05C03E1CFA42F4002F9BB5 /* UserInfo.swift */,
 				0AE5BD3F1CA3BA75001458DF /* OneShotLocationManager.swift */,
 				0AD8BE8B1CF0DD5100DA829F /* MeasureReference.swift */,
-				0AC276871CC424F100AF391E /* DataBase.swift */,
 				0A6BA02B1D049E00005EB620 /* Moment.swift */,
 				0ACAE6EC1D16F58C00775412 /* Channel.swift */,
 			);
@@ -344,8 +342,9 @@
 				0A05C03D1CF9EEED002F9BB5 /* LoginViewController.swift in Sources */,
 				0ACAE6EB1D16D86400775412 /* ChannelsTableViewController.swift in Sources */,
 				0A94B52F1D0333B60064053B /* SearchUserResultsTableViewCell.swift in Sources */,
-				0A94B5331D0381BB0064053B /* FriendsTableViewController.swift in Sources */,
+				0A94B5331D0381BB0064053B /* UsersListTableViewController.swift in Sources */,
 				0AE5BD301CA3B287001458DF /* EditPhotoVC.swift in Sources */,
+				0ABFA82A1D207D0500E17906 /* AdministratorTableViewCell.swift in Sources */,
 				0A1F1A9A1CBAA94C0025CB26 /* Helpers.swift in Sources */,
 				0AB748671CB0E2EF00A18F43 /* Theme.swift in Sources */,
 				0AE5BD401CA3BA75001458DF /* OneShotLocationManager.swift in Sources */,
@@ -364,7 +363,6 @@
 				0AD8BE8C1CF0DD5100DA829F /* MeasureReference.swift in Sources */,
 				0AB8AC2A1CEB71E4001BF2AE /* CustomLengthTableViewCell.swift in Sources */,
 				0AF5B8E01CF0C611004FBB3F /* NewReferenceViewController.swift in Sources */,
-				0AC276881CC424F100AF391E /* DataBase.swift in Sources */,
 				0ABFA8281D1F466700E17906 /* CreateChannelViewController.swift in Sources */,
 				0AE5BD2E1CA3B287001458DF /* AppDelegate.swift in Sources */,
 				0AA12DA41CEA6ED700BAB749 /* SettingsTableViewController.swift in Sources */,

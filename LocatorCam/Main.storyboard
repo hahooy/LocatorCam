@@ -7,10 +7,10 @@
         <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
     </dependencies>
     <scenes>
-        <!--Friends Table View Controller-->
+        <!--Users List Table View Controller-->
         <scene sceneID="ocn-9B-8Yc">
             <objects>
-                <tableViewController id="5R9-IQ-KFc" customClass="FriendsTableViewController" customModule="LocatorCam" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="5R9-IQ-KFc" customClass="UsersListTableViewController" customModule="LocatorCam" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="QML-0g-nBv">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -52,6 +52,38 @@
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="friendUsernameLabel" destination="scx-kR-0K6" id="eqr-WE-MSQ"/>
+                                </connections>
+                            </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="administrator cell" id="W0m-ao-geA" customClass="AdministratorTableViewCell" customModule="LocatorCam" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="136" width="600" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="W0m-ao-geA" id="aBD-O5-lPF">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zVa-1F-Y4P">
+                                            <rect key="frame" x="8" y="11" width="42" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pNW-mY-IOz">
+                                            <rect key="frame" x="541" y="7" width="51" height="30"/>
+                                            <state key="normal" title="remove"/>
+                                            <connections>
+                                                <action selector="removeAdministratorButton:" destination="W0m-ao-geA" eventType="touchUpInside" id="Aju-Ef-M2n"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="pNW-mY-IOz" firstAttribute="centerY" secondItem="zVa-1F-Y4P" secondAttribute="centerY" id="9IM-NT-KCK"/>
+                                        <constraint firstAttribute="leadingMargin" secondItem="zVa-1F-Y4P" secondAttribute="leading" id="DMs-xT-zqI"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="pNW-mY-IOz" secondAttribute="trailing" id="MKI-Ci-bXD"/>
+                                        <constraint firstItem="zVa-1F-Y4P" firstAttribute="centerY" secondItem="aBD-O5-lPF" secondAttribute="centerY" id="hMp-Jw-A9b"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="nameLabel" destination="zVa-1F-Y4P" id="6C0-Nr-ZJR"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -139,6 +171,9 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="5R9-IQ-KFc" kind="show" identifier="from channel settings to administrator list" id="RGh-7j-xGe"/>
+                                        </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="QT7-iz-kch" detailTextLabel="aBB-Gx-v6K" style="IBUITableViewCellStyleValue1" id="gPs-i7-1ox">
                                         <rect key="frame" x="0.0" y="247" width="600" height="44"/>
@@ -163,26 +198,39 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="5R9-IQ-KFc" kind="show" identifier="from channel settings to member list" id="WLm-Pm-303"/>
+                                        </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="vje-Td-jmx">
-                                        <rect key="frame" x="0.0" y="291" width="600" height="44"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="94" id="vje-Td-jmx">
+                                        <rect key="frame" x="0.0" y="291" width="600" height="94"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="vje-Td-jmx" id="ptQ-ja-WsA">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="93"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oV2-s6-PKS">
-                                                    <rect key="frame" x="8" y="7" width="190" height="30"/>
+                                                    <rect key="frame" x="205" y="8" width="190" height="30"/>
                                                     <state key="normal" title="Invite others to this channel"/>
                                                     <connections>
-                                                        <action selector="inviteOthersToChannel:" destination="2Xc-6X-F18" eventType="touchUpInside" id="VlS-4Y-0Az"/>
                                                         <segue destination="zzL-f8-Ngm" kind="show" identifier="to search user for invitation" id="KKA-Re-9hn"/>
+                                                    </connections>
+                                                </button>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LTd-YM-Wa8">
+                                                    <rect key="frame" x="234" y="55" width="132" height="30"/>
+                                                    <state key="normal" title="Delete this channel">
+                                                        <color key="titleColor" red="1" green="0.1843246993989397" blue="0.036081313039146967" alpha="1" colorSpace="calibratedRGB"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="deleteChannelButton:" destination="2Xc-6X-F18" eventType="touchUpInside" id="unY-xk-KBK"/>
                                                     </connections>
                                                 </button>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="oV2-s6-PKS" firstAttribute="leading" secondItem="ptQ-ja-WsA" secondAttribute="leadingMargin" id="YT9-uk-WdB"/>
-                                                <constraint firstItem="oV2-s6-PKS" firstAttribute="centerY" secondItem="ptQ-ja-WsA" secondAttribute="centerY" id="p0D-t7-iQO"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="LTd-YM-Wa8" secondAttribute="bottom" id="46Q-om-m4a"/>
+                                                <constraint firstAttribute="topMargin" secondItem="oV2-s6-PKS" secondAttribute="top" id="J0l-C8-eSZ"/>
+                                                <constraint firstItem="LTd-YM-Wa8" firstAttribute="centerX" secondItem="ptQ-ja-WsA" secondAttribute="centerX" id="a3s-RQ-dsk"/>
+                                                <constraint firstItem="oV2-s6-PKS" firstAttribute="centerX" secondItem="ptQ-ja-WsA" secondAttribute="centerX" id="g0K-Cl-9xP"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -481,7 +529,7 @@
         <!--Settings-->
         <scene sceneID="ukD-Ev-8dW">
             <objects>
-                <tableViewController id="4Ja-sx-xxZ" customClass="SettingsTableViewController" customModule="LocatorCam" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController hidesBottomBarWhenPushed="YES" id="4Ja-sx-xxZ" customClass="SettingsTableViewController" customModule="LocatorCam" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="ioE-H9-UFH">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -568,7 +616,7 @@
                                                     <state key="normal" title="0"/>
                                                     <connections>
                                                         <action selector="numberOfFriendsButtonAction:" destination="4Ja-sx-xxZ" eventType="touchUpInside" id="akj-gc-ynU"/>
-                                                        <segue destination="5R9-IQ-KFc" kind="show" id="0VA-om-BHt"/>
+                                                        <segue destination="5R9-IQ-KFc" kind="show" identifier="from settings to friends" id="0VA-om-BHt"/>
                                                     </connections>
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Friends:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uD3-aF-lgp">
@@ -1591,5 +1639,6 @@
         <segue reference="e6P-H6-MDK"/>
         <segue reference="8Td-Im-SQU"/>
         <segue reference="Hcj-rt-TA7"/>
+        <segue reference="RGh-7j-xGe"/>
     </inferredMetricsTieBreakers>
 </document>
