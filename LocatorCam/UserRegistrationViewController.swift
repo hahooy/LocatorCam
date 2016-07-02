@@ -13,20 +13,35 @@ class UserRegistrationViewController: UIViewController {
     // MARK: - Properties
     @IBOutlet weak var usernameTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
+    @IBOutlet weak var passwordAgainTextField: UITextField!
     @IBOutlet weak var emailTextField: UITextField!
+    
+    struct Constant {
+        static let passwordMismatchAlertMessage = "The passwords you entered don't match each other, please check your password." 
+        static let segueToApp = "register and login to app"
+        static let registerURL = SharingManager.Constant.baseServerURL + "register/"
+    }
     
     
     @IBAction func registerButton(sender: AnyObject) {
-        if let username = usernameTextField.text,
-            let password = passwordTextField.text,
-            let email = emailTextField.text {
-            register_request(username, password: password, email: email)
+        guard let username = usernameTextField.text, let password = passwordTextField.text, let passwordAgain = passwordAgainTextField.text, let email = emailTextField.text else {
+            return
         }
+        
+        if password != passwordAgain {
+            passwordTextField.text = ""
+            passwordAgainTextField.text = ""
+            showSimpleAlertMessage(Constant.passwordMismatchAlertMessage)
+            return
+        }
+        
+        register_request(username, password: password, email: email)
     }
     
-    struct Constant {
-        static let segueToApp = "register and login to app"
-        static let registerURL = SharingManager.Constant.baseServerURL + "register/"
+    private func showSimpleAlertMessage(message: String) {
+        let alert = UIAlertController(title: nil, message: message, preferredStyle: .Alert)
+        alert.addAction(UIAlertAction(title: "Close", style: .Cancel, handler: nil))
+        presentViewController(alert, animated: true, completion: nil)
     }
     
     // MARK: - Helper functions
@@ -50,19 +65,15 @@ class UserRegistrationViewController: UIViewController {
                 return
             }
             
-            //let dataString = NSString(data: data!, encoding: NSUTF8StringEncoding)
             do {
+
                 let json = try NSJSONSerialization.JSONObjectWithData(data!, options: .AllowFragments) as! NSDictionary
                 
-                // registration failed
-                if let registrationError = json["error"] as? String {
-                    print(registrationError)
-                    return
+                if let message = json["message"] as? String {
+                    dispatch_async(dispatch_get_main_queue(), {
+                        self.showSimpleAlertMessage(message)
+                    })
                 }
-                
-                dispatch_async(dispatch_get_main_queue(), {
-                    self.performSegueWithIdentifier(Constant.segueToApp, sender: self)
-                })
                 
             } catch {
                 print("error serializing JSON: \(error)")

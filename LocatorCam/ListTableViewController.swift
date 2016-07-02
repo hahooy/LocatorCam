@@ -63,7 +63,7 @@ class ListTableViewController: UITableViewController, UIImagePickerControllerDel
         if SharingManager.sharedInstance.moments.count > 0 {
             SharingManager.sharedInstance.fetchMoments(publishedEarlier: false, publishedLater: true, spinner: nil, refreshControl: refreshControl)
         } else {
-            SharingManager.sharedInstance.fetchMoments(publishedEarlier: false, publishedLater: false, spinner: nil, refreshControl: refreshControl)
+            SharingManager.sharedInstance.fetchMoments(publishedEarlier: false, publishedLater: false, spinner: scrollToBottomSpinner, refreshControl: refreshControl)
         }
     }
     
