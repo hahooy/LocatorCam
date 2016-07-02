@@ -36,14 +36,15 @@ class SubmitPhotoViewController: UIViewController {
         
         // compress and encode the image
         
-        let thumbnail = UIImageJPEGRepresentation(image.getThumbnail(), 1)!
+        let thumbnail = UIImageJPEGRepresentation(image.getThumbnail(SharingManager.Constant.maxThumbnailSize), 0)!
         let originalPhoto = UIImageJPEGRepresentation(image, 0)!
         // need to form url encoded the query string!!! otherwise + will be interpreted as space
         let s = NSCharacterSet.URLQueryAllowedCharacterSet().mutableCopy()
         s.removeCharactersInString("+&")
         let thumbnailBase64String: NSString = thumbnail.base64EncodedStringWithOptions(.Encoding64CharacterLineLength).stringByAddingPercentEncodingWithAllowedCharacters(s as! NSCharacterSet)!
         let originalPhotoBase64String: NSString = originalPhoto.base64EncodedStringWithOptions(.Encoding64CharacterLineLength).stringByAddingPercentEncodingWithAllowedCharacters(s as! NSCharacterSet)!
-        
+        print(thumbnailBase64String.length)
+        print(originalPhotoBase64String.length)
         // create a photo object
         var moment = [
             "username": username,
@@ -119,9 +120,10 @@ class SubmitPhotoViewController: UIViewController {
 }
 
 extension UIImage {
-    func getThumbnail() -> UIImage {
-        let thumbnailWidth = SharingManager.Constant.thumbnailWidth
-        let thumbnailHeight = self.size.height * thumbnailWidth / self.size.width
+    func getThumbnail(maxThumbnailSize: CGFloat) -> UIImage {
+        let reduceRatio = min(maxThumbnailSize / self.size.height, maxThumbnailSize / self.size.width, 1.0)
+        let thumbnailWidth = self.size.width * reduceRatio
+        let thumbnailHeight = self.size.height * reduceRatio
         let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: thumbnailWidth, height: thumbnailHeight))
         imageView.contentMode = .ScaleAspectFit
         imageView.image = self

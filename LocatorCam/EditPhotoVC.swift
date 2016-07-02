@@ -40,8 +40,8 @@ class EditPhotoVC: UIViewController {
         loadLineView(imageView)
         imageView.image = photo
         if (SharingManager.sharedInstance.locationStampEnabled) {
-            embedGPSData()
-        }        
+            recordGPSData()
+        }
     }
     
     
@@ -79,18 +79,15 @@ class EditPhotoVC: UIViewController {
         removeAllLines()
     }
     
-    private func embedGPSData() {
+    private func recordGPSData() {
         manager = OneShotLocationManager() // request the current location
         manager!.fetchWithCompletion {location, error in
             // fetch location or an error
             if let loc = location {
                 self.photoLocation = loc
-                let locString = "\(formatDate(loc.timestamp))\n\(self.transformCoordinate(loc.coordinate)) +/- \(loc.horizontalAccuracy)m"
-                
-                // embeded text to image on the main queue
                 dispatch_async(dispatch_get_main_queue()) {
                     if let img = self.imageView.image {
-                        self.imageView.image = EditPhotoVC.textToImage(locString, inImage: img, atPoint: CGPointZero)
+                        self.imageView.image = self.stampGeoLocationToImage(loc, img: img)
                     }
                 }
             } else if let err = error {
@@ -104,6 +101,12 @@ class EditPhotoVC: UIViewController {
             // destroy the object immediately to save memory
             self.manager = nil
         }
+    }
+    
+    private func stampGeoLocationToImage(loc: CLLocation, img: UIImage) -> UIImage {
+        let locString = "\(formatDate(loc.timestamp))\n\(self.transformCoordinate(loc.coordinate)) +/- \(loc.horizontalAccuracy)m"
+
+        return EditPhotoVC.textToImage(locString, inImage: img, atPoint: CGPointZero)
     }
     
     // send image to the next view
@@ -126,10 +129,6 @@ class EditPhotoVC: UIViewController {
                 submitVC.photoLocation = photoLocation
             }
         }
-    }
-    
-    @IBAction func goBack(segue: UIStoryboardSegue) {
-        
     }
     
     func image(image: UIImage, didFinishSavingWithError error: NSErrorPointer, contextInfo:UnsafePointer<Void>) {
