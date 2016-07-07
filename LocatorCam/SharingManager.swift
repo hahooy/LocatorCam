@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Firebase
 
 /*
  This class contains variables that are shared across the entire application
