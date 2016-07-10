@@ -23,10 +23,14 @@ class ChannelSettingsTableViewController: UITableViewController {
     @IBOutlet weak var channelDescriptionLabel: UILabel!
     @IBOutlet weak var numberOfMembersLabel: UILabel!
     @IBOutlet weak var numberOfAdministratorsLabel: UILabel!
-    
+    @IBAction func leaveChannelButton(sender: UIButton) {
+        if let channelID = channel?.id {
+            makeChannelRequest(channelID, url: SharingManager.Constant.leaveChannelURL)
+        }
+    }
     @IBAction func deleteChannelButton(sender: UIButton) {
         if let channelID = channel?.id {
-            deleteChannel(channelID)
+            makeChannelRequest(channelID, url: SharingManager.Constant.deleteChannelURL)
         }
     }
     
@@ -68,9 +72,9 @@ class ChannelSettingsTableViewController: UITableViewController {
         }
     }
     
-    private func deleteChannel(channelID: Int) {
+    private func makeChannelRequest(channelID: Int, url: String) {
         
-        let url:NSURL = NSURL(string: SharingManager.Constant.deleteChannelURL)!
+        let url:NSURL = NSURL(string: url)!
         let session = NSURLSession.sharedSession()
         
         let request = NSMutableURLRequest(URL: url)
@@ -101,16 +105,17 @@ class ChannelSettingsTableViewController: UITableViewController {
                 if let message = json["message"] as? String {
                     dispatch_async(dispatch_get_main_queue(), {
                         let inviteUserAlert = UIAlertController(title: nil, message: message, preferredStyle: .Alert)
-                        inviteUserAlert.addAction(UIAlertAction(title: "Close", style: .Cancel, handler: nil))                        
+                        inviteUserAlert.addAction(UIAlertAction(title: "Close", style: .Cancel, handler: nil))
                         self.presentViewController(inviteUserAlert, animated: true, completion: nil)
                     })
                 }
+                
+                UserInfo.currentChannel = nil
             } catch {
                 print("error serializing JSON: \(error)")
             }
         }
         task.resume()
     }
-    
     
 }

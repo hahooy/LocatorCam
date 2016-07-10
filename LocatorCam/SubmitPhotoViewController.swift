@@ -103,7 +103,7 @@ class SubmitPhotoViewController: UIViewController {
         task.resume()
 
         
-        // return to the first page
+        // return to the last page
         // let viewControlers = navigationController?.viewControllers
         // navigationController?.popToViewController(viewControlers![0], animated: true)
         navigationController?.popViewControllerAnimated(true)

@@ -53,8 +53,8 @@ class SharingManager {
         static let NumberOfMomentsToFetch: UInt = 10
         static let minimumTimeInterval = 0.000001
         static let maxThumbnailSize: CGFloat = 1000
-        //static let baseServerURL = "http://127.0.0.1:8000/locator-cam/"
-        static let baseServerURL = "https://locatorcam.herokuapp.com/locator-cam/"
+        static let baseServerURL = "http://127.0.0.1:8000/locator-cam/"
+        //static let baseServerURL = "https://locatorcam.herokuapp.com/locator-cam/"
         static let loginURL = baseServerURL + "login/"
         static let searchUserURL = baseServerURL + "search-user/"
         static let addFriendURL = baseServerURL + "add-friend/"
@@ -75,6 +75,7 @@ class SharingManager {
         static let removeMemberFromChannelURL = baseServerURL + "remove-member-from-channel/"
         static let removeAdministratorFromChannelURL = baseServerURL + "remove-administrator-from-channel/"
         static let deleteChannelURL = baseServerURL + "delete-channel/"
+        static let leaveChannelURL = baseServerURL + "leave-channel/"
     }
 
     
