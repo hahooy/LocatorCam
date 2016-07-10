@@ -8,7 +8,6 @@
 
 import UIKit
 import MobileCoreServices
-import Firebase
 import CoreLocation
 
 

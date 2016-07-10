@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import Firebase
+import UIKit
 
 /*
  This class contains variables that are shared across the entire application
