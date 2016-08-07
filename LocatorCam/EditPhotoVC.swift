@@ -43,7 +43,6 @@ class EditPhotoVC: UIViewController {
         }
     }
     
-    
     // add a line to line view
     @IBAction func addMeasurementLine(sender: UIBarButtonItem) {
         lineView?.addLine()
@@ -256,5 +255,10 @@ class EditPhotoVC: UIViewController {
         let longitudeSeconds = longitudeInSeconds - longitudeDegrees * 3600 - longitudeMinutes * 60
         
         return "\(coordinate.latitude >= 0 ? "N" : "S") \(latitudeDegrees)° \(latitudeMinutes)' \(latitudeSeconds)\", \(coordinate.longitude >= 0 ? "E" : "W") \(longitudeDegrees)° \(longitudeMinutes)' \(longitudeSeconds)\""
+    }
+    
+    // MARK: - Navigation
+    @IBAction func unwindToEditPhoto(segue: UIStoryboardSegue) {
+        // unwind to this view
     }
 }
