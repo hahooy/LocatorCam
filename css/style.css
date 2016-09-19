@@ -152,7 +152,7 @@ nav.navbar.fixed-to-top{
 header{
 	padding: 150px 0px 0px 0px;
 	height: 960px;
-	background: url('../img/nepal.jpg');
+	background: url('../img/ocean.jpg');
 	background-color: white!important;
 	background-size: cover;
 	background-repeat: no-repeat;
@@ -237,7 +237,7 @@ header .carousel-indicators li {
 	overflow: hidden;
 	padding: 230px 0px 150px 0px;
 	min-height: 600px;
-	background: url('../img/dunes.jpg');
+	background: url('../img/sea.jpg');
 	background-position: center top;
 	background-repeat: repeat-x;
 	color: white;
