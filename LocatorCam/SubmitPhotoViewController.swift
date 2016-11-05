@@ -131,6 +131,6 @@ extension UIImage {
         imageView.layer.renderInContext(UIGraphicsGetCurrentContext()!)
         let resizedImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
-        return resizedImage
+        return resizedImage!
     }
 }

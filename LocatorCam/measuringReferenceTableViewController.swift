@@ -188,7 +188,7 @@ class measuringReferenceTableViewController: UITableViewController, UIPickerView
     
     
     func saveReferences() {
-        let isSuccessfulSave = NSKeyedArchiver.archiveRootObject(baseMeasuringReferences, toFile: MeasureReference.ArchiveURL.path!)
+        let isSuccessfulSave = NSKeyedArchiver.archiveRootObject(baseMeasuringReferences, toFile: MeasureReference.ArchiveURL!.path!)
         if !isSuccessfulSave {
             print("Failed to save references...")
         } else {
@@ -197,7 +197,7 @@ class measuringReferenceTableViewController: UITableViewController, UIPickerView
     }
     
     func loadReferences() -> [MeasureReference]? {
-        return NSKeyedUnarchiver.unarchiveObjectWithFile(MeasureReference.ArchiveURL.path!) as? [MeasureReference]
+        return NSKeyedUnarchiver.unarchiveObjectWithFile(MeasureReference.ArchiveURL!.path!) as? [MeasureReference]
     }
     
     // MARK: - helper function

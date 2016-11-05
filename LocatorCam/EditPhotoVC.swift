@@ -184,7 +184,7 @@ class EditPhotoVC: UIViewController {
         UIGraphicsEndImageContext()
         
         //And pass it back up to the caller.
-        return newImage
+        return newImage!
         
     }
     
@@ -215,7 +215,7 @@ class EditPhotoVC: UIViewController {
         // Create graphics context
         UIGraphicsBeginImageContextWithOptions(UIScreen.mainScreen().bounds.size, false, UIScreen.mainScreen().scale)
         let context = UIGraphicsGetCurrentContext()
-        CGContextSetInterpolationQuality(context, CGInterpolationQuality.High)
+        CGContextSetInterpolationQuality(context!, CGInterpolationQuality.High)
         
         // Draw each view into context
         for curView in allViews {
@@ -235,7 +235,7 @@ class EditPhotoVC: UIViewController {
         let height = imageView.frame.height * UIScreen.mainScreen().scale
         // let height = imageView.image!.size.height / ratio * UIScreen.mainScreen().scale
         
-        let imageRef = image.CGImage!
+        let imageRef = image!.CGImage!
         let imageArea = CGRectMake(x, y, width, height)
         let subImageRef: CGImageRef = CGImageCreateWithImageInRect(imageRef, imageArea)!
         // Return image
