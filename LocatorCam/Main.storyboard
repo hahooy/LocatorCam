@@ -1170,12 +1170,15 @@
                             </variation>
                         </view>
                         <view key="tableFooterView" contentMode="scaleToFill" id="hvY-YZ-neK">
-                            <rect key="frame" x="0.0" y="289" width="375" height="44"/>
+                            <rect key="frame" x="0.0" y="289" width="375" height="205"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eXy-BK-gFl">
-                                    <rect key="frame" x="128" y="7" width="118" height="30"/>
-                                    <state key="normal" title="QR code scanner"/>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eXy-BK-gFl">
+                                    <rect key="frame" x="112.5" y="20" width="150" height="165"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="150" id="fcE-ev-afD"/>
+                                    </constraints>
+                                    <state key="normal" title="QR code scanner" image="Focus"/>
                                     <connections>
                                         <segue destination="p9M-mj-XAP" kind="show" id="l1d-9O-tdp"/>
                                     </connections>
@@ -1183,8 +1186,9 @@
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
-                                <constraint firstItem="eXy-BK-gFl" firstAttribute="centerY" secondItem="hvY-YZ-neK" secondAttribute="centerY" id="W5r-d1-Vht"/>
-                                <constraint firstItem="eXy-BK-gFl" firstAttribute="centerX" secondItem="hvY-YZ-neK" secondAttribute="centerX" id="d6y-Sx-GCq"/>
+                                <constraint firstAttribute="bottom" secondItem="eXy-BK-gFl" secondAttribute="bottom" constant="20" symbolic="YES" id="K98-xH-IX0"/>
+                                <constraint firstItem="eXy-BK-gFl" firstAttribute="centerX" secondItem="hvY-YZ-neK" secondAttribute="centerX" id="qR4-p5-XGQ"/>
+                                <constraint firstItem="eXy-BK-gFl" firstAttribute="top" secondItem="hvY-YZ-neK" secondAttribute="top" constant="20" symbolic="YES" id="tke-Ku-o87"/>
                             </constraints>
                         </view>
                         <prototypes>
@@ -1281,7 +1285,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vvZ-1P-w9Q" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="gGs-Sh-8uN" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="2709" y="-486"/>
+            <point key="canvasLocation" x="2708" y="-486.20689655172418"/>
         </scene>
         <!--New Reference-->
         <scene sceneID="beu-GC-wP6">
@@ -1671,6 +1675,7 @@
     <resources>
         <image name="Add List Filled-50.png" width="25" height="25"/>
         <image name="Add List-50.png" width="540" height="540"/>
+        <image name="Focus" width="150" height="150"/>
         <image name="Map Marker Filled-50.png" width="25" height="25"/>
         <image name="Map Marker-50.png" width="25" height="25"/>
         <image name="Ruler" width="25" height="25"/>

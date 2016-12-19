@@ -115,6 +115,9 @@ class QRScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsD
                 // A measure reference QR code should encode the name, length and unit of the
                 // reference and seperate them by comma. e.g. ref1,5,inch
                 let data:[String] = metadataObj.stringValue.components(separatedBy: [","," "])
+                guard data.count == 3 else {
+                    return
+                }
                 measuringReference = MeasureReference(name: data[0], length: (data[1] as NSString).doubleValue, unit: data[2])
                 performSegue(withIdentifier: Constant.unwindToReferenceTable, sender: nil)
             }
