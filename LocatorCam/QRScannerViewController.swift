@@ -11,13 +11,12 @@ import AVFoundation
 
 
 class QRScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
-
-    @IBOutlet var messageLabel:UILabel!
-    @IBOutlet var topbar: UIView!
+    // Scan the QR code and store the decoded information as a measure reference.
     
     var captureSession:AVCaptureSession?
     var videoPreviewLayer:AVCaptureVideoPreviewLayer?
     var qrCodeFrameView:UIView?
+    var measuringReference:MeasureReference?
     
     let supportedCodeTypes:Set<String> = [AVMetadataObjectTypeUPCECode,
                                           AVMetadataObjectTypeCode39Code,
@@ -29,6 +28,15 @@ class QRScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsD
                                           AVMetadataObjectTypeAztecCode,
                                           AVMetadataObjectTypePDF417Code,
                                           AVMetadataObjectTypeQRCode]
+    
+    struct Constant {
+        static let unwindToReferenceTable = "unwindFromScannerToReferenceTable"
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.isToolbarHidden = true
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -63,10 +71,6 @@ class QRScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsD
             // Start video capture.
             captureSession?.startRunning()
             
-            // Move the message label and top bar to the front
-            view.bringSubview(toFront: messageLabel)
-            view.bringSubview(toFront: topbar)
-            
             // Initialize QR Code Frame to highlight the QR code
             qrCodeFrameView = UIView()
             
@@ -96,7 +100,6 @@ class QRScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsD
         // Check if the metadataObjects array is not nil and it contains at least one object.
         if metadataObjects == nil || metadataObjects.count == 0 {
             qrCodeFrameView?.frame = CGRect.zero
-            messageLabel.text = "No QR/barcode is detected"
             return
         }
         
@@ -109,19 +112,19 @@ class QRScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsD
             qrCodeFrameView?.frame = barCodeObject!.bounds
             
             if metadataObj.stringValue != nil {
-                messageLabel.text = metadataObj.stringValue
+                // A measure reference QR code should encode the name, length and unit of the
+                // reference and seperate them by comma. e.g. ref1,5,inch
+                let data:[String] = metadataObj.stringValue.components(separatedBy: [","," "])
+                measuringReference = MeasureReference(name: data[0], length: (data[1] as NSString).doubleValue, unit: data[2])
+                performSegue(withIdentifier: Constant.unwindToReferenceTable, sender: nil)
             }
         }
     }
 
-    /*
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
     }
-    */
 
 }

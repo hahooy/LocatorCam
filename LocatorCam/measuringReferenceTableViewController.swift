@@ -43,6 +43,7 @@ class measuringReferenceTableViewController: UITableViewController, UIPickerView
         static let unwindFromPredefinedReference = "unwind from predefined reference to edit board"
         static let unwindFromCustomReference = "unwind from custom reference to edit board"
         static let unwindFromNewReference = "unwindFromNewReferenceToReferenceTable"
+        static let unwindFromScanner = "unwindFromScannerToReferenceTable"
         static let inchToFoot = 0.08333
         static let inchToMm = 25.4
         static let inchToCm = 2.54
@@ -78,7 +79,7 @@ class measuringReferenceTableViewController: UITableViewController, UIPickerView
     // MARK: - Table view data source
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return 3
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -87,6 +88,8 @@ class measuringReferenceTableViewController: UITableViewController, UIPickerView
             return measuringReferences.count
         case 1:
             return 1
+        case 2:
+            return 0
         default:
             return 0
         }
@@ -97,6 +100,8 @@ class measuringReferenceTableViewController: UITableViewController, UIPickerView
             return "Predefined"
         } else if section == 1 {
             return "Custom"
+        } else if section == 2{
+            return "QRCode"
         }
         return nil
     }
@@ -179,6 +184,12 @@ class measuringReferenceTableViewController: UITableViewController, UIPickerView
     @IBAction func unwindToReferenceTable(_ segue: UIStoryboardSegue) {
         if segue.identifier == Constant.unwindFromNewReference {
             if let sourceViewController = segue.source as? NewReferenceViewController {
+                baseMeasuringReferences.append(sourceViewController.measuringReference!)
+            }
+        }
+        if segue.identifier == Constant.unwindFromScanner {
+            if let sourceViewController = segue.source as? QRScannerViewController {
+                print("unwinded to reference table")
                 baseMeasuringReferences.append(sourceViewController.measuringReference!)
             }
         }

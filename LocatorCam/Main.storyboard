@@ -1169,6 +1169,24 @@
                                 </mask>
                             </variation>
                         </view>
+                        <view key="tableFooterView" contentMode="scaleToFill" id="hvY-YZ-neK">
+                            <rect key="frame" x="0.0" y="289" width="375" height="44"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eXy-BK-gFl">
+                                    <rect key="frame" x="128" y="7" width="118" height="30"/>
+                                    <state key="normal" title="QR code scanner"/>
+                                    <connections>
+                                        <segue destination="p9M-mj-XAP" kind="show" id="l1d-9O-tdp"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstItem="eXy-BK-gFl" firstAttribute="centerY" secondItem="hvY-YZ-neK" secondAttribute="centerY" id="W5r-d1-Vht"/>
+                                <constraint firstItem="eXy-BK-gFl" firstAttribute="centerX" secondItem="hvY-YZ-neK" secondAttribute="centerX" id="d6y-Sx-GCq"/>
+                            </constraints>
+                        </view>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="predefined length" textLabel="3cc-JQ-4vh" detailTextLabel="ciQ-Au-3e7" style="IBUITableViewCellStyleSubtitle" id="EHT-cR-mDI">
                                 <rect key="frame" x="0.0" y="201" width="375" height="44"/>
@@ -1352,6 +1370,28 @@
                 <exit id="CGD-PN-01M" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="3394" y="-486"/>
+        </scene>
+        <!--Scanner View Controller-->
+        <scene sceneID="Auv-os-45H">
+            <objects>
+                <viewController hidesBottomBarWhenPushed="YES" id="p9M-mj-XAP" customClass="QRScannerViewController" customModule="LocatorCam" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="zoF-XC-3LU"/>
+                        <viewControllerLayoutGuide type="bottom" id="yfZ-Dk-XMo"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="euf-iF-MEz">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <segue destination="t9n-A9-q2d" kind="unwind" identifier="unwindFromScannerToReferenceTable" unwindAction="unwindToReferenceTable:" id="qmo-U0-1yd"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="YlI-RV-ymM" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="t9n-A9-q2d" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="4210" y="-486"/>
         </scene>
         <!--Edit Photo-->
         <scene sceneID="Q0M-l7-RFO">

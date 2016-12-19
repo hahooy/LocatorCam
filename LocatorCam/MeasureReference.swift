@@ -15,6 +15,10 @@ class MeasureReference: NSObject, NSCoding
     var name: String
     var length: Double
     var unit: String
+
+    override var description: String {
+        return "\(name), \(length), \(unit)"
+    }
     
     // MARK: - Archiving Paths
     
@@ -53,4 +57,6 @@ class MeasureReference: NSObject, NSCoding
         
         self.init(name: name, length: length, unit: unit)
     }
+    
+    
 }
