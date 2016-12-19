@@ -9,10 +9,10 @@
 import UIKit
 
 func applyTheme() {
-    let sharedApplication = UIApplication.sharedApplication()
+    let sharedApplication = UIApplication.shared
     sharedApplication.delegate?.window??.tintColor = mainColor
     sharedApplication.delegate?.window??.backgroundColor = mainColor
-    sharedApplication.statusBarStyle = UIStatusBarStyle.LightContent
+    sharedApplication.statusBarStyle = UIStatusBarStyle.lightContent
     
     styleForTabBar()
     styleForNavigationBar()
@@ -23,9 +23,9 @@ func applyTheme() {
 
 func styleForTabBar() {
     UITabBar.appearance().barTintColor = mainColor
-    UITabBar.appearance().tintColor = UIColor.whiteColor()
+    UITabBar.appearance().tintColor = UIColor.white
     
-    UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName:UIColor.whiteColor()], forState:.Selected)
+    UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName:UIColor.white], for:.selected)
     
     //UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName:UIColor.blackColor()], forState:.Normal)
 }
@@ -33,18 +33,18 @@ func styleForTabBar() {
 
 func styleForNavigationBar() {
     UINavigationBar.appearance().barTintColor = barTintColor
-    UINavigationBar.appearance().tintColor = UIColor.whiteColor()
-    UINavigationBar.appearance().titleTextAttributes = [NSFontAttributeName: standardTextFont,  NSForegroundColorAttributeName: UIColor.whiteColor()]
+    UINavigationBar.appearance().tintColor = UIColor.white
+    UINavigationBar.appearance().titleTextAttributes = [NSFontAttributeName: standardTextFont,  NSForegroundColorAttributeName: UIColor.white]
 }
 
 func styleForToolBar() {
     UIToolbar.appearance().barTintColor = barTintColor
-    UIToolbar.appearance().tintColor = UIColor.whiteColor()
+    UIToolbar.appearance().tintColor = UIColor.white
 }
 
 func styleForTableView() {
     UITableView.appearance().backgroundColor = backgroundColor
-    UITableView.appearance().separatorStyle = .SingleLineEtched
+    UITableView.appearance().separatorStyle = .singleLineEtched
 }
 
 func styleForSegmentedControl() {
@@ -52,10 +52,10 @@ func styleForSegmentedControl() {
     UISegmentedControl.appearance().tintColor = barTintColor
 }
 
-func formatDate(date: NSDate) ->  String {
-    let dateFormatter = NSDateFormatter()
+func formatDate(_ date: Date) ->  String {
+    let dateFormatter = DateFormatter()
     dateFormatter.dateFormat = "MMM d, yyyy, HH:mm"
-    let dateStr = dateFormatter.stringFromDate(date)
+    let dateStr = dateFormatter.string(from: date)
     return dateStr
 }
 

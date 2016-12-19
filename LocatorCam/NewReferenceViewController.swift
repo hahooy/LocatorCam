@@ -21,39 +21,39 @@ class NewReferenceViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         nameTextField.delegate = self
         lengthTextField.delegate = self
-        lengthTextField.addTarget(self, action: #selector(NewReferenceViewController.checkValidInput), forControlEvents: UIControlEvents.EditingChanged)
+        lengthTextField.addTarget(self, action: #selector(NewReferenceViewController.checkValidInput), for: UIControlEvents.editingChanged)
         checkValidInput()
     }
     
     // MARK: - UITextFieldDelegate
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
     }
     
-    func textFieldDidBeginEditing(textField: UITextField) {
-        saveButton.enabled = false
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        saveButton.isEnabled = false
     }
    
-    func textFieldDidEndEditing(textField: UITextField) {
+    func textFieldDidEndEditing(_ textField: UITextField) {
         checkValidInput()
     }
     
-    @objc private func checkValidInput() {
+    @objc fileprivate func checkValidInput() {
         let name = nameTextField.text ?? ""
         let length = lengthTextField.text ?? ""
-        saveButton.enabled = !name.isEmpty && !length.isEmpty
+        saveButton.isEnabled = !name.isEmpty && !length.isEmpty
     }
     
     // MARK: Navigation
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         measuringReference = MeasureReference(name: nameTextField.text!, length: Double(lengthTextField.text!)!, unit: "Inches")
     }
     
-    @IBAction func cancel(sender: UIBarButtonItem) {
-        navigationController?.popViewControllerAnimated(true)
+    @IBAction func cancel(_ sender: UIBarButtonItem) {
+        navigationController?.popViewController(animated: true)
     }
     
 }

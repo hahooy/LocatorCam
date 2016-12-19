@@ -12,7 +12,7 @@ class CustomLengthTableViewCell: UITableViewCell, UITextFieldDelegate {
     @IBOutlet weak var customLengthInput: UITextField!
     @IBOutlet weak var customUnitInput: UITextField!
 
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         return true;
     }
 }

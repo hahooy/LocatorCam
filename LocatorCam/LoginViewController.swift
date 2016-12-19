@@ -11,9 +11,9 @@ import UIKit
 class LoginViewController: UIViewController {
     
     // MARK: - Properties
-    @IBAction func signinButton(sender: UIButton) {
+    @IBAction func signinButton(_ sender: UIButton) {
         if let username = userIDTextField.text, let password = passcodeTextField.text {
-            login_request(username.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet()), password: password.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet()))
+            login_request(username.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines), password: password.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines))
         }
         
     }
@@ -25,7 +25,7 @@ class LoginViewController: UIViewController {
     }
     
     // MARK: - Navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == Constant.segueToApp {
             print("to app")
         }
@@ -33,21 +33,21 @@ class LoginViewController: UIViewController {
     
     // MARK: - Helper functions
     
-    func login_request(username: String, password: String) {
-        let url:NSURL = NSURL(string: SharingManager.Constant.loginURL)!
-        let session = NSURLSession.sharedSession()
+    func login_request(_ username: String, password: String) {
+        let url:URL = URL(string: SharingManager.Constant.loginURL)!
+        let session = URLSession.shared
         
-        let request = NSMutableURLRequest(URL: url)
-        request.HTTPMethod = "POST"
-        request.cachePolicy = NSURLRequestCachePolicy.ReloadIgnoringCacheData
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.cachePolicy = NSURLRequest.CachePolicy.reloadIgnoringCacheData
         
         let paramString = "username=\(username)&password=\(password)"
-        request.HTTPBody = paramString.dataUsingEncoding(NSUTF8StringEncoding)
+        request.httpBody = paramString.data(using: String.Encoding.utf8)
         
-        let task = session.dataTaskWithRequest(request) {
-            (let data, let response, let error) in
+        let task = session.dataTask(with: request, completionHandler: {
+            (data, response, error) in
             
-            guard let _:NSData = data, let _:NSURLResponse = response  where error == nil else {
+            guard let _:Data = data, let _:URLResponse = response, error == nil else {
                 print("error: \(error)")
                 return
             }
@@ -55,7 +55,7 @@ class LoginViewController: UIViewController {
             // let dataString = NSString(data: data!, encoding: NSUTF8StringEncoding)
 
             do {
-                let json = try NSJSONSerialization.JSONObjectWithData(data!, options: .AllowFragments) as! NSDictionary
+                let json = try JSONSerialization.jsonObject(with: data!, options: .allowFragments) as! NSDictionary
                 
                 // login failed
                 if let loginError = json["error"] as? String {
@@ -70,14 +70,14 @@ class LoginViewController: UIViewController {
                     UserInfo.friends = friends
                     print("username: \(username), email: \(email), friends: \(friends)")
                 }
-                dispatch_async(dispatch_get_main_queue(), {
-                    self.performSegueWithIdentifier(Constant.segueToApp, sender: self)
+                DispatchQueue.main.async(execute: {
+                    self.performSegue(withIdentifier: Constant.segueToApp, sender: self)
                 })
             } catch {
                 print("error serializing JSON: \(error)")
             }
             
-        }
+        }) 
         
         task.resume()
     }

@@ -14,60 +14,60 @@ class CreateChannelViewController: UIViewController {
     @IBOutlet weak var EnablePrivateChannelSwitch: UISwitch!
     @IBOutlet weak var channelNameTextField: UITextField!
     @IBOutlet weak var channelDescriptionTextField: UITextField!
-    @IBAction func createChannelButton(sender: UIButton) {
+    @IBAction func createChannelButton(_ sender: UIButton) {
         if let channelName = channelNameTextField.text {
             createChannel(channelName, description: channelDescriptionTextField.text)
         }
     }
     
-    @IBAction func dismissKeyboard(sender: UITapGestureRecognizer) {
+    @IBAction func dismissKeyboard(_ sender: UITapGestureRecognizer) {
         channelNameTextField.resignFirstResponder()
         channelDescriptionTextField.resignFirstResponder()
     }
     
     // MARK: - API Requests
-    private func createChannel(channelName: String, description: String?) {
-        let url:NSURL = NSURL(string: SharingManager.Constant.createChannelURL)!
-        let session = NSURLSession.sharedSession()
+    fileprivate func createChannel(_ channelName: String, description: String?) {
+        let url:URL = URL(string: SharingManager.Constant.createChannelURL)!
+        let session = URLSession.shared
         
-        let request = NSMutableURLRequest(URL: url)
-        request.HTTPMethod = "POST"
-        request.cachePolicy = NSURLRequestCachePolicy.ReloadIgnoringCacheData
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.cachePolicy = NSURLRequest.CachePolicy.reloadIgnoringCacheData
         request.addValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
         request.addValue("application/json", forHTTPHeaderField: "Accept")
         
-        var param: [String: AnyObject] = ["channel_name": channelName]
+        var param: [String: AnyObject] = ["channel_name": channelName as AnyObject]
         if let description = description {
-            param["channel_description"] = description
+            param["channel_description"] = description as AnyObject?
         }
         
         do {
-            request.HTTPBody = try NSJSONSerialization.dataWithJSONObject(param, options: .PrettyPrinted)
+            request.httpBody = try JSONSerialization.data(withJSONObject: param, options: .prettyPrinted)
         } catch {
             print("error serializing JSON: \(error)")
         }
         
-        let task = session.dataTaskWithRequest(request) {
-            (let data, let response, let error) in
+        let task = session.dataTask(with: request, completionHandler: {
+            (data, response, error) in
             
-            guard let _:NSData = data, let _:NSURLResponse = response  where error == nil else {
+            guard let _:Data = data, let _:URLResponse = response, error == nil else {
                 print("error: \(error)")
                 return
             }
             
             do {
-                let json = try NSJSONSerialization.JSONObjectWithData(data!, options: .AllowFragments) as! NSDictionary
+                let json = try JSONSerialization.jsonObject(with: data!, options: .allowFragments) as! NSDictionary
                 if let message = json["message"] as? String {
-                    dispatch_async(dispatch_get_main_queue(), {
-                        let inviteUserAlert = UIAlertController(title: nil, message: message, preferredStyle: .Alert)
-                        inviteUserAlert.addAction(UIAlertAction(title: "Close", style: .Cancel, handler: nil))
-                        self.presentViewController(inviteUserAlert, animated: true, completion: nil)
+                    DispatchQueue.main.async(execute: {
+                        let inviteUserAlert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+                        inviteUserAlert.addAction(UIAlertAction(title: "Close", style: .cancel, handler: nil))
+                        self.present(inviteUserAlert, animated: true, completion: nil)
                     })
                 }
             } catch {
                 print("error serializing JSON: \(error)")
             }
-        }
+        }) 
         task.resume()
     }
     

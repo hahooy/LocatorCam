@@ -22,25 +22,25 @@ class ChannelsTableViewController: UITableViewController {
         static let toChannelSettingsSegueIdentifier = "to channel settings"        
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationController?.toolbarHidden = true
+        self.navigationController?.isToolbarHidden = true
         fetchChannels()
     }
 
     // MARK: - Table view data source
 
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return channels.count
     }
 
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(Constant.leftDetailChannelCellIdentifier, forIndexPath: indexPath)
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: Constant.leftDetailChannelCellIdentifier, for: indexPath)
         cell.textLabel?.text = channels[indexPath.row].name
         var detailText = "This channel has no member"
         if let numOfMembers = channels[indexPath.row].numOfMembers {
@@ -54,15 +54,15 @@ class ChannelsTableViewController: UITableViewController {
         return cell
     }
     
-    override func tableView(tableView: UITableView, accessoryButtonTappedForRowWithIndexPath indexPath: NSIndexPath) {
-        performSegueWithIdentifier(Constant.toChannelSettingsSegueIdentifier, sender: indexPath)
+    override func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
+        performSegue(withIdentifier: Constant.toChannelSettingsSegueIdentifier, sender: indexPath)
     }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // user switch channel, refetch all the moments
         UserInfo.currentChannel = channels[indexPath.row]
         SharingManager.sharedInstance.moments = [Moment]()
-        navigationController?.popViewControllerAnimated(true)
+        _ = navigationController?.popViewController(animated: true)
     }
     
 
@@ -70,26 +70,26 @@ class ChannelsTableViewController: UITableViewController {
     
     func fetchChannels() {
         // make API request to fetch all channels
-        let url:NSURL = NSURL(string: SharingManager.Constant.fetchChannelURL)!
-        let session = NSURLSession.sharedSession()
-        let request = NSMutableURLRequest(URL: url)
-        request.HTTPMethod = "GET"
-        request.cachePolicy = NSURLRequestCachePolicy.ReloadIgnoringCacheData
+        let url:URL = URL(string: SharingManager.Constant.fetchChannelURL)!
+        let session = URLSession.shared
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        request.cachePolicy = NSURLRequest.CachePolicy.reloadIgnoringCacheData
         request.addValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
         request.addValue("application/json", forHTTPHeaderField: "Accept")
         
-        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
         
-        let task = session.dataTaskWithRequest(request) {
-            (let data, let response, let error) in
+        let task = session.dataTask(with: request, completionHandler: {
+            (data, response, error) in
             
-            guard let _:NSData = data, let _:NSURLResponse = response  where error == nil else {
+            guard let _:Data = data, let _:URLResponse = response, error == nil else {
                 print("error: \(error)")
                 return
             }
             
             do {
-                let channelsJSON = try NSJSONSerialization.JSONObjectWithData(data!, options: .AllowFragments) as! NSArray
+                let channelsJSON = try JSONSerialization.jsonObject(with: data!, options: .allowFragments) as! [[String:Any]]
                 var tempChannels = [Channel]()
                 
                 for channel in channelsJSON {
@@ -113,16 +113,16 @@ class ChannelsTableViewController: UITableViewController {
                     tempChannels.append(tempChannel)
                 }
                 
-                dispatch_async(dispatch_get_main_queue(), {
+                DispatchQueue.main.async(execute: {
                     self.channels = tempChannels
                 })
             } catch {
                 print("error serializing JSON: \(error)")
             }
-            dispatch_async(dispatch_get_main_queue(), {
-                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+            DispatchQueue.main.async(execute: {
+                UIApplication.shared.isNetworkActivityIndicatorVisible = false
             })
-        }
+        }) 
         task.resume()
     }
 
@@ -130,8 +130,8 @@ class ChannelsTableViewController: UITableViewController {
 
     // MARK: - Navigation
 
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if let channelSettingsVC = segue.destinationViewController as? ChannelSettingsTableViewController, let indexPath = sender as? NSIndexPath {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let channelSettingsVC = segue.destination as? ChannelSettingsTableViewController, let indexPath = sender as? IndexPath {
             let channel = channels[indexPath.row]
             channelSettingsVC.channel = channel
         }

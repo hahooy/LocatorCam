@@ -23,7 +23,7 @@ class UserRegistrationViewController: UIViewController {
     }
     
     
-    @IBAction func registerButton(sender: AnyObject) {
+    @IBAction func registerButton(_ sender: AnyObject) {
         guard let username = usernameTextField.text, let password = passwordTextField.text, let passwordAgain = passwordAgainTextField.text, let email = emailTextField.text else {
             return
         }
@@ -38,39 +38,39 @@ class UserRegistrationViewController: UIViewController {
         register_request(username, password: password, email: email)
     }
     
-    private func showSimpleAlertMessage(message: String) {
-        let alert = UIAlertController(title: nil, message: message, preferredStyle: .Alert)
-        alert.addAction(UIAlertAction(title: "Close", style: .Cancel, handler: nil))
-        presentViewController(alert, animated: true, completion: nil)
+    fileprivate func showSimpleAlertMessage(_ message: String) {
+        let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Close", style: .cancel, handler: nil))
+        present(alert, animated: true, completion: nil)
     }
     
     // MARK: - Helper functions
     
-    func register_request(username: String, password: String, email: String) {
-        let url:NSURL = NSURL(string: Constant.registerURL)!
-        let session = NSURLSession.sharedSession()
+    func register_request(_ username: String, password: String, email: String) {
+        let url:URL = URL(string: Constant.registerURL)!
+        let session = URLSession.shared
         
-        let request = NSMutableURLRequest(URL: url)
-        request.HTTPMethod = "POST"
-        request.cachePolicy = NSURLRequestCachePolicy.ReloadIgnoringCacheData
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.cachePolicy = NSURLRequest.CachePolicy.reloadIgnoringCacheData
         
         let paramString = "username=\(username)&password=\(password)&email=\(email)"
-        request.HTTPBody = paramString.dataUsingEncoding(NSUTF8StringEncoding)
+        request.httpBody = paramString.data(using: String.Encoding.utf8)
         
-        let task = session.dataTaskWithRequest(request) {
-            (let data, let response, let error) in
+        let task = session.dataTask(with: request, completionHandler: {
+            (data, response, error) in
             
-            guard let _:NSData = data, let _:NSURLResponse = response  where error == nil else {
+            guard let _:Data = data, let _:URLResponse = response, error == nil else {
                 print("error: \(error)")
                 return
             }
             
             do {
 
-                let json = try NSJSONSerialization.JSONObjectWithData(data!, options: .AllowFragments) as! NSDictionary
+                let json = try JSONSerialization.jsonObject(with: data!, options: .allowFragments) as! NSDictionary
                 
                 if let message = json["message"] as? String {
-                    dispatch_async(dispatch_get_main_queue(), {
+                    DispatchQueue.main.async(execute: {
                         self.showSimpleAlertMessage(message)
                     })
                 }
@@ -78,7 +78,7 @@ class UserRegistrationViewController: UIViewController {
             } catch {
                 print("error serializing JSON: \(error)")
             }
-        }
+        }) 
         
         task.resume()
     }

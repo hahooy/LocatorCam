@@ -16,10 +16,10 @@ class SettingsTableViewController: UITableViewController {
     @IBOutlet weak var emailLabel: UILabel!
     @IBOutlet weak var numberOfFriendsButton: UIButton!
     @IBOutlet weak var numberOfChannelsButton: UIButton!
-    @IBAction func numberOfFriendsButtonAction(sender: UIButton) {
+    @IBAction func numberOfFriendsButtonAction(_ sender: UIButton) {
         
     }
-    @IBAction func logout(sender: UIBarButtonItem) {
+    @IBAction func logout(_ sender: UIBarButtonItem) {
         logoutUser()
     }
     
@@ -35,96 +35,96 @@ class SettingsTableViewController: UITableViewController {
         emailLabel.text = UserInfo.email
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationController?.toolbarHidden = true
+        self.navigationController?.isToolbarHidden = true
         getNumberOfFriends()
         getNumOfChannels()
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        self.navigationController?.toolbarHidden = false
-        SharingManager.sharedInstance.locationStampEnabled = stampLocationSwitch.on
+        self.navigationController?.isToolbarHidden = false
+        SharingManager.sharedInstance.locationStampEnabled = stampLocationSwitch.isOn
     }
     
-    private func getNumberOfFriends() {
-        let url:NSURL = NSURL(string: SharingManager.Constant.numberOfFriendsURL)!
-        let session = NSURLSession.sharedSession()
+    fileprivate func getNumberOfFriends() {
+        let url:URL = URL(string: SharingManager.Constant.numberOfFriendsURL)!
+        let session = URLSession.shared
         
-        let request = NSMutableURLRequest(URL: url)
-        request.HTTPMethod = "POST"
-        request.cachePolicy = NSURLRequestCachePolicy.ReloadIgnoringCacheData
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.cachePolicy = NSURLRequest.CachePolicy.reloadIgnoringCacheData
         
         let paramString = "content_type=JSON"
-        request.HTTPBody = paramString.dataUsingEncoding(NSUTF8StringEncoding)
+        request.httpBody = paramString.data(using: String.Encoding.utf8)
         
-        let task = session.dataTaskWithRequest(request) {
-            (let data, let response, let error) in
+        let task = session.dataTask(with: request, completionHandler: {
+            (data, response, error) in
             
-            guard let _:NSData = data, let _:NSURLResponse = response  where error == nil else {
+            guard let _:Data = data, let _:URLResponse = response, error == nil else {
                 print("error: \(error)")
                 return
             }
             do {
-                let json = try NSJSONSerialization.JSONObjectWithData(data!, options: .AllowFragments) as! NSDictionary
+                let json = try JSONSerialization.jsonObject(with: data!, options: .allowFragments) as! NSDictionary
                 if let numberOfFriends = json["number_of_friends"] as? Int {
-                    dispatch_async(dispatch_get_main_queue(), {
-                        self.numberOfFriendsButton.setTitle(String(numberOfFriends), forState: .Normal)
+                    DispatchQueue.main.async(execute: {
+                        self.numberOfFriendsButton.setTitle(String(numberOfFriends), for: UIControlState())
                     })
                 }
             } catch {
                 print("error serializing JSON: \(error)")
             }
-        }
+        }) 
         task.resume()
     }
     
-    private func getNumOfChannels() {
-        let url:NSURL = NSURL(string: SharingManager.Constant.fetchChannelsCountURL)!
-        let session = NSURLSession.sharedSession()
+    fileprivate func getNumOfChannels() {
+        let url:URL = URL(string: SharingManager.Constant.fetchChannelsCountURL)!
+        let session = URLSession.shared
         
-        let request = NSMutableURLRequest(URL: url)
-        request.HTTPMethod = "POST"
-        request.cachePolicy = NSURLRequestCachePolicy.ReloadIgnoringCacheData
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.cachePolicy = NSURLRequest.CachePolicy.reloadIgnoringCacheData
         
-        let task = session.dataTaskWithRequest(request) {
-            (let data, let response, let error) in
+        let task = session.dataTask(with: request, completionHandler: {
+            (data, response, error) in
             
-            guard let _:NSData = data, let _:NSURLResponse = response  where error == nil else {
+            guard let _:Data = data, let _:URLResponse = response, error == nil else {
                 print("error: \(error)")
                 return
             }
             do {
-                let json = try NSJSONSerialization.JSONObjectWithData(data!, options: .AllowFragments) as! NSDictionary
+                let json = try JSONSerialization.jsonObject(with: data!, options: .allowFragments) as! NSDictionary
                 if let numberOfChannels = json["channels_count"] as? Int {
-                    dispatch_async(dispatch_get_main_queue(), {
-                        self.numberOfChannelsButton.setTitle(String(numberOfChannels), forState: .Normal)
+                    DispatchQueue.main.async(execute: {
+                        self.numberOfChannelsButton.setTitle(String(numberOfChannels), for: UIControlState())
                     })
                 }
             } catch {
                 print("error serializing JSON: \(error)")
             }
-        }
+        }) 
         task.resume()
         
     }
     
-    private func logoutUser() {
-        let url:NSURL = NSURL(string: SharingManager.Constant.loginURL)!
-        let session = NSURLSession.sharedSession()
-        let request = NSMutableURLRequest(URL: url)
-        request.HTTPMethod = "POST"
-        request.cachePolicy = NSURLRequestCachePolicy.ReloadIgnoringCacheData
+    fileprivate func logoutUser() {
+        let url:URL = URL(string: SharingManager.Constant.loginURL)!
+        let session = URLSession.shared
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.cachePolicy = NSURLRequest.CachePolicy.reloadIgnoringCacheData
         
-        let task = session.dataTaskWithRequest(request) {
-            (let data, let response, let error) in
+        let task = session.dataTask(with: request, completionHandler: {
+            (data, response, error) in
             
-            guard let _:NSData = data, let _:NSURLResponse = response  where error == nil else {
+            guard let _:Data = data, let _:URLResponse = response, error == nil else {
                 print("error: \(error)")
                 return
             }
-        }
+        }) 
         task.resume()
         
         // cleanup
@@ -134,16 +134,16 @@ class SettingsTableViewController: UITableViewController {
         UserInfo.username = nil
         
         SharingManager.sharedInstance.moments = [Moment]()
-        SharingManager.sharedInstance.momentsUpdateHandlers = Array<(Void -> Void)>()
+        SharingManager.sharedInstance.momentsUpdateHandlers = Array<((Void) -> Void)>()
         
-        performSegueWithIdentifier(Constant.toLogin, sender: self)
+        performSegue(withIdentifier: Constant.toLogin, sender: self)
     }
     
     // MARK: - Navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == Constant.toFriends {
-            if let userTable = segue.destinationViewController as? UsersListTableViewController {
-                userTable.userType = UsersListTableViewController.UserType.Friend
+            if let userTable = segue.destination as? UsersListTableViewController {
+                userTable.userType = UsersListTableViewController.UserType.friend
             }
         }
     }

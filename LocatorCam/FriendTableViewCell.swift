@@ -14,49 +14,49 @@ class FriendTableViewCell: UITableViewCell {
     
     @IBOutlet weak var friendUsernameLabel: UILabel!
 
-    @IBAction func unfriendButtonAction(sender: UIButton) {
-        let unfriendAllert = UIAlertController(title: nil, message: "Unfollow \(friendUsernameLabel.text!)?", preferredStyle: .ActionSheet)
-        unfriendAllert.addAction(UIAlertAction(title: "Unfriend", style: .Destructive, handler: {(action: UIAlertAction) -> Void in self.unfriend(self.friendUsernameLabel.text!) } ))
-        unfriendAllert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
+    @IBAction func unfriendButtonAction(_ sender: UIButton) {
+        let unfriendAllert = UIAlertController(title: nil, message: "Unfollow \(friendUsernameLabel.text!)?", preferredStyle: .actionSheet)
+        unfriendAllert.addAction(UIAlertAction(title: "Unfriend", style: .destructive, handler: {(action: UIAlertAction) -> Void in self.unfriend(self.friendUsernameLabel.text!) } ))
+        unfriendAllert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         if friendTableViewController != nil {
-            friendTableViewController!.presentViewController(unfriendAllert, animated: true, completion: nil)
+            friendTableViewController!.present(unfriendAllert, animated: true, completion: nil)
         }
     }
     
     weak var friendTableViewController: UsersListTableViewController?
     
     // MARK: - API Requests
-    private func unfriend(username: String) {
-        let url:NSURL = NSURL(string: SharingManager.Constant.unfriendURL)!
-        let session = NSURLSession.sharedSession()
+    fileprivate func unfriend(_ username: String) {
+        let url:URL = URL(string: SharingManager.Constant.unfriendURL)!
+        let session = URLSession.shared
         
-        let request = NSMutableURLRequest(URL: url)
-        request.HTTPMethod = "POST"
-        request.cachePolicy = NSURLRequestCachePolicy.ReloadIgnoringCacheData
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.cachePolicy = NSURLRequest.CachePolicy.reloadIgnoringCacheData
         
         let paramString = "username=\(username)&content_type=JSON"
-        request.HTTPBody = paramString.dataUsingEncoding(NSUTF8StringEncoding)
+        request.httpBody = paramString.data(using: String.Encoding.utf8)
         
-        let task = session.dataTaskWithRequest(request) {
-            (let data, let response, let error) in
+        let task = session.dataTask(with: request, completionHandler: {
+            (data, response, error) in
             
-            guard let _:NSData = data, let _:NSURLResponse = response  where error == nil else {
+            guard let _:Data = data, let _:URLResponse = response, error == nil else {
                 print("error: \(error)")
                 return
             }
             
             do {
-                let json = try NSJSONSerialization.JSONObjectWithData(data!, options: .AllowFragments) as! NSDictionary
+                let json = try JSONSerialization.jsonObject(with: data!, options: .allowFragments) as! NSDictionary
                 if let message = json["message"] as? String {
                     print(message)
-                    dispatch_async(dispatch_get_main_queue(), {
+                    DispatchQueue.main.async(execute: {
                         self.friendTableViewController!.getAllFriends()
                     })
                 }
             } catch {
                 print("error serializing JSON: \(error)")
             }
-        }
+        }) 
         task.resume()
     }
 }

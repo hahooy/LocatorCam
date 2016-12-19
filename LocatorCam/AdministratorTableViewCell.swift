@@ -15,53 +15,53 @@ class AdministratorTableViewCell: UITableViewCell {
     
     @IBOutlet weak var nameLabel: UILabel!
     
-    @IBAction func removeAdministratorButton(sender: AnyObject) {
+    @IBAction func removeAdministratorButton(_ sender: AnyObject) {
         if let name = nameLabel.text, let channelID = usersListTableViewController?.channel?.id, let userType = usersListTableViewController?.userType {
 
-            if userType == .Admin {
+            if userType == .admin {
                 removeUserFromChannel(name, channelID: channelID, requestURL: SharingManager.Constant.removeAdministratorFromChannelURL, usernameType: "administrator_username")
-            } else if userType == .Member {
+            } else if userType == .member {
                 removeUserFromChannel(name, channelID: channelID, requestURL: SharingManager.Constant.removeMemberFromChannelURL, usernameType: "member_username")
             }            
         }
     }
     
-    private func removeUserFromChannel(username: String, channelID: Int, requestURL: String, usernameType: String) {
+    fileprivate func removeUserFromChannel(_ username: String, channelID: Int, requestURL: String, usernameType: String) {
         
-        let url:NSURL = NSURL(string: requestURL)!
-        let session = NSURLSession.sharedSession()
+        let url:URL = URL(string: requestURL)!
+        let session = URLSession.shared
         
-        let request = NSMutableURLRequest(URL: url)
-        request.HTTPMethod = "POST"
-        request.cachePolicy = NSURLRequestCachePolicy.ReloadIgnoringCacheData
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.cachePolicy = NSURLRequest.CachePolicy.reloadIgnoringCacheData
         request.addValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
         request.addValue("application/json", forHTTPHeaderField: "Accept")
         
-        let param: [String: AnyObject] = ["channel_id": channelID, usernameType: username]
+        let param: [String: AnyObject] = ["channel_id": channelID as AnyObject, usernameType: username as AnyObject]
         
         do {
-            request.HTTPBody = try NSJSONSerialization.dataWithJSONObject(param, options: .PrettyPrinted)
+            request.httpBody = try JSONSerialization.data(withJSONObject: param, options: .prettyPrinted)
         } catch {
             print("error serializing JSON: \(error)")
         }
         
-        let task = session.dataTaskWithRequest(request) {
-            (let data, let response, let error) in
+        let task = session.dataTask(with: request, completionHandler: {
+            (data, response, error) in
             
-            guard let _:NSData = data, let _:NSURLResponse = response  where error == nil else {
+            guard let _:Data = data, let _:URLResponse = response, error == nil else {
                 print("error: \(error)")
                 return
             }
             
             do {
-                let json = try NSJSONSerialization.JSONObjectWithData(data!, options: .AllowFragments) as! NSDictionary
+                let json = try JSONSerialization.jsonObject(with: data!, options: .allowFragments) as! NSDictionary
                 
                 if let message = json["message"] as? String {
-                    dispatch_async(dispatch_get_main_queue(), {
-                        let inviteUserAlert = UIAlertController(title: nil, message: message, preferredStyle: .Alert)
-                        inviteUserAlert.addAction(UIAlertAction(title: "Close", style: .Cancel, handler: nil))
+                    DispatchQueue.main.async(execute: {
+                        let inviteUserAlert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+                        inviteUserAlert.addAction(UIAlertAction(title: "Close", style: .cancel, handler: nil))
                         if let tableViewController = self.usersListTableViewController {
-                            tableViewController.presentViewController(inviteUserAlert, animated: true, completion: nil)
+                            tableViewController.present(inviteUserAlert, animated: true, completion: nil)
                             tableViewController.viewWillAppear(true)
                         }
                     })
@@ -69,7 +69,7 @@ class AdministratorTableViewCell: UITableViewCell {
             } catch {
                 print("error serializing JSON: \(error)")
             }
-        }
+        }) 
         task.resume()
     }
     

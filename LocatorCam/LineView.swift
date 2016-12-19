@@ -20,7 +20,7 @@ private struct Line {
         return sqrt(pow((startPoint.x - endPoint.x), 2) + pow((startPoint.y - endPoint.y), 2))
     }
     var lineWidth: CGFloat = 3
-    var color: UIColor = UIColor.blueColor()
+    var color: UIColor = UIColor.blue
     var radius: CGFloat = 30
     var closeToStartPoint = false
     var closeToEndPoint = false
@@ -30,7 +30,7 @@ private struct Line {
 class LineView: UIView {
     
     @IBInspectable
-    private var lines: [Line] = [] {
+    fileprivate var lines: [Line] = [] {
         didSet {
             setNeedsDisplay()
         }
@@ -40,7 +40,7 @@ class LineView: UIView {
     // view becomes the reference line, the length of the reference line
     // always equals to the reference object and does not change as
     // user draging and panning the line
-    private var measuringReference: MeasureReference? {
+    fileprivate var measuringReference: MeasureReference? {
         didSet {
             setNeedsDisplay()
         }
@@ -56,14 +56,14 @@ class LineView: UIView {
     }
     
     
-    override func drawRect(rect: CGRect) {
+    override func draw(_ rect: CGRect) {
         // draw all lines
         for i in 0..<lines.count {
             // draw line
             let linePath = UIBezierPath()
-            linePath.moveToPoint(lines[i].startPoint)
+            linePath.move(to: lines[i].startPoint)
             linePath.lineWidth = lines[i].lineWidth
-            linePath.addLineToPoint(lines[i].endPoint)
+            linePath.addLine(to: lines[i].endPoint)
             lines[i].color.set()
             linePath.stroke()
             // draw circles
@@ -81,7 +81,7 @@ class LineView: UIView {
     }
     
     // draw circle at the line end points
-    private func drawCircle(center: CGPoint, radius: CGFloat) {
+    fileprivate func drawCircle(_ center: CGPoint, radius: CGFloat) {
         let circlePath = UIBezierPath(arcCenter: center, radius: radius, startAngle: 0, endAngle: CGFloat(2 * M_PI), clockwise: true)
         circlePath.lineWidth = 1
         UIColor(red: 0.1, green: 0.5, blue: 0.5, alpha: 0.3).set()
@@ -89,9 +89,9 @@ class LineView: UIView {
     }
     
     // draw text along the line
-    private func drawText(text: String, atPoint: CGPoint) {
+    fileprivate func drawText(_ text: String, atPoint: CGPoint) {
         
-        let textColor: UIColor = UIColor.whiteColor()
+        let textColor: UIColor = UIColor.white
         let textFont: UIFont = UIFont(name: "Helvetica Neue", size: 12)!
         
         let textFontAttributes = [
@@ -102,30 +102,30 @@ class LineView: UIView {
         
         let textWithAttr = NSAttributedString(string: text, attributes: textFontAttributes)
         // Creating a container for the text
-        let rect: CGRect = CGRectMake(atPoint.x, atPoint.y, textWithAttr.size().width, textWithAttr.size().height)
+        let rect: CGRect = CGRect(x: atPoint.x, y: atPoint.y, width: textWithAttr.size().width, height: textWithAttr.size().height)
 
         //Now Draw the text into an image.
-        text.drawInRect(rect, withAttributes: textFontAttributes)
+        text.draw(in: rect, withAttributes: textFontAttributes)
     }
     
     // determine if two points are closer than the specified distance
-    private func closeEnough(pointA: CGPoint, pointB: CGPoint, distance: CGFloat) -> Bool {
+    fileprivate func closeEnough(_ pointA: CGPoint, pointB: CGPoint, distance: CGFloat) -> Bool {
         return sqrt(pow((pointA.x - pointB.x), 2) + pow((pointA.y - pointB.y), 2)) < distance
     }
     
     // move the line end point pointed by pan gesture
-    func move(gesture: UIPanGestureRecognizer) {
+    func move(_ gesture: UIPanGestureRecognizer) {
         switch gesture.state {
-        case .Began:
+        case .began:
             for i in 0..<lines.count {
                 // determine which point should be moved
-                let initialLocation = gesture.locationInView(self)
+                let initialLocation = gesture.location(in: self)
                 lines[i].closeToStartPoint = closeEnough(initialLocation, pointB: lines[i].startPoint, distance: lines[i].radius)
                 lines[i].closeToEndPoint = closeEnough(initialLocation, pointB: lines[i].endPoint, distance: lines[i].radius)
             }
-        case .Ended: fallthrough
-        case .Changed:
-            let translation = gesture.translationInView(self)
+        case .ended: fallthrough
+        case .changed:
+            let translation = gesture.translation(in: self)
             for i in 0..<lines.count {
                 // move the point if pointed by pan gesture
                 if (lines[i].closeToStartPoint) {
@@ -134,7 +134,7 @@ class LineView: UIView {
                 } else if (lines[i].closeToEndPoint) {
                     lines[i].endPoint.x = max(min(lines[i].endPoint.x + translation.x, bounds.width), 0)
                     lines[i].endPoint.y = max(min(lines[i].endPoint.y + translation.y, bounds.height), 0)                }
-                gesture.setTranslation(CGPointZero, inView: self)
+                gesture.setTranslation(CGPoint.zero, in: self)
             }
         default: break
         }
@@ -164,7 +164,7 @@ class LineView: UIView {
     }
     
     // set the reference object for measurement 
-    func setMeasuringReference(reference: MeasureReference?) {
+    func setMeasuringReference(_ reference: MeasureReference?) {
         measuringReference = reference
     }
 }

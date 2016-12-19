@@ -14,8 +14,8 @@ class ChannelInvitationTableViewCell: UITableViewCell {
    
     @IBOutlet weak var name: UILabel!
     @IBOutlet weak var userDescription: UILabel!
-    @IBAction func inviteButton(sender: UIButton) {
-        if let username = name.text, id = channelID {
+    @IBAction func inviteButton(_ sender: UIButton) {
+        if let username = name.text, let id = channelID {
             invite(username, channelID: id)
         }
     }
@@ -23,48 +23,48 @@ class ChannelInvitationTableViewCell: UITableViewCell {
     var channelID: Int?
     var channelInvitationTableViewController: ChannelInvitationTableViewController?
     
-    private func invite(username: String, channelID: Int) {
+    fileprivate func invite(_ username: String, channelID: Int) {
         
-        let url:NSURL = NSURL(string: SharingManager.Constant.addMemberToChannelURL)!
-        let session = NSURLSession.sharedSession()
+        let url:URL = URL(string: SharingManager.Constant.addMemberToChannelURL)!
+        let session = URLSession.shared
         
-        let request = NSMutableURLRequest(URL: url)
-        request.HTTPMethod = "POST"
-        request.cachePolicy = NSURLRequestCachePolicy.ReloadIgnoringCacheData
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.cachePolicy = NSURLRequest.CachePolicy.reloadIgnoringCacheData
         request.addValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
         request.addValue("application/json", forHTTPHeaderField: "Accept")
         
-        let param: [String: AnyObject] = ["username_to_be_added": username, "channel_id": channelID]
+        let param: [String: AnyObject] = ["username_to_be_added": username as AnyObject, "channel_id": channelID as AnyObject]
         
         do {
-            request.HTTPBody = try NSJSONSerialization.dataWithJSONObject(param, options: .PrettyPrinted)
+            request.httpBody = try JSONSerialization.data(withJSONObject: param, options: .prettyPrinted)
         } catch {
             print("error serializing JSON: \(error)")
         }
         
-        let task = session.dataTaskWithRequest(request) {
-            (let data, let response, let error) in
+        let task = session.dataTask(with: request, completionHandler: {
+            (data, response, error) in
             
-            guard let _:NSData = data, let _:NSURLResponse = response  where error == nil else {
+            guard let _:Data = data, let _:URLResponse = response, error == nil else {
                 print("error: \(error)")
                 return
             }
             
             do {
-                let json = try NSJSONSerialization.JSONObjectWithData(data!, options: .AllowFragments) as! NSDictionary
+                let json = try JSONSerialization.jsonObject(with: data!, options: .allowFragments) as! NSDictionary
                 if let message = json["message"] as? String {
-                    dispatch_async(dispatch_get_main_queue(), {
-                        let inviteUserAlert = UIAlertController(title: nil, message: message, preferredStyle: .Alert)
-                        inviteUserAlert.addAction(UIAlertAction(title: "Close", style: .Cancel, handler: nil))
+                    DispatchQueue.main.async(execute: {
+                        let inviteUserAlert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+                        inviteUserAlert.addAction(UIAlertAction(title: "Close", style: .cancel, handler: nil))
                         if let tableViewController = self.channelInvitationTableViewController {
-                            tableViewController.presentViewController(inviteUserAlert, animated: true, completion: nil)
+                            tableViewController.present(inviteUserAlert, animated: true, completion: nil)
                         }
                     })
                 }
             } catch {
                 print("error serializing JSON: \(error)")
             }
-        }
+        }) 
         task.resume()
     }
 

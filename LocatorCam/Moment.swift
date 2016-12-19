@@ -14,13 +14,13 @@ class Moment {
     var description: String?
     var latitude: Double?
     var longitude: Double?
-    var pub_time_interval: NSTimeInterval?
+    var pub_time_interval: TimeInterval?
     var thumbnail_base64: String?
     
     init(id: Int?, username: String?, description: String?,
          latitude: Double?,
          longitude: Double?,
-         pub_time_interval: NSTimeInterval?,
+         pub_time_interval: TimeInterval?,
          thumbnail_base64: String?) {
         self.id = id
         self.username = username

@@ -11,16 +11,16 @@ import UIKit
 class UsersListTableViewController: UITableViewController {
     
     // MARK: - Properties
-    private var users: [String] = [] {
+    fileprivate var users: [String] = [] {
         didSet {
             tableView.reloadData()
         }
     }
     
     enum UserType {
-        case Friend
-        case Member
-        case Admin
+        case friend
+        case member
+        case admin
     }
     
     var userType: UserType?
@@ -33,21 +33,21 @@ class UsersListTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationController?.toolbarHidden = true
+        self.navigationController?.isToolbarHidden = true
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         if let type = userType {
             switch type {
-            case .Friend:
+            case .friend:
                 self.title = "Friends"
                 getAllFriends()
-            case .Admin:
+            case .admin:
                 self.title = "Administrators"
                 if let channelID = channel?.id {
                     getUsersFromChannel(channelID, requestURL: SharingManager.Constant.getChannelAdministratorsURL, typeKey: "administrators")
                 }
-            case .Member:
+            case .member:
                 self.title = "Members"
                 if let channelID = channel?.id {
                     getUsersFromChannel(channelID, requestURL: SharingManager.Constant.getChannelMembersURL, typeKey: "members")
@@ -58,27 +58,27 @@ class UsersListTableViewController: UITableViewController {
     
     // MARK: - Table view data source
     
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return users.count
     }
     
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var identifier = ""
         if let type = userType {
             switch type {
-            case .Friend:
+            case .friend:
                 identifier = Constant.friendCellIdentifier
-            case .Admin, .Member:
+            case .admin, .member:
                 identifier = Constant.administratorCellIdentifier
             }
         }
         
-        let cell = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath)
         if let cell = cell as? FriendTableViewCell {
             cell.friendUsernameLabel.text = users[indexPath.row]
             cell.friendTableViewController = self
@@ -93,77 +93,77 @@ class UsersListTableViewController: UITableViewController {
     
     // MARK: - API Requests
     func getAllFriends() {
-        let url:NSURL = NSURL(string: SharingManager.Constant.getAllFriendsURL)!
-        let session = NSURLSession.sharedSession()
+        let url:URL = URL(string: SharingManager.Constant.getAllFriendsURL)!
+        let session = URLSession.shared
         
-        let request = NSMutableURLRequest(URL: url)
-        request.HTTPMethod = "POST"
-        request.cachePolicy = NSURLRequestCachePolicy.ReloadIgnoringCacheData
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.cachePolicy = NSURLRequest.CachePolicy.reloadIgnoringCacheData
         
         let paramString = "content_type=JSON"
-        request.HTTPBody = paramString.dataUsingEncoding(NSUTF8StringEncoding)
+        request.httpBody = paramString.data(using: String.Encoding.utf8)
         
-        let task = session.dataTaskWithRequest(request) {
-            (let data, let response, let error) in
+        let task = session.dataTask(with: request, completionHandler: {
+            (data, response, error) in
             
-            guard let _:NSData = data, let _:NSURLResponse = response  where error == nil else {
+            guard let _:Data = data, let _:URLResponse = response, error == nil else {
                 print("error: \(error)")
                 return
             }
             
             do {
-                let json = try NSJSONSerialization.JSONObjectWithData(data!, options: .AllowFragments) as! NSDictionary
+                let json = try JSONSerialization.jsonObject(with: data!, options: .allowFragments) as! NSDictionary
                 if let friends = json["friends"] as? [String] {
-                    dispatch_async(dispatch_get_main_queue(), {
+                    DispatchQueue.main.async(execute: {
                         self.users = friends
                     })
                 }
             } catch {
                 print("error serializing JSON: \(error)")
             }
-        }
+        }) 
         task.resume()
     }
     
-    private func getUsersFromChannel(channelID: Int, requestURL: String, typeKey: String) {
+    fileprivate func getUsersFromChannel(_ channelID: Int, requestURL: String, typeKey: String) {
         
-        let url:NSURL = NSURL(string: requestURL)!
-        let session = NSURLSession.sharedSession()
+        let url:URL = URL(string: requestURL)!
+        let session = URLSession.shared
         
-        let request = NSMutableURLRequest(URL: url)
-        request.HTTPMethod = "POST"
-        request.cachePolicy = NSURLRequestCachePolicy.ReloadIgnoringCacheData
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.cachePolicy = NSURLRequest.CachePolicy.reloadIgnoringCacheData
         request.addValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
         request.addValue("application/json", forHTTPHeaderField: "Accept")
         
-        let param: [String: AnyObject] = ["channel_id": channelID]
+        let param: [String: AnyObject] = ["channel_id": channelID as AnyObject]
         
         do {
-            request.HTTPBody = try NSJSONSerialization.dataWithJSONObject(param, options: .PrettyPrinted)
+            request.httpBody = try JSONSerialization.data(withJSONObject: param, options: .prettyPrinted)
         } catch {
             print("error serializing JSON: \(error)")
         }
         
-        let task = session.dataTaskWithRequest(request) {
-            (let data, let response, let error) in
+        let task = session.dataTask(with: request, completionHandler: {
+            (data, response, error) in
             
-            guard let _:NSData = data, let _:NSURLResponse = response  where error == nil else {
+            guard let _:Data = data, let _:URLResponse = response, error == nil else {
                 print("error: \(error)")
                 return
             }
             
             do {
-                let json = try NSJSONSerialization.JSONObjectWithData(data!, options: .AllowFragments) as! NSDictionary
+                let json = try JSONSerialization.jsonObject(with: data!, options: .allowFragments) as! NSDictionary
                 
                 if let users = json[typeKey] as? [String] {
-                    dispatch_async(dispatch_get_main_queue(), {
+                    DispatchQueue.main.async(execute: {
                         self.users = users
                     })
                 }
             } catch {
                 print("error serializing JSON: \(error)")
             }
-        }
+        }) 
         task.resume()
     }
     

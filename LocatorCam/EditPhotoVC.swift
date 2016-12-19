@@ -44,17 +44,17 @@ class EditPhotoVC: UIViewController {
     }
     
     // add a line to line view
-    @IBAction func addMeasurementLine(sender: UIBarButtonItem) {
+    @IBAction func addMeasurementLine(_ sender: UIBarButtonItem) {
         lineView?.addLine()
     }
     
     // remove a line from line view
-    @IBAction func removeMeasurementLine(sender: UIBarButtonItem) {
+    @IBAction func removeMeasurementLine(_ sender: UIBarButtonItem) {
         lineView?.removeLine()
     }
     
     // save the image locally
-    @IBAction func saveImage(sender: UIBarButtonItem) {
+    @IBAction func saveImage(_ sender: UIBarButtonItem) {
         var combinedImage: UIImage?
         
         if lineView != nil && lineView!.numberOfLines() > 0 {
@@ -67,23 +67,23 @@ class EditPhotoVC: UIViewController {
         
         UIImageWriteToSavedPhotosAlbum(combinedImage!, self,
                                        #selector(EditPhotoVC.image(_:didFinishSavingWithError:contextInfo:)), nil)
-        let saveSuccessAlert = UIAlertController(title: "Success", message: "Photo has been saved to your local storage", preferredStyle: UIAlertControllerStyle.Alert)
-        saveSuccessAlert.addAction(UIAlertAction(title: "Close", style: .Cancel, handler: nil))
-        presentViewController(saveSuccessAlert, animated: true, completion: nil)
+        let saveSuccessAlert = UIAlertController(title: "Success", message: "Photo has been saved to your local storage", preferredStyle: UIAlertControllerStyle.alert)
+        saveSuccessAlert.addAction(UIAlertAction(title: "Close", style: .cancel, handler: nil))
+        present(saveSuccessAlert, animated: true, completion: nil)
     }
     
     
-    @IBAction func resetLines(sender: UIBarButtonItem) {
+    @IBAction func resetLines(_ sender: UIBarButtonItem) {
         removeAllLines()
     }
     
-    private func recordGPSData() {
+    fileprivate func recordGPSData() {
         manager = OneShotLocationManager() // request the current location
         manager!.fetchWithCompletion {location, error in
             // fetch location or an error
             if let loc = location {
                 self.photoLocation = loc
-                dispatch_async(dispatch_get_main_queue()) {
+                DispatchQueue.main.async {
                     if let img = self.imageView.image {
                         self.imageView.image = self.stampGeoLocationToImage(loc, img: img)
                     }
@@ -91,7 +91,7 @@ class EditPhotoVC: UIViewController {
             } else if let err = error {
                 print(err.localizedDescription)
                 // ask user to turn on GPS
-                dispatch_async(dispatch_get_main_queue()) {
+                DispatchQueue.main.async {
                     Helpers.showLocationFailAlert(self)
                 }
             }
@@ -101,14 +101,14 @@ class EditPhotoVC: UIViewController {
         }
     }
     
-    private func stampGeoLocationToImage(loc: CLLocation, img: UIImage) -> UIImage {
+    fileprivate func stampGeoLocationToImage(_ loc: CLLocation, img: UIImage) -> UIImage {
         let locString = "\(formatDate(loc.timestamp))\n\(self.transformCoordinate(loc.coordinate)) +/- \(loc.horizontalAccuracy)m"
 
-        return EditPhotoVC.textToImage(locString, inImage: img, atPoint: CGPointZero)
+        return EditPhotoVC.textToImage(locString as NSString, inImage: img, atPoint: CGPoint.zero)
     }
     
     // send image to the next view
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == Constant.toSubmitPhotoIdentifier {
             var combinedImage: UIImage?
             
@@ -121,7 +121,7 @@ class EditPhotoVC: UIViewController {
             }
             
             // send image to the submit view controler
-            if let submitVC = segue.destinationViewController as? SubmitPhotoViewController {
+            if let submitVC = segue.destination as? SubmitPhotoViewController {
                 submitVC.imageToSubmit = combinedImage
                 // send location data to the submit view controler
                 submitVC.photoLocation = photoLocation
@@ -129,27 +129,27 @@ class EditPhotoVC: UIViewController {
         }
     }
     
-    func image(image: UIImage, didFinishSavingWithError error: NSErrorPointer, contextInfo:UnsafePointer<Void>) {
+    func image(_ image: UIImage, didFinishSavingWithError error: NSObject?, contextInfo:UnsafeRawPointer) {
         
         if error != nil {
             let alert = UIAlertController(title: "Save Failed",
                                           message: "Failed to save image",
-                                          preferredStyle: UIAlertControllerStyle.Alert)
+                                          preferredStyle: UIAlertControllerStyle.alert)
             
             let cancelAction = UIAlertAction(title: "OK",
-                                             style: .Cancel, handler: nil)
+                                             style: .cancel, handler: nil)
             
             alert.addAction(cancelAction)
-            self.presentViewController(alert, animated: true,
+            self.present(alert, animated: true,
                                        completion: nil)
         }
     }
     
     // embed text in UIImage
-    static func textToImage(text: NSString, inImage: UIImage, atPoint:CGPoint)->UIImage {
+    static func textToImage(_ text: NSString, inImage: UIImage, atPoint:CGPoint)->UIImage {
         
         // configure the font
-        let textColor = UIColor.whiteColor()
+        let textColor = UIColor.white
         let textFont = UIFont(name: "Helvetica Neue", size: inImage.size.width * 0.04)!
         
         let textFontAttributes = [
@@ -164,18 +164,18 @@ class EditPhotoVC: UIViewController {
         UIGraphicsBeginImageContext(CGSize(width: inImage.size.width, height: inImage.size.height + textHeight))
         
         //Put the image into a rectangle as large as the original image.
-        inImage.drawInRect(CGRectMake(0, textHeight, inImage.size.width, inImage.size.height))
+        inImage.draw(in: CGRect(x: 0, y: textHeight, width: inImage.size.width, height: inImage.size.height))
         
         // Creating a text container within the image that is as wide as the image, as height as the text.
         
-        let rect = CGRectMake(atPoint.x, atPoint.y, textWidth,  textHeight)
+        let rect = CGRect(x: atPoint.x, y: atPoint.y, width: textWidth,  height: textHeight)
         
         // draw the background color for the text.
         UIColor(red: 0.1, green: 0.5, blue: 0.5, alpha: 1).set()
         UIBezierPath(rect: rect).fill()
         
         // Draw the text into the container.
-        drawText.drawInRect(rect)
+        drawText.draw(in: rect)
         
         // Create a new image out of the images we have created
         let newImage = UIGraphicsGetImageFromCurrentImageContext()
@@ -189,23 +189,23 @@ class EditPhotoVC: UIViewController {
     }
     
     // add lineView to the parent view
-    private func loadLineView(parentView: UIView) {
-        lineView = LineView(frame: UIScreen.mainScreen().bounds, reference: measuringReference)
+    fileprivate func loadLineView(_ parentView: UIView) {
+        lineView = LineView(frame: UIScreen.main.bounds, reference: measuringReference)
         lineView!.backgroundColor = UIColor(white: 1, alpha: 0)
         lineView!.addGestureRecognizer(UIPanGestureRecognizer(target: lineView, action: #selector(LineView.move)))
-        lineView!.contentMode = UIViewContentMode.ScaleAspectFit
+        lineView!.contentMode = UIViewContentMode.scaleAspectFit
         parentView.addSubview(lineView!)
     }
     
     // remove all lines
-    private func removeAllLines() {
+    fileprivate func removeAllLines() {
         if let lines = lineView {
             lines.removeAllLines()
         }
     }
     
     // Flattens <allViews> into single UIImage
-    private func flattenViews(allViews: [UIView]) -> UIImage? {
+    fileprivate func flattenViews(_ allViews: [UIView]) -> UIImage? {
         // Return nil if <allViews> empty
         if (allViews.isEmpty) {
             return nil
@@ -213,13 +213,13 @@ class EditPhotoVC: UIViewController {
         
         // If here, compose image out of views in <allViews>
         // Create graphics context
-        UIGraphicsBeginImageContextWithOptions(UIScreen.mainScreen().bounds.size, false, UIScreen.mainScreen().scale)
+        UIGraphicsBeginImageContextWithOptions(UIScreen.main.bounds.size, false, UIScreen.main.scale)
         let context = UIGraphicsGetCurrentContext()
-        CGContextSetInterpolationQuality(context!, CGInterpolationQuality.High)
+        context!.interpolationQuality = CGInterpolationQuality.high
         
         // Draw each view into context
         for curView in allViews {
-            curView.drawViewHierarchyInRect(curView.frame, afterScreenUpdates: false)
+            curView.drawHierarchy(in: curView.frame, afterScreenUpdates: false)
         }
         
         // Extract image & end context
@@ -229,21 +229,21 @@ class EditPhotoVC: UIViewController {
         // resize the snapshot to the size of the original image
         // let ratio:CGFloat = imageView.image!.size.width / imageView.frame.width
         
-        let x:CGFloat = imageView.frame.origin.x * UIScreen.mainScreen().scale
-        let y:CGFloat = imageView.frame.origin.y * UIScreen.mainScreen().scale
-        let width = imageView.frame.width * UIScreen.mainScreen().scale
-        let height = imageView.frame.height * UIScreen.mainScreen().scale
+        let x:CGFloat = imageView.frame.origin.x * UIScreen.main.scale
+        let y:CGFloat = imageView.frame.origin.y * UIScreen.main.scale
+        let width = imageView.frame.width * UIScreen.main.scale
+        let height = imageView.frame.height * UIScreen.main.scale
         // let height = imageView.image!.size.height / ratio * UIScreen.mainScreen().scale
         
-        let imageRef = image!.CGImage!
-        let imageArea = CGRectMake(x, y, width, height)
-        let subImageRef: CGImageRef = CGImageCreateWithImageInRect(imageRef, imageArea)!
+        let imageRef = image!.cgImage!
+        let imageArea = CGRect(x: x, y: y, width: width, height: height)
+        let subImageRef: CGImage = imageRef.cropping(to: imageArea)!
         // Return image
-        return UIImage(CGImage: subImageRef)
+        return UIImage(cgImage: subImageRef)
     }
     
     // convert coordinate from degree to degree, minute and second
-    private func transformCoordinate(coordinate: CLLocationCoordinate2D) -> String {
+    fileprivate func transformCoordinate(_ coordinate: CLLocationCoordinate2D) -> String {
         // convert the degree to coresponding degree + minute + second
         let latitudeInSeconds = abs(Int(coordinate.latitude * 3600))
         let latitudeDegrees = latitudeInSeconds / 3600
@@ -258,7 +258,7 @@ class EditPhotoVC: UIViewController {
     }
     
     // MARK: - Navigation
-    @IBAction func unwindToEditPhoto(segue: UIStoryboardSegue) {
+    @IBAction func unwindToEditPhoto(_ segue: UIStoryboardSegue) {
         // unwind to this view
     }
 }

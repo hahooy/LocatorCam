@@ -23,18 +23,18 @@ class ChannelSettingsTableViewController: UITableViewController {
     @IBOutlet weak var channelDescriptionLabel: UILabel!
     @IBOutlet weak var numberOfMembersLabel: UILabel!
     @IBOutlet weak var numberOfAdministratorsLabel: UILabel!
-    @IBAction func leaveChannelButton(sender: UIButton) {
+    @IBAction func leaveChannelButton(_ sender: UIButton) {
         if let channelID = channel?.id {
             makeChannelRequest(channelID, url: SharingManager.Constant.leaveChannelURL)
         }
     }
-    @IBAction func deleteChannelButton(sender: UIButton) {
+    @IBAction func deleteChannelButton(_ sender: UIButton) {
         if let channelID = channel?.id {
             makeChannelRequest(channelID, url: SharingManager.Constant.deleteChannelURL)
         }
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         channelTitleLable.text = channel?.name
         channelDescriptionLabel.text = channel?.description
@@ -47,24 +47,24 @@ class ChannelSettingsTableViewController: UITableViewController {
     }
     
     // MARK: - Navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let identifier = segue.identifier else {
             return
         }
         
         switch identifier {
         case Constant.segueToSearchUserIdentifier:
-            if let searchUserVC = segue.destinationViewController as? ChannelInvitationTableViewController {
+            if let searchUserVC = segue.destination as? ChannelInvitationTableViewController {
                 searchUserVC.channelToJoin = channel
             }
         case Constant.segueToAdministrators:
-            if let usersListVC = segue.destinationViewController as? UsersListTableViewController {
-                usersListVC.userType = UsersListTableViewController.UserType.Admin
+            if let usersListVC = segue.destination as? UsersListTableViewController {
+                usersListVC.userType = UsersListTableViewController.UserType.admin
                 usersListVC.channel = channel
             }
         case Constant.segueToMembers:
-            if let usersListVC = segue.destinationViewController as? UsersListTableViewController {
-                usersListVC.userType = UsersListTableViewController.UserType.Member
+            if let usersListVC = segue.destination as? UsersListTableViewController {
+                usersListVC.userType = UsersListTableViewController.UserType.member
                 usersListVC.channel = channel
             }
         default:
@@ -72,41 +72,41 @@ class ChannelSettingsTableViewController: UITableViewController {
         }
     }
     
-    private func makeChannelRequest(channelID: Int, url: String) {
+    fileprivate func makeChannelRequest(_ channelID: Int, url: String) {
         
-        let url:NSURL = NSURL(string: url)!
-        let session = NSURLSession.sharedSession()
+        let url:URL = URL(string: url)!
+        let session = URLSession.shared
         
-        let request = NSMutableURLRequest(URL: url)
-        request.HTTPMethod = "POST"
-        request.cachePolicy = NSURLRequestCachePolicy.ReloadIgnoringCacheData
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.cachePolicy = NSURLRequest.CachePolicy.reloadIgnoringCacheData
         request.addValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
         request.addValue("application/json", forHTTPHeaderField: "Accept")
         
-        let param: [String: AnyObject] = ["channel_id": channelID]
+        let param: [String: AnyObject] = ["channel_id": channelID as AnyObject]
         
         do {
-            request.HTTPBody = try NSJSONSerialization.dataWithJSONObject(param, options: .PrettyPrinted)
+            request.httpBody = try JSONSerialization.data(withJSONObject: param, options: .prettyPrinted)
         } catch {
             print("error serializing JSON: \(error)")
         }
         
-        let task = session.dataTaskWithRequest(request) {
-            (let data, let response, let error) in
+        let task = session.dataTask(with: request, completionHandler: {
+            (data, response, error) in
             
-            guard let _:NSData = data, let _:NSURLResponse = response  where error == nil else {
+            guard let _:Data = data, let _:URLResponse = response, error == nil else {
                 print("error: \(error)")
                 return
             }
             
             do {
-                let json = try NSJSONSerialization.JSONObjectWithData(data!, options: .AllowFragments) as! NSDictionary
+                let json = try JSONSerialization.jsonObject(with: data!, options: .allowFragments) as! NSDictionary
                 
                 if let message = json["message"] as? String {
-                    dispatch_async(dispatch_get_main_queue(), {
-                        let inviteUserAlert = UIAlertController(title: nil, message: message, preferredStyle: .Alert)
-                        inviteUserAlert.addAction(UIAlertAction(title: "Close", style: .Cancel, handler: nil))
-                        self.presentViewController(inviteUserAlert, animated: true, completion: nil)
+                    DispatchQueue.main.async(execute: {
+                        let inviteUserAlert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+                        inviteUserAlert.addAction(UIAlertAction(title: "Close", style: .cancel, handler: nil))
+                        self.present(inviteUserAlert, animated: true, completion: nil)
                     })
                 }
                 
@@ -114,7 +114,7 @@ class ChannelSettingsTableViewController: UITableViewController {
             } catch {
                 print("error serializing JSON: \(error)")
             }
-        }
+        }) 
         task.resume()
     }
     

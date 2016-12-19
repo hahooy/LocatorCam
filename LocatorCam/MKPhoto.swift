@@ -18,7 +18,7 @@ class MKPhoto: NSObject, MKAnnotation {
     let thumbnail: UIImage?
     let latitude: CLLocationDegrees
     let longitude: CLLocationDegrees
-    let date: NSDate
+    let date: Date
     let momentID: Int?
     
     init(moment: Moment) {
@@ -29,13 +29,13 @@ class MKPhoto: NSObject, MKAnnotation {
         momentID = moment.id
         
         if let imageString = moment.thumbnail_base64 {
-            let decodedData = NSData(base64EncodedString: imageString, options: NSDataBase64DecodingOptions.IgnoreUnknownCharacters)
+            let decodedData = Data(base64Encoded: imageString, options: NSData.Base64DecodingOptions.ignoreUnknownCharacters)
             thumbnail = UIImage(data: decodedData!)
         } else {
             thumbnail = nil
         }
         
-        date = NSDate(timeIntervalSince1970: moment.pub_time_interval!)
+        date = Date(timeIntervalSince1970: moment.pub_time_interval!)
     }
     
     

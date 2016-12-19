@@ -23,12 +23,12 @@ class PhotoMapViewController: UIViewController, MKMapViewDelegate, CLLocationMan
     }
     
 
-    @IBAction func setMapType(sender: UISegmentedControl) {
+    @IBAction func setMapType(_ sender: UISegmentedControl) {
         switch sender.selectedSegmentIndex {
         case 0:
-            mapView.mapType = .Standard
+            mapView.mapType = .standard
         case 1:
-            mapView.mapType = .Satellite
+            mapView.mapType = .satellite
         default:
             break
         }
@@ -44,27 +44,27 @@ class PhotoMapViewController: UIViewController, MKMapViewDelegate, CLLocationMan
         locationManager.startUpdatingLocation()
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationController?.navigationBarHidden = true
+        self.navigationController?.isNavigationBarHidden = true
         self.renderAnnotations()
     }
     
     // MARK: - photo points
     
-    private func clearPhotoPoints() {
+    fileprivate func clearPhotoPoints() {
         if mapView?.annotations != nil {
             mapView.removeAnnotations(mapView.annotations as [MKAnnotation])
         }
     }
     
-    private func handlePhotoPoints() {
+    fileprivate func handlePhotoPoints() {
         mapView.addAnnotations(photos)
         mapView.showAnnotations(photos, animated: true)
     }
     
     
-    private func renderAnnotations() {
+    fileprivate func renderAnnotations() {
         photos = [MKPhoto]()
         for moment in SharingManager.sharedInstance.moments {
             if moment.username != nil && moment.pub_time_interval != nil && moment.latitude != nil && moment.longitude != nil && moment.id != nil {
@@ -77,12 +77,12 @@ class PhotoMapViewController: UIViewController, MKMapViewDelegate, CLLocationMan
     
     // MARK: - MKMapViewDelegate
     
-    func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
-        if annotation.isKindOfClass(mapView.userLocation.classForCoder) {
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        if annotation.isKind(of: mapView.userLocation.classForCoder) {
             return nil
         }
         
-        var view = mapView.dequeueReusableAnnotationViewWithIdentifier(Constants.AnnotationViewReuseIdentifier)
+        var view = mapView.dequeueReusableAnnotationView(withIdentifier: Constants.AnnotationViewReuseIdentifier)
         
         if view == nil {
             view = MKPinAnnotationView(annotation: annotation, reuseIdentifier: Constants.AnnotationViewReuseIdentifier)
@@ -99,32 +99,32 @@ class PhotoMapViewController: UIViewController, MKMapViewDelegate, CLLocationMan
             if let thumbnail = photoPoint.thumbnail {
                 view!.leftCalloutAccessoryView = UIImageView(frame: Constants.LeftCalloutFrame)
                 (view!.leftCalloutAccessoryView as! UIImageView).image = thumbnail
-                view!.rightCalloutAccessoryView = UIButton(type: UIButtonType.DetailDisclosure) as UIButton
+                view!.rightCalloutAccessoryView = UIButton(type: UIButtonType.detailDisclosure) as UIButton
             }
         }
         
         return view
     }
     
-    func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
-        performSegueWithIdentifier(Constants.ShowImageDetailsSegue, sender: view)
+    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+        performSegue(withIdentifier: Constants.ShowImageDetailsSegue, sender: view)
     }
     
     // MARK - LocationManagerDelegate
     
-    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         mapView.centerCoordinate = locations[locations.count - 1].coordinate
     }
     
-    func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         Helpers.showLocationFailAlert(self)
     }    
     
     // MARK - Segue
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == Constants.ShowImageDetailsSegue {
-            if let mapImageDetailsVC = segue.destinationViewController as? MapImageDetailsViewController {
+            if let mapImageDetailsVC = segue.destination as? MapImageDetailsViewController {
                 if let photoPoint = (sender as? MKAnnotationView)?.annotation as? MKPhoto {
                     mapImageDetailsVC.momentID = photoPoint.momentID
                 }
@@ -134,7 +134,7 @@ class PhotoMapViewController: UIViewController, MKMapViewDelegate, CLLocationMan
     
     // MARK: - Constants
     
-    private struct Constants {
+    fileprivate struct Constants {
         static let LeftCalloutFrame = CGRect(x: 0, y: 0, width: 59, height: 59)
         static let AnnotationViewReuseIdentifier = "photopoint"
         static let ShowImageDetailsSegue = "ShowImageDetails"

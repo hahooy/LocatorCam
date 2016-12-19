@@ -10,18 +10,18 @@ import Foundation
 import UIKit
 
 class Helpers {
-    static func showLocationFailAlert(viewController: UIViewController) {
-        let locationFailAlert = UIAlertController(title: "Enable Location Services", message: "Open Settings\nTap Location\nSelect 'While Using the App'", preferredStyle: .Alert)
+    static func showLocationFailAlert(_ viewController: UIViewController) {
+        let locationFailAlert = UIAlertController(title: "Enable Location Services", message: "Open Settings\nTap Location\nSelect 'While Using the App'", preferredStyle: .alert)
         
-        let settingsAction = UIAlertAction(title: "Settings", style: .Default) { (alertAction) in
-            if let appSettings = NSURL(string: UIApplicationOpenSettingsURLString) {
-                UIApplication.sharedApplication().openURL(appSettings)
+        let settingsAction = UIAlertAction(title: "Settings", style: .default) { (alertAction) in
+            if let appSettings = URL(string: UIApplicationOpenSettingsURLString) {
+                UIApplication.shared.openURL(appSettings)
             }
         }
         
         locationFailAlert.addAction(settingsAction)
-        locationFailAlert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
+        locationFailAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         
-        viewController.presentViewController(locationFailAlert, animated: true, completion: nil)
+        viewController.present(locationFailAlert, animated: true, completion: nil)
     }
 }

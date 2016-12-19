@@ -23,7 +23,7 @@ class SharingManager {
      handlers to be executed whenever moments get updated. usually the handler is a closure that
      refresh the UIView
      */
-    var momentsUpdateHandlers = Array<(Void -> Void)>()
+    var momentsUpdateHandlers = Array<((Void) -> Void)>()
     // all moments download from the database
     var moments = [Moment]() {
         didSet {
@@ -32,20 +32,20 @@ class SharingManager {
             }
         }
     }
-    let defaults = NSUserDefaults.standardUserDefaults()
-    let semaphore = dispatch_semaphore_create(1)
+    let defaults = UserDefaults.standard
+    let semaphore = DispatchSemaphore(value: 1)
     
     // determine if the picture will be stamped by location and time data
     var locationStampEnabled: Bool {
         get {
-            if defaults.objectForKey("locationStampEnabled") == nil {
+            if defaults.object(forKey: "locationStampEnabled") == nil {
                 return true
             }
-            return defaults.boolForKey("locationStampEnabled")
+            return defaults.bool(forKey: "locationStampEnabled")
         }
         
         set {
-            defaults.setBool(newValue, forKey: "locationStampEnabled")
+            defaults.set(newValue, forKey: "locationStampEnabled")
         }
     }
     
@@ -80,72 +80,72 @@ class SharingManager {
 
     
     // add a handler for updating moments
-    func addMomentsUpdatedHandler(handler: Void -> Void) {
+    func addMomentsUpdatedHandler(_ handler: @escaping (Void) -> Void) {
         momentsUpdateHandlers.append(handler)
     }
     
     
-    func fetchMoments(publishedEarlier publishedEarlier: Bool, publishedLater: Bool, spinner: UIActivityIndicatorView?, refreshControl: UIRefreshControl?) {
+    func fetchMoments(publishedEarlier: Bool, publishedLater: Bool, spinner: UIActivityIndicatorView?, refreshControl: UIRefreshControl?) {
         // run the whole fetching process on a different queue to
         // avoid blocking the main queue
-        dispatch_async(dispatch_get_global_queue(QOS_CLASS_UTILITY, 0)) {
+        DispatchQueue.global(qos: DispatchQoS.QoSClass.utility).async {
             // use semaphore to avoid moments array being updated by multiple threads
-            let timeout = dispatch_time(DISPATCH_TIME_NOW, 2 * 60 * 1000 * 1000 * 1000)
-            dispatch_semaphore_wait(self.semaphore, timeout)
+            let timeout = DispatchTime.now() + Double(2 * 60 * 1000 * 1000 * 1000) / Double(NSEC_PER_SEC)
+            _ = self.semaphore.wait(timeout: timeout)
             // fetch moments happened before endTime
             // make API request to upload the photo
-            let url:NSURL = NSURL(string: SharingManager.Constant.fetchMomentsURL)!
-            let session = NSURLSession.sharedSession()
-            let request = NSMutableURLRequest(URL: url)
-            request.HTTPMethod = "POST"
-            request.cachePolicy = NSURLRequestCachePolicy.ReloadIgnoringCacheData
+            let url:URL = URL(string: SharingManager.Constant.fetchMomentsURL)!
+            let session = URLSession.shared
+            var request = URLRequest(url: url)
+            request.httpMethod = "POST"
+            request.cachePolicy = NSURLRequest.CachePolicy.reloadIgnoringCacheData
             request.addValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
             request.addValue("application/json", forHTTPHeaderField: "Accept")
             
-            var param: [String: AnyObject] = ["content_type": "JSON"]
+            var param: [String: AnyObject] = ["content_type": "JSON" as AnyObject]
             
             // specify the time condition for the request
             if publishedEarlier == true {
-                param["published_earlier_than"] = true
+                param["published_earlier_than"] = true as AnyObject?
             }
             if publishedLater == true {
-                param["published_later_than"] = true
+                param["published_later_than"] = true as AnyObject?
             }
             
             // is the user in a channel?
             if let channelID = UserInfo.currentChannel?.id {
-                param["channel_id"] = channelID
+                param["channel_id"] = channelID as AnyObject?
             }
             
             var existingMomentID: [Int] = []
             for moment in self.moments {
                 existingMomentID.append(moment.id!)
             }
-            param["existing_moments_id"] = existingMomentID
+            param["existing_moments_id"] = existingMomentID as AnyObject?
             
             do {
-                request.HTTPBody = try NSJSONSerialization.dataWithJSONObject(param, options: .PrettyPrinted)
+                request.httpBody = try JSONSerialization.data(withJSONObject: param, options: .prettyPrinted)
             } catch {
                 print("error serializing JSON: \(error)")
             }
             
-            UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+            UIApplication.shared.isNetworkActivityIndicatorVisible = true
             if spinner != nil {
-                dispatch_async(dispatch_get_main_queue(), {
+                DispatchQueue.main.async(execute: {
                     spinner!.startAnimating()
                 })
             }
             
-            let task = session.dataTaskWithRequest(request) {
-                (let data, let response, let error) in
+            let task = session.dataTask(with: request, completionHandler: {
+                (data, response, error) in
                 
-                guard let _:NSData = data, let _:NSURLResponse = response  where error == nil else {
+                guard let _:Data = data, let _:URLResponse = response, error == nil else {
                     print("error: \(error)")
                     return
                 }
                 
                 do {
-                    let momentsJSON = try NSJSONSerialization.JSONObjectWithData(data!, options: .AllowFragments) as! NSArray
+                    let momentsJSON = try JSONSerialization.jsonObject(with: data!, options: .allowFragments) as! [[String:Any]]
                     var tempMoments = [Moment]()
                     
                     for moment in momentsJSON {
@@ -166,7 +166,7 @@ class SharingManager {
                         if let longitude = moment["longitude"] as? Double {
                             tempMoment.longitude = longitude
                         }
-                        if let pub_time_interval = moment["pub_time_interval"] as? NSTimeInterval {
+                        if let pub_time_interval = moment["pub_time_interval"] as? TimeInterval {
                             tempMoment.pub_time_interval = pub_time_interval
                         }
                         if let thumbnail_base64 = moment["thumbnail_base64"] as? String {
@@ -175,9 +175,9 @@ class SharingManager {
                         tempMoments.append(tempMoment)
                     }
                     if tempMoments.count > 0 {
-                        print(tempMoments[0].pub_time_interval)
+                        print(tempMoments[0].pub_time_interval!)
                     }
-                    dispatch_async(dispatch_get_main_queue(), {
+                    DispatchQueue.main.async(execute: {
                         if publishedLater == true {
                             self.moments = tempMoments + self.moments
                         } else {
@@ -187,8 +187,8 @@ class SharingManager {
                 } catch {
                     print("error serializing JSON: \(error)")
                 }
-                dispatch_async(dispatch_get_main_queue(), {
-                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                DispatchQueue.main.async(execute: {
+                    UIApplication.shared.isNetworkActivityIndicatorVisible = false
                     if spinner != nil {
                         spinner!.stopAnimating()
                     }
@@ -196,8 +196,8 @@ class SharingManager {
                         refreshControl?.endRefreshing()
                     }
                 })
-                dispatch_semaphore_signal(self.semaphore)
-            }
+                self.semaphore.signal()
+            }) 
             task.resume()
         }
     }

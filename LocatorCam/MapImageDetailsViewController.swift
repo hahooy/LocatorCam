@@ -22,20 +22,20 @@ class MapImageDetailsViewController: UIViewController, UIScrollViewDelegate {
     
     @IBOutlet var zoomOutTapGesture: UITapGestureRecognizer!
     @IBOutlet var goBackTapGesture: UITapGestureRecognizer!
-    @IBAction func goBackTapGestureHandler(sender: UITapGestureRecognizer) {
-        self.navigationController?.popViewControllerAnimated(true)
+    @IBAction func goBackTapGestureHandler(_ sender: UITapGestureRecognizer) {
+        self.navigationController?.popViewController(animated: true)
     }
     
-    @IBAction func tapGesture(sender: UITapGestureRecognizer) {
+    @IBAction func tapGesture(_ sender: UITapGestureRecognizer) {
         scrollView.setZoomScale(1.0, animated: true)        
     }
     
     var image: UIImage? {
         didSet {
-            let imageWidth = UIScreen.mainScreen().bounds.width
+            let imageWidth = UIScreen.main.bounds.width
             let imageHeight = imageWidth * image!.size.height / image!.size.width
             imageView.frame = CGRect(x: 0, y: 0, width: imageWidth, height: imageHeight)
-            imageView.contentMode = .ScaleAspectFit
+            imageView.contentMode = .scaleAspectFit
             imageView.image = image
             scrollView.contentSize = imageView.frame.size
             scrollView.addSubview(imageView)
@@ -49,53 +49,53 @@ class MapImageDetailsViewController: UIViewController, UIScrollViewDelegate {
         guard let id = momentID else {
             return
         }
-        goBackTapGesture.requireGestureRecognizerToFail(zoomOutTapGesture)
+        goBackTapGesture.require(toFail: zoomOutTapGesture)
         activityIndicator.startAnimating()
-        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
         
         // make API request to fetch the photo
-        let url:NSURL = NSURL(string: SharingManager.Constant.fetchPhotoURL)!
-        let session = NSURLSession.sharedSession()
-        let request = NSMutableURLRequest(URL: url)
-        request.HTTPMethod = "POST"
-        request.cachePolicy = NSURLRequestCachePolicy.ReloadIgnoringCacheData
+        let url:URL = URL(string: SharingManager.Constant.fetchPhotoURL)!
+        let session = URLSession.shared
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.cachePolicy = NSURLRequest.CachePolicy.reloadIgnoringCacheData
         request.addValue("application/x-www-form-urlencoded; charset=utf-8", forHTTPHeaderField: "Content-Type")
         let paramString = "content_type=JSON&moment_id=\(id)"
-        request.HTTPBody = paramString.dataUsingEncoding(NSUTF8StringEncoding)
+        request.httpBody = paramString.data(using: String.Encoding.utf8)
         
-        let task = session.dataTaskWithRequest(request) {
-            (let data, let response, let error) in
+        let task = session.dataTask(with: request, completionHandler: {
+            (data, response, error) in
             
-            guard let _:NSData = data, let _:NSURLResponse = response  where error == nil else {
+            guard let _:Data = data, let _:URLResponse = response, error == nil else {
                 print("error: \(error)")
                 return
             }
             
             do {
-                let json = try NSJSONSerialization.JSONObjectWithData(data!, options: .AllowFragments) as! NSDictionary
+                let json = try JSONSerialization.jsonObject(with: data!, options: .allowFragments) as! NSDictionary
                 if let photoBase64String = json["photo_base64"] as? String {
-                    let decodedData = NSData(base64EncodedString: photoBase64String, options: NSDataBase64DecodingOptions.IgnoreUnknownCharacters)
-                    dispatch_async(dispatch_get_main_queue(), {
+                    let decodedData = Data(base64Encoded: photoBase64String, options: NSData.Base64DecodingOptions.ignoreUnknownCharacters)
+                    DispatchQueue.main.async(execute: {
                         self.image = UIImage(data: decodedData!)
-                        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                        UIApplication.shared.isNetworkActivityIndicatorVisible = false
                         self.activityIndicator.stopAnimating()
                     })
                 }
             } catch {
                 print("error serializing JSON: \(error)")
             }
-        }
+        }) 
         task.resume()
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        self.navigationController?.navigationBarHidden = true
-        self.navigationController?.toolbarHidden = true
+        self.navigationController?.isNavigationBarHidden = true
+        self.navigationController?.isToolbarHidden = true
     }
     
     // MARK: - ScrollView Delegate Method
-    func viewForZoomingInScrollView(scrollView: UIScrollView) -> UIView? {
+    func viewForZooming(in scrollView: UIScrollView) -> UIView? {
         return imageView
     }
 }

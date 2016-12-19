@@ -44,7 +44,7 @@ class SearchTableViewController: UITableViewController,UISearchBarDelegate,UISea
     }
     
     // MARK: - UISearchResultsUpdating Protocol Method
-    func updateSearchResultsForSearchController(searchController: UISearchController) {
+    func updateSearchResults(for searchController: UISearchController) {
         let searchKeyword = searchController.searchBar.text!
         
         // set the minimum number of search characters to 2
@@ -57,17 +57,17 @@ class SearchTableViewController: UITableViewController,UISearchBarDelegate,UISea
     
     // MARK: - Table view data source
     
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return searchResults.count
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // 
-        let cell = tableView.dequeueReusableCellWithIdentifier(Constant.userResultCellIdentifier, forIndexPath: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: Constant.userResultCellIdentifier, for: indexPath)
         if let cell = cell as? SearchUserResultsTableViewCell {
             cell.username.text = searchResults[indexPath.row]
             cell.userdescription.text = ""
@@ -77,37 +77,37 @@ class SearchTableViewController: UITableViewController,UISearchBarDelegate,UISea
     }
     
     // MARK: - Search Methods
-    private func searchRequest(keyword: String, scope: String) {
+    fileprivate func searchRequest(_ keyword: String, scope: String) {
         if scope == Constant.SearchScope.People.rawValue {
-            let url:NSURL = NSURL(string: SharingManager.Constant.searchUserURL)!
-            let session = NSURLSession.sharedSession()
+            let url:URL = URL(string: SharingManager.Constant.searchUserURL)!
+            let session = URLSession.shared
             
-            let request = NSMutableURLRequest(URL: url)
-            request.HTTPMethod = "POST"
-            request.cachePolicy = NSURLRequestCachePolicy.ReloadIgnoringCacheData
+            var request = URLRequest(url: url)
+            request.httpMethod = "POST"
+            request.cachePolicy = NSURLRequest.CachePolicy.reloadIgnoringCacheData
             
             let paramString = "username=\(keyword)&content_type=JSON"
-            request.HTTPBody = paramString.dataUsingEncoding(NSUTF8StringEncoding)
+            request.httpBody = paramString.data(using: String.Encoding.utf8)
             
-            let task = session.dataTaskWithRequest(request) {
-                (let data, let response, let error) in
+            let task = session.dataTask(with: request, completionHandler: {
+                (data, response, error) in
                 
-                guard let _:NSData = data, let _:NSURLResponse = response  where error == nil else {
+                guard let _:Data = data, let _:URLResponse = response, error == nil else {
                     print("error: \(error)")
                     return
                 }
                 
                 do {
-                    let json = try NSJSONSerialization.JSONObjectWithData(data!, options: .AllowFragments) as! NSDictionary
+                    let json = try JSONSerialization.jsonObject(with: data!, options: .allowFragments) as! NSDictionary
                     if let users = json["users"] as? [String] {                        
-                        dispatch_async(dispatch_get_main_queue(), {
+                        DispatchQueue.main.async(execute: {
                             self.searchResults = users
                         })
                     }
                 } catch {
                     print("error serializing JSON: \(error)")
                 }
-            }
+            }) 
             task.resume()
         }
     }
