@@ -106,7 +106,7 @@ class SubmitPhotoViewController: UIViewController {
         // return to the last page
         // let viewControlers = navigationController?.viewControllers
         // navigationController?.popToViewController(viewControlers![0], animated: true)
-        navigationController?.popViewController(animated: true)
+        _ = navigationController?.popViewController(animated: true)
     }
     
     // share image via sms, email and social media

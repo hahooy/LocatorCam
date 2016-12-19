@@ -23,7 +23,7 @@ class MapImageDetailsViewController: UIViewController, UIScrollViewDelegate {
     @IBOutlet var zoomOutTapGesture: UITapGestureRecognizer!
     @IBOutlet var goBackTapGesture: UITapGestureRecognizer!
     @IBAction func goBackTapGestureHandler(_ sender: UITapGestureRecognizer) {
-        self.navigationController?.popViewController(animated: true)
+        _ = self.navigationController?.popViewController(animated: true)
     }
     
     @IBAction func tapGesture(_ sender: UITapGestureRecognizer) {

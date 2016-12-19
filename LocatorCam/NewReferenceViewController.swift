@@ -53,7 +53,7 @@ class NewReferenceViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func cancel(_ sender: UIBarButtonItem) {
-        navigationController?.popViewController(animated: true)
+        _ = navigationController?.popViewController(animated: true)
     }
     
 }

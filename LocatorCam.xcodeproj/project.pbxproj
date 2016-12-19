@@ -13,6 +13,7 @@
 		0A0B1F2F1CB2102F00FC0C77 /* ProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A0B1F2E1CB2102F00FC0C77 /* ProfileTableViewCell.swift */; };
 		0A0EEF981CB93AB500B4349B /* MapImageDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A0EEF971CB93AB500B4349B /* MapImageDetailsViewController.swift */; };
 		0A1F1A9A1CBAA94C0025CB26 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A1F1A991CBAA94C0025CB26 /* Helpers.swift */; };
+		0A3CFADA1E083DC1006C7912 /* QRScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3CFAD91E083DC1006C7912 /* QRScannerViewController.swift */; };
 		0A4D64481CB89C5D00CC837F /* PhotoMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A4D64461CB89C5D00CC837F /* PhotoMapViewController.swift */; };
 		0A4D644B1CB8B57C00CC837F /* MKPhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A4D644A1CB8B57C00CC837F /* MKPhoto.swift */; };
 		0A61D52E1CAE1E1000DDC276 /* LineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A61D52D1CAE1E1000DDC276 /* LineView.swift */; };
@@ -52,6 +53,7 @@
 		0A0B1F2E1CB2102F00FC0C77 /* ProfileTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileTableViewCell.swift; sourceTree = "<group>"; };
 		0A0EEF971CB93AB500B4349B /* MapImageDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapImageDetailsViewController.swift; sourceTree = "<group>"; };
 		0A1F1A991CBAA94C0025CB26 /* Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
+		0A3CFAD91E083DC1006C7912 /* QRScannerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QRScannerViewController.swift; sourceTree = "<group>"; };
 		0A4D64461CB89C5D00CC837F /* PhotoMapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoMapViewController.swift; sourceTree = "<group>"; };
 		0A4D644A1CB8B57C00CC837F /* MKPhoto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MKPhoto.swift; sourceTree = "<group>"; };
 		0A61D52D1CAE1E1000DDC276 /* LineView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LineView.swift; sourceTree = "<group>"; };
@@ -111,6 +113,7 @@
 			children = (
 				0AE5BD2F1CA3B287001458DF /* EditPhotoVC.swift */,
 				0ABFA8271D1F466700E17906 /* CreateChannelViewController.swift */,
+				0A3CFAD91E083DC1006C7912 /* QRScannerViewController.swift */,
 				0A94B52A1D0283410064053B /* SearchTableViewController.swift */,
 				0A94B52E1D0333B60064053B /* SearchUserResultsTableViewCell.swift */,
 				0A05C0401CFA5539002F9BB5 /* UserRegistrationViewController.swift */,
@@ -284,6 +287,7 @@
 				0AE5BD401CA3BA75001458DF /* OneShotLocationManager.swift in Sources */,
 				0A0B1F2F1CB2102F00FC0C77 /* ProfileTableViewCell.swift in Sources */,
 				0A6BA02C1D049E00005EB620 /* Moment.swift in Sources */,
+				0A3CFADA1E083DC1006C7912 /* QRScannerViewController.swift in Sources */,
 				0A94B5311D03819E0064053B /* FriendTableViewCell.swift in Sources */,
 				0AA12DA61CEA901D00BAB749 /* measuringReferenceTableViewController.swift in Sources */,
 				0ABFA8241D1F33E500E17906 /* ChannelInvitationTableViewController.swift in Sources */,

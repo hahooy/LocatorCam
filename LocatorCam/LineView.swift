@@ -150,7 +150,7 @@ class LineView: UIView {
     
     // remove a line from the view
     func removeLine() {
-        lines.popLast()
+        _ = lines.popLast()
     }
     
     // remove all lines from the view
